@@ -21,6 +21,6 @@ plugins:
   - search
   - git-revision-date-localized
   - git-committers
-      repository: swisskyrepo/PayloadsAllTheThings
-      branch: main
-      token: !ENV GH_TOKEN
+    repository: swisskyrepo/PayloadsAllTheThings
+    branch: main
+    token: !ENV GH_TOKEN
