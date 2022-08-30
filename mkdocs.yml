@@ -17,3 +17,6 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 repo_url: https://github.com/swisskyrepo/PayloadsAllTheThings/
+plugins:
+  - search
+  - git-revision-date-localized
