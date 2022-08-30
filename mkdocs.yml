@@ -20,3 +20,6 @@ repo_url: https://github.com/swisskyrepo/PayloadsAllTheThings/
 plugins:
   - search
   - git-revision-date-localized
+  - git-committers
+      repository: swisskyrepo/PayloadsAllTheThings
+      branch: main
