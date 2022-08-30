@@ -20,7 +20,8 @@ repo_url: https://github.com/swisskyrepo/PayloadsAllTheThings/
 plugins:
   - search
   - git-revision-date-localized
-  - git-committers
-    repository: swisskyrepo/PayloadsAllTheThings
-    branch: main
-    token: !ENV GH_TOKEN
+  - git-committers:
+      repository: swisskyrepo/PayloadsAllTheThings
+      branch: main
+      token: !ENV GH_TOKEN
+      docs_path: docs/
