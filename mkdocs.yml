@@ -1,6 +1,9 @@
 site_name: Payloads All The Things
 theme:
   name: material
+  features:
+    - navigation.top
+    - navigation.tracking
   icon:
     repo: fontawesome/brands/github
   palette:
