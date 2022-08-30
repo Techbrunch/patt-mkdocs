@@ -1,6 +1,8 @@
 site_name: Payloads All The Things
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
   palette:
 
     # Palette toggle for light mode
@@ -17,6 +19,7 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 repo_url: https://github.com/swisskyrepo/PayloadsAllTheThings/
+edit_uri: edit/master/
 plugins:
   - search
   - git-revision-date-localized
